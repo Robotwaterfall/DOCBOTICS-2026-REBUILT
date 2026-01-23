@@ -4,7 +4,14 @@
 
 package frc.robot;
 
+import org.littletonrobotics.junction.LoggedRobot;
+import org.littletonrobotics.junction.Logger;
+
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -13,7 +20,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  * the TimedRobot documentation. If you change the name of this class or the package after creating
  * this project, you must also update the Main.java file in the project.
  */
-public class Robot extends TimedRobot {
+public class Robot extends LoggedRobot {
   private Command m_autonomousCommand;
 
   private final RobotContainer m_robotContainer;
@@ -42,6 +49,21 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+
+    Logger.recordOutput("RobotPose", new Pose2d());
+    Logger.recordOutput("ZeroedComponentPose", new Pose3d[] {(new Pose3d())});
+    Logger.recordOutput(
+      "FinalComponentPose", 
+      new Pose3d[]{
+        new Pose3d(
+          -0.238, 0.0, 0.298, new Rotation3d(0.0, Math.sin(Timer.getTimestamp())
+          -1.0, 0.0)
+        )
+      });
+    
+
+  
+    
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
