@@ -34,7 +34,7 @@ public final class Constants {
     public static final double kDriveEncoderRPM2MeterPerSec = kDriveEncoderRot2Meter / 60;
     public static final double kTurningEncoderRPM2RadPerSec = kTurningEncoderRot2Rad / 60;
 
-    public static final double kTurning = 0.3; // TODO: Tune this kp for turning
+    public static final double kTurning = 0.25; // TODO: Tune this kp for turning
 
   }
 
@@ -119,6 +119,31 @@ public final class Constants {
 
 
       public static final double kDeadband = 0.5;
+
+  }
+
+  public static final class ClimberConstants {
+
+    public static final int kClimberPrimaryMotorId = 0; //TODO: change motor id
+
+    public static final int kClimberSecoundaryMotorId  = 1;
+
+    public static final double Kp = 0;
+    public static final double Ki = 0;
+    public static final double Kd = 0;
+
+     /**Converts revolutions of the elevator motor's encoder to gear revolutions. */
+    public static double climberMotorEncoderRevToGearRev = 1/ 20;
+    public static double climberSprocketPitchDiameter_inches = 1.751;
+    /** converts elevator gear revolutions to linear motion in inches*/
+    public static double climberGearRevToLinearMotion_Inches = climberSprocketPitchDiameter_inches * Math.PI;
+    /**
+     * Conversion from rotation of the primary elevator motor
+     * to meters. Used for getting current position of the tallest point on the
+     * to the ground
+     */
+    public static final double elevatorMotorRotationToMeters = climberMotorEncoderRevToGearRev * climberGearRevToLinearMotion_Inches;
+
 
   }
 }
