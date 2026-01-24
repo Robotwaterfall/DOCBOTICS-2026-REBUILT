@@ -121,4 +121,28 @@ public final class Constants {
       public static final double kDeadband = 0.5;
 
   }
+  public static final class IntakeConstants{
+    public static final int kIntakeMotorPort = 2; //TODO:: SET LATER
+
+  }
+    public static final class IntakePitcherConstants{
+    public static final int kIntakePitcherMotorPort = 2; //TODO:: SET LATER
+        public static final double intakePitcherRotationsToDegrees = 0;//TODO:: SET LATER
+    public static double intakePitcher_kP = 0;
+    public static double intakePitcher_kI = 0;
+    public static double intakePitcher_kD = 0;
+  }
+
+  public static final class  ShooterConstants {
+    public static final int kShooterLeadMotorPort = 2; //TODO:: SET LATER
+    public static final int kShooterFollower_1_port = 2; //TODO:: SET LATER
+    public static final int kShooterFollower_2_port = 2; //TODO:: SET LATER
+  
+    
+  }
+    public static final class  ConveyorConstant {
+    public static final int kConveyorMotorPort = 2; //TODO:: SET LATER
+ 
+
+  }
 }
