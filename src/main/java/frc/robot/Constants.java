@@ -96,6 +96,8 @@ public final class Constants {
     public static class autoTargetConstants {
       public static final double autoOrientKp = 0.0035;
 
+      public static final double autoLockKp = 0;
+
     }
   }
 
