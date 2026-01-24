@@ -4,7 +4,11 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.OIConstants;
+import frc.robot.commands.SwerveJoystickCmd;
+import frc.robot.subsystems.SwerveSub;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -14,13 +18,27 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
 
+  public final SwerveSub swerveSub = new SwerveSub();
+
+  private final Joystick driverJoyStick = new Joystick(OIConstants.kDriverControllerPort);
 
 
-
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
+
+     // Configure the trigger bindings
+    swerveSub.setDefaultCommand(
+        new SwerveJoystickCmd(
+            swerveSub,
+            () -> -driverJoyStick.getRawAxis(OIConstants.kDriverYAxis),
+            () -> driverJoyStick.getRawAxis(OIConstants.kDriverXAxis),
+            () -> driverJoyStick.getRawAxis(OIConstants.kDriverRotAxis),
+            () -> driverJoyStick.getRawButtonPressed(OIConstants.kSlowModeIdx),
+             /// By default will be on field oriented.
+            () -> !
+            driverJoyStick.getRawButton(OIConstants.kDriverFieldOrientedButtonIdx), 
+            () -> driverJoyStick.getRawButton(OIConstants.kLockWheelsButton))); 
   }
 
 
