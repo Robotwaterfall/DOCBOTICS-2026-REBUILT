@@ -18,7 +18,7 @@ public class ClimberSub extends SubsystemBase{
     private SparkMaxConfig primaryClimberMotorConfig = new SparkMaxConfig();
     private SparkMaxConfig secondaryClimberMotorConfig = new SparkMaxConfig();
 
-    private double climberSetpoint;
+    private double climberSetpoint = ClimberConstants.idleHeightSetpoint;
 
     private PIDController climberController = new PIDController(
         ClimberConstants.Kp, 

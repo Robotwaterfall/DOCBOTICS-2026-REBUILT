@@ -117,6 +117,8 @@ public final class Constants {
 
       public static final int kLockWheelsButton = 9;
 
+      public static final int climbL1Button = 0; //TODO:find
+
 
       public static final double kDeadband = 0.5;
 
@@ -145,6 +147,12 @@ public final class Constants {
     public static final double climberMotorRotationToMeters = climberMotorEncoderRevToGearRev * climberGearRevToLinearMotion_Inches;
 
     public static final double climberTolerance = 0.2;
+
+    public static final double climberL1ClimbInches = 1; //TODO: tune
+
+    public static final double idleHeightSetpoint = 0.5; //TODO: tune
+
+    public static final double timeUntilPull = 5.0;
 
 
   }
