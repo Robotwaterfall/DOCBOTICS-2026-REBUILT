@@ -1,0 +1,17 @@
+INTAKE:
+1x Kraken x60 (ARTICULATOR)
+1x Neo (WHEELS)
+
+Conveyor:
+1x Neo (BELTS)
+
+SHOOTER:
+3x Kraken x60 (FLYWHEEL)
+1x Kraken x60 (INDEXER)
+
+CLIMBER:
+2x Neo (CLIMBER)
+
+DRIVE TRAIN:
+4x Neo 1.1 (DRIVE)
+4x Neo 1.1 (TURN)
