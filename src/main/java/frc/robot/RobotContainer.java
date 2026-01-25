@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.ClimberConstants;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.ClimberIdleHeightCmd;
 import frc.robot.commands.SwerveJoystickCmd;
