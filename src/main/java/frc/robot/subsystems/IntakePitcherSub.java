@@ -3,11 +3,11 @@ package frc.robot.subsystems;
 import com.revrobotics.spark.SparkMax;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.IntakePitcherConstants;
 
-import com.revrobotics.spark.SparkBase.PersistMode;
-import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.PersistMode;
+import com.revrobotics.ResetMode;
+
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
@@ -30,7 +30,8 @@ public class IntakePitcherSub extends SubsystemBase {
         intakePitchController.enableContinuousInput(0, 360);
 
         intakePitcherMotorConfig.absoluteEncoder.positionConversionFactor(IntakePitcherConstants.intakePitcherRotationsToDegrees);
-        intakePitcherMotor.configure(intakePitcherMotorConfig,ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
+        intakePitcherMotor.configure(intakePitcherMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
+    
 
     }
 

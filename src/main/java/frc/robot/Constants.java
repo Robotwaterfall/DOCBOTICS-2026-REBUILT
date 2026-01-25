@@ -140,7 +140,7 @@ public final class Constants {
   
     
   }
-    public static final class  ConveyorConstant {
+    public static final class  ConveyorConstants {
     public static final int kConveyorMotorPort = 2; //TODO:: SET LATER
  
 
