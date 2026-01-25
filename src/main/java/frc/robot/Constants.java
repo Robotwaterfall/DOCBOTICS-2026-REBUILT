@@ -142,7 +142,9 @@ public final class Constants {
      * to meters. Used for getting current position of the tallest point on the
      * to the ground
      */
-    public static final double elevatorMotorRotationToMeters = climberMotorEncoderRevToGearRev * climberGearRevToLinearMotion_Inches;
+    public static final double climberMotorRotationToMeters = climberMotorEncoderRevToGearRev * climberGearRevToLinearMotion_Inches;
+
+    public static final double climberTolerance = 0.2;
 
 
   }

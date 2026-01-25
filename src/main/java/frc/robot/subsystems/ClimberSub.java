@@ -28,10 +28,10 @@ public class ClimberSub extends SubsystemBase{
     public ClimberSub(){
 
         secondaryClimberMotorConfig.follow(
-            ClimberConstants.kClimberPrimaryMotorId,true
+            ClimberConstants.kClimberPrimaryMotorId,true // secondary climbing motor will follow in reverse
         );
 
-        primaryClimberMotorConfig.encoder.positionConversionFactor(ClimberConstants.elevatorMotorRotationToMeters);
+        primaryClimberMotorConfig.encoder.positionConversionFactor(ClimberConstants.climberMotorRotationToMeters);
 
         primaryClimberMotor.configure(primaryClimberMotorConfig, 
             ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
