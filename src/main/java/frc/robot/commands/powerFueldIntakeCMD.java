@@ -11,22 +11,23 @@ import frc.robot.subsystems.IntakePitcherSub;
 import frc.robot.subsystems.IntakeSub;
 
 
-public class powerFueldIntakeCMD extends Command {
+public class PowerFueldIntakeCMD extends Command {
     private final IntakeSub intakeSub;
     private final SparkMax intakeConsumerMotor;
     public final Supplier<Double> intakeConsumerSpeedSupplier;
     public final Supplier<Double> outakeConsumerSpeedSupplier;
 
 
-    public powerFueldIntakeCMD(
-        IntakeSub intakeConsumerSub, 
-    Supplier<Double> intakeConsumerSpeedSupplier,
-    Supplier<Double> outakeConsumerSpeedSupplier) {
-        this.intakeSub = intakeConsumerSub;
-        this.intakeConsumerMotor = intakeConsumerSub.getIntakeConsumerMotor();
+    public PowerFueldIntakeCMD(
+        IntakeSub intakeSub, 
+        Supplier<Double> intakeConsumerSpeedSupplier,
+        Supplier<Double> outakeConsumerSpeedSupplier) {
+
+        this.intakeSub = intakeSub;
+        this.intakeConsumerMotor = intakeSub.getIntakeConsumerMotor();
         this.intakeConsumerSpeedSupplier = intakeConsumerSpeedSupplier;
         this.outakeConsumerSpeedSupplier = outakeConsumerSpeedSupplier;
-        addRequirements(intakeConsumerSub);
+        addRequirements(intakeSub);
 
     }
 
@@ -36,6 +37,7 @@ public class powerFueldIntakeCMD extends Command {
         /* When command starts, stop the intake consumer motor. */
         intakeConsumerMotor.set(0);
         intakeConsumerMotor.stopMotor();
+    
 
         SmartDashboard.putBoolean("isIntakePitcherCommandRunning", true);
     }

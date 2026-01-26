@@ -6,8 +6,15 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
+import frc.robot.Constants.ShooterConstants;
+import frc.robot.commands.PitchIntakeCMD;
 import frc.robot.commands.SwerveJoystickCmd;
+import frc.robot.subsystems.IntakePitcherSub;
+import frc.robot.subsystems.IntakeSub;
+import frc.robot.subsystems.ShooterSub;
 import frc.robot.subsystems.SwerveSub;
 
 /**
@@ -19,9 +26,18 @@ import frc.robot.subsystems.SwerveSub;
 public class RobotContainer {
 
   public final SwerveSub swerveSub = new SwerveSub();
+  public final IntakeSub intakeSub = new IntakeSub();
+  public final IntakePitcherSub intakePitcherSub = new IntakePitcherSub();
+  public final ShooterSub shooterSub = new ShooterSub();
 
   private final Joystick driverJoyStick = new Joystick(OIConstants.kDriverControllerPort);
 
+
+  private final JoystickButton intakeFueldButton = new JoystickButton(driverJoyStick,OIConstants.kIntakeFuelButton);
+  private final JoystickButton powerConveyorButton = new JoystickButton(driverJoyStick,OIConstants.kPowerConveryorButton);
+  private final JoystickButton pitchIntakeUpButton = new JoystickButton(driverJoyStick,OIConstants.kPitchIntakeUp);
+  private final JoystickButton pitchIntakeDownButton = new JoystickButton(driverJoyStick,OIConstants.kPitchIntakeDown);
+  private final JoystickButton shootFuelButton = new JoystickButton(driverJoyStick,OIConstants.kPitchIntakeDown);
 
   public RobotContainer() {
     // Configure the trigger bindings
@@ -39,10 +55,17 @@ public class RobotContainer {
             () -> !
             driverJoyStick.getRawButton(OIConstants.kDriverFieldOrientedButtonIdx), 
             () -> driverJoyStick.getRawButton(OIConstants.kLockWheelsButton))); 
+
+    intakePitcherSub.setDefaultCommand(new PitchIntakeCMD(intakePitcherSub, true));
+
+    
+
   }
 
 
   private void configureBindings() {
+
+    
     
   }
 

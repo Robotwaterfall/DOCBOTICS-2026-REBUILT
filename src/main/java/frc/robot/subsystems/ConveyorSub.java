@@ -10,11 +10,11 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 public class ConveyorSub extends SubsystemBase {
 
-    /**Motor that allows the intake to consume coral. */
+    /**Motor powes the conveyor motor. */
     private SparkMax conveyorMotor = new SparkMax(ConveyorConstants.kConveyorMotorPort, MotorType.kBrushless);
     
     /**
-     * @return the intake motor that consumes the Coral.
+     * @return the converyor motor moves the fuel up to shooter
      */
     public SparkMax getConveryorMotor() {
         return conveyorMotor;

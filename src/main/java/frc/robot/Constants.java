@@ -112,13 +112,20 @@ public final class Constants {
       public static final int kDriveGyroResetButtonIdx = 7;
     
       public static final int kSlowModeIdx = 4;
-
       public static final int kDriverFieldOrientedButtonIdx = 5;
-
+      public static final double kDeadband = 0.5;
       public static final int kLockWheelsButton = 9;
 
 
-      public static final double kDeadband = 0.5;
+      public static final int kShooterAxis = 2; //TODO:: SET LATER
+
+      public static final int kPowerConveryorButton = 2; //TODO:: SET LATER
+      public static final int kIntakeFuelButton = 2; //TODO:: SET LATER
+      public static final int kPitchIntakeUp = 2; //TODO:: SET LATER
+      public static final int kPitchIntakeDown = 2; //TODO:: SET LATER
+
+
+    
 
   }
   public static final class IntakeConstants{
@@ -137,6 +144,7 @@ public final class Constants {
     public static final int kShooterLeadMotorPort = 2; //TODO:: SET LATER
     public static final int kShooterFollower_1_port = 2; //TODO:: SET LATER
     public static final int kShooterFollower_2_port = 2; //TODO:: SET LATER
+    public static final int kIndexer_port = 2;
   
     
   }

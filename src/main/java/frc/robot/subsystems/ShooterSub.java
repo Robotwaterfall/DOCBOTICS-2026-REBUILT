@@ -10,15 +10,12 @@ import frc.robot.Constants.ShooterConstants;
 
 public class ShooterSub extends SubsystemBase {
     /*
-     * Note: In REV Hardware, the m_rightShooterFollow
-     * controller must be configured to follow the m_leftShooterLead controller
-     * and be inverted relative to the m_leftShooterLead controller’s direction.*
-     * 
-     * /* Shoter controllers to shooter fuel
+     * /* Shooter controllers to shoot fuel
      */
     public TalonFX shooter_lead = new TalonFX(ShooterConstants.kShooterLeadMotorPort);
     public TalonFX shooterFollower_1 = new TalonFX(ShooterConstants.kShooterFollower_1_port);
     public TalonFX shooterFollower_2 = new TalonFX(ShooterConstants.kShooterFollower_2_port);
+    public TalonFX indexMotor = new TalonFX(ShooterConstants.kIndexer_port);
 
 
 
@@ -27,27 +24,29 @@ public class ShooterSub extends SubsystemBase {
     }
 
     // *TODO figure out direction of motors relative to direction of current. */
-    public void setShooterMotorsPower(double shootpower, double feederpower) {
+    public void setShooterMotorsPower(double shootPower, double indexPower) {
         /*
-         * power left lead motor, right motor will
-         * follow if set correctly in REV hardware correctly
+         * power shooter lead motor, both follower motors and index will follow
+      
          */
-        shooter_lead.set(shootpower);
-        shooterFollower_1.set(shootpower);
-        shooterFollower_2.set(shootpower);
+        shooter_lead.set(shootPower);
+        shooterFollower_1.set(shootPower);
+        shooterFollower_2.set(shootPower);
+        indexMotor.set(indexPower);
 
     }
 
     public void StopMotors() {
-        /* Stop shooter motors. */
+        /* Stop shooter motors and indexer. */
         shooter_lead.set(0.0);
         shooterFollower_1.set(0.0);
         shooterFollower_2.set(0.0);
-       
+        indexMotor.set(0);
 
         shooter_lead.stopMotor();
         shooterFollower_1.stopMotor();
         shooterFollower_2.stopMotor();
+        indexMotor.stopMotor();
 
     }
 }
