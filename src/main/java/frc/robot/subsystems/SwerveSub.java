@@ -11,7 +11,7 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 
 import edu.wpi.first.wpilibj.DriverStation;
-
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -20,6 +20,8 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.config.LimelightHelpers;
 
 import com.studica.frc.AHRS;
+
+import java.util.Optional;
 
 import org.littletonrobotics.junction.Logger;
 
@@ -97,6 +99,8 @@ public class SwerveSub extends SubsystemBase {
     private final AHRS gyro = new AHRS(AHRS.NavXComType.kUSB1);
     
     //new AHRS(SerialPort.Port.kUSB1);
+
+    public final Optional <Alliance> Alliance = DriverStation.getAlliance();
 
 
 

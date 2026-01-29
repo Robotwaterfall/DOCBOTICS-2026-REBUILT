@@ -98,6 +98,9 @@ public final class Constants {
 
       public static final double autoLockKp = 0;
 
+      public static final int limelightBlueAlliancePipeline = 1;
+      public static final int limelightRedAlliancePipeline = 2;
+
     }
   }
 

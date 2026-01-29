@@ -1,14 +1,17 @@
 package frc.robot.commands;
 
+import java.util.Optional;
 import java.util.function.Supplier;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.config.LimelightHelpers;
+import frc.robot.config.LimelightHelpers.LimelightResults;
 import frc.robot.subsystems.SwerveSub;
 
 public class SwerveLimelightLockCmd extends Command {
@@ -33,6 +36,7 @@ public class SwerveLimelightLockCmd extends Command {
 
     // };
 
+      private final Optional <Alliance> currentAlliance;
 
     public SwerveLimelightLockCmd( SwerveSub swerveSubsystem, 
           Supplier <Double> xSpdFunction,
@@ -49,6 +53,9 @@ public class SwerveLimelightLockCmd extends Command {
         this.xLimiter = new SlewRateLimiter(DriveConstants.kTeleDriveMaxAccelerationUnitsPerSecond);
         this.yLimiter = new SlewRateLimiter(DriveConstants.kTeleDriveMaxAccelerationUnitsPerSecond);
         this.turningLimiter = new SlewRateLimiter(DriveConstants.kTeleDriveMaxAngularAccelerationUnitsPerSecond);
+
+        this.currentAlliance = swerveSubsystem.Alliance;
+
         addRequirements(swerveSubsystem);
 
   }
@@ -56,12 +63,31 @@ public class SwerveLimelightLockCmd extends Command {
     @Override
     public void initialize(){
 
+      if(currentAlliance.isPresent()){
+
+        if(currentAlliance.get() == Alliance.Blue){ //change apriltags pipelines to lock on to based off of the alliance.
+
+          LimelightHelpers.setPipelineIndex("lockOnLimelight", DriveConstants.autoTargetConstants.limelightBlueAlliancePipeline);
+
+        } else if(currentAlliance.get() == Alliance.Red){
+
+          LimelightHelpers.setPipelineIndex("lockOnLimelight", DriveConstants.autoTargetConstants.limelightRedAlliancePipeline);
+     
+        }
+
+      } else {
+        LimelightHelpers.setPipelineIndex("lockOnLimelight", 0);
+
+
+      }
+
     }
 
     @Override
     public void execute(){
 
-      double lockonAngularVelocity = LimelightHelpers.getTX("limelight") * DriveConstants.autoTargetConstants.autoLockKp;
+
+      double lockonAngularVelocity = LimelightHelpers.getTX("lockOnLimelight") * DriveConstants.autoTargetConstants.autoLockKp;
 
       lockonAngularVelocity *= DriveConstants.kTeleDriveMaxAngularSpeedRadiansPerSecond;
 
