@@ -7,6 +7,7 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.LimelightConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.config.LimelightHelpers;
 import frc.robot.subsystems.SwerveSub;
@@ -61,7 +62,7 @@ public class SwerveLimelightLockCmd extends Command {
     @Override
     public void execute(){
 
-      double lockonAngularVelocity = LimelightHelpers.getTX("limelight") * DriveConstants.autoTargetConstants.autoLockKp;
+      double lockonAngularVelocity = LimelightHelpers.getTX(LimelightConstants.Limelight2) * DriveConstants.autoTargetConstants.autoLockKp;
 
       lockonAngularVelocity *= DriveConstants.kTeleDriveMaxAngularSpeedRadiansPerSecond;
 
