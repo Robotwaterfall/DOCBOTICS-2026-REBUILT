@@ -2,21 +2,22 @@
 package frc.robot.subsystems;
 
 
+import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
-import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 
 import edu.wpi.first.wpilibj.DriverStation;
-
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.LimelightConstants;
 import frc.robot.config.LimelightHelpers;
 
 import com.studica.frc.AHRS;
@@ -88,13 +89,18 @@ public class SwerveSub extends SubsystemBase {
     private double limeLightTX = 0;
 
 
-    private final SwerveDriveOdometry odometer = new SwerveDriveOdometry(DriveConstants.kDriveKinematics, 
-    new Rotation2d(0), getModulePositionsAuto() );
+    private final SwerveDrivePoseEstimator poseEstimator = new SwerveDrivePoseEstimator(
+        DriveConstants.kDriveKinematics, 
+        getRotation2d(), 
+        getModulePositionsAuto(),
+        new Pose2d() );
 
 
     private RobotConfig config;
     
     private final AHRS gyro = new AHRS(AHRS.NavXComType.kUSB1);
+
+    private final Field2d m_Field = new Field2d();
     
     //new AHRS(SerialPort.Port.kUSB1);
 
@@ -149,13 +155,27 @@ public class SwerveSub extends SubsystemBase {
             this // Reference to this subsystem to set requirements
     );
 
+    SmartDashboard.putData("Field", m_Field);
+
     
     }
     @Override
     public void periodic(){
 
-        odometer.update(getRotation2d(),  getModulePositionsAuto()
+        poseEstimator.update(getRotation2d(),  getModulePositionsAuto()
         );
+
+        boolean doRejectUpdate = LimelightHelpers.getTV("limelight3"); // TODO: Change limelight
+        if(doRejectUpdate){
+            LimelightHelpers.PoseEstimate mt1 = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight3");
+
+
+            if(mt1.tagCount > 0){
+                poseEstimator.addVisionMeasurement(mt1.pose, mt1.timestampSeconds);
+            }
+        }
+
+        Logger.recordOutput("RobotPose", poseEstimator.getEstimatedPosition());
 
         SmartDashboard.putNumber("robot Heading", getHeading());
         SmartDashboard.putString("robot location", getPose().getTranslation().toString());
@@ -189,10 +209,10 @@ public class SwerveSub extends SubsystemBase {
         backRight.sendToDashboard();
     }
     public Pose2d getPose(){
-        return odometer.getPoseMeters();
+        return poseEstimator.getEstimatedPosition();
     } 
     public void resetPose(Pose2d pose){
-        odometer.resetPosition(gyro.getRotation2d(), getModulePositionsAuto() , pose);
+        poseEstimator.resetPosition(getRotation2d(), getModulePositionsAuto() , pose);
     }
      public ChassisSpeeds getSpeeds() {
          return DriveConstants.kDriveKinematics.toChassisSpeeds(getModuleStates()); 
@@ -281,8 +301,8 @@ public SwerveModulePosition[] getModulePositionsAuto() { // not updating
 
 
     public double orientToTarget(){
-        if(LimelightHelpers.getTV("limelight")){
-        limeLightTX = LimelightHelpers.getTX("limelight"); 
+        if(LimelightHelpers.getTV(LimelightConstants.Limelight2)){
+        limeLightTX = LimelightHelpers.getTX(LimelightConstants.Limelight2); 
         }
         double targetingAngularVelocity = 
         limeLightTX * 
