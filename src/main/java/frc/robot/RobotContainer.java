@@ -10,6 +10,8 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.ResetHeadingCmd;
 import frc.robot.commands.SwerveJoystickCmd;
+import frc.robot.commands.hoodServoAdjustCmd;
+import frc.robot.subsystems.HoodSub;
 import frc.robot.subsystems.SwerveSub;
 
 /**
@@ -21,6 +23,7 @@ import frc.robot.subsystems.SwerveSub;
 public class RobotContainer {
 
   public final SwerveSub swerveSub = new SwerveSub();
+  public final HoodSub hoodSub = new HoodSub();
 
   private final Joystick driverJoyStick = new Joystick(OIConstants.kDriverControllerPort);
 
@@ -41,6 +44,11 @@ public class RobotContainer {
             () -> !
             driverJoyStick.getRawButton(OIConstants.kDriverFieldOrientedButtonIdx), 
             () -> driverJoyStick.getRawButton(OIConstants.kLockWheelsButton))); 
+
+    hoodSub.setDefaultCommand(
+      new hoodServoAdjustCmd(hoodSub) //Hood should constantly be adjusting
+    );
+    
   }
 
 

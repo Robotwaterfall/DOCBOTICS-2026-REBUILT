@@ -4,25 +4,22 @@ import java.util.function.Supplier;
 
 import com.revrobotics.spark.SparkMax;
 
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.IntakePitcherSub;
 import frc.robot.subsystems.IntakeSub;
 
 
-public class powerFueldIntakeCMD extends Command {
-    private final IntakeSub intakeSub;
+public class powerFuelIntakeCMD extends Command {
+
     private final SparkMax intakeConsumerMotor;
     public final Supplier<Double> intakeConsumerSpeedSupplier;
     public final Supplier<Double> outakeConsumerSpeedSupplier;
 
 
-    public powerFueldIntakeCMD(
+    public powerFuelIntakeCMD(
         IntakeSub intakeConsumerSub, 
     Supplier<Double> intakeConsumerSpeedSupplier,
     Supplier<Double> outakeConsumerSpeedSupplier) {
-        this.intakeSub = intakeConsumerSub;
         this.intakeConsumerMotor = intakeConsumerSub.getIntakeConsumerMotor();
         this.intakeConsumerSpeedSupplier = intakeConsumerSpeedSupplier;
         this.outakeConsumerSpeedSupplier = outakeConsumerSpeedSupplier;
