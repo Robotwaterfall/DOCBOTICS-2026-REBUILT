@@ -103,9 +103,12 @@ public final class Constants {
 
   public static final class LimelightConstants {
 
-    public static final String Limelight1 = "limelight2+";
-    public static final String Limelight2 = "limelight3";
-    public static final String Limelight3 = "limelight3a";
+    public static final String Limelight2 = "limelight2+";
+    public static final String Limelight3 = "limelight3";
+
+    public static final double limelightMountAngleDegrees = 60.0; //TODO
+    public static final double limelightLensHeightInches = 20.0; //TODO
+    public static final double goalHeightInches = 49.5;
 
   }
 
@@ -128,5 +131,40 @@ public final class Constants {
 
       public static final double kDeadband = 0.5;
 
+  }
+  public static final class IntakeConstants{
+    public static final int kIntakeMotorPort = 2; //TODO:: SET LATER
+
+  }
+    public static final class IntakePitcherConstants{
+    public static final int kIntakePitcherMotorPort = 2; //TODO:: SET LATER
+        public static final double intakePitcherRotationsToDegrees = 0;//TODO:: SET LATER
+    public static double intakePitcher_kP = 0;
+    public static double intakePitcher_kI = 0;
+    public static double intakePitcher_kD = 0;
+  }
+
+  public static final class  ShooterConstants {
+    public static final int kShooterLeadMotorPort = 2; //TODO:: SET LATER
+    public static final int kShooterFollower_1_port = 2; //TODO:: SET LATER
+    public static final int kShooterFollower_2_port = 2; //TODO:: SET LATER
+  
+    
+  }
+    public static final class  ConveyorConstant {
+    public static final int kConveyorMotorPort = 2; //TODO:: SET LATER
+ 
+
+  }
+
+  public static final class hoodConstants{
+    public static final int kHoodId = 0; //TODO: change can id for hood
+
+    public static final double kMinAngleDeg = 0.0; //TODO:tune
+    public static final double kMaxAngleDeg = 180.0;
+    public static final int kMinPulseUs = 500;  //TODO:tune
+    public static final int kCenterPulseUs = 1500;
+    public static final int kMaxPulseUs = 2500;  
+    
   }
 }
