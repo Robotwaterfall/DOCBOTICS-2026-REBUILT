@@ -23,14 +23,14 @@ public class TeleOpIntakePowerCMD extends Command {
         addRequirements(intakeSub);
     }
 
-    // Called when the command is initially scheduled.
+  // Called when the command is initially scheduled. Preps motors.
   @Override
   public void initialize() {
     intakeSub.setMotorPower(0);
     intakeMotor.stopMotor();
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
+  // Called every time the scheduler runs while the command is scheduled. Calculates the power based on given trigger values
   @Override
   public void execute() {
     intakeSub.setMotorPower((intakePowerSpeedSupplier.get() - outakePowerSpeedSupplier.get()) * 0.3);
