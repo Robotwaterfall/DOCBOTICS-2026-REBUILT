@@ -16,7 +16,8 @@ public class HoodSub extends SubsystemBase{
 
     private final ServoHub servoHub;
 
-    private final ServoChannel hoodServo;
+    private final ServoChannel hoodServoPrimaryChannel;
+    private final ServoChannel hoodServoSecondaryChannel;
 
 
     public HoodSub(){
@@ -24,20 +25,35 @@ public class HoodSub extends SubsystemBase{
         servoHub = new ServoHub(hoodConstants.kHoodId);
 
         ServoHubConfig config = new ServoHubConfig();
-         config.channel0.pulseRange(Constants.hoodConstants.kMinPulseUs, Constants.hoodConstants.kCenterPulseUs, 
-         Constants.hoodConstants.kMaxPulseUs);
 
-         servoHub.configure(config, ResetMode.kResetSafeParameters);
+        config.channel0.pulseRange(Constants.hoodConstants.kMinPulseUs, Constants.hoodConstants.kCenterPulseUs, 
+        Constants.hoodConstants.kMaxPulseUs);
 
-        hoodServo = servoHub.getServoChannel(ChannelId.kChannelId0);
+        config.channel1.pulseRange(Constants.hoodConstants.kMinPulseUs, Constants.hoodConstants.kCenterPulseUs, 
+        Constants.hoodConstants.kMaxPulseUs);
+         
 
-        hoodServo.setEnabled(true);
-        hoodServo.setPowered(true);
+        servoHub.configure(config, ResetMode.kResetSafeParameters);
+
+        hoodServoPrimaryChannel = servoHub.getServoChannel(ChannelId.kChannelId0);
+
+        hoodServoPrimaryChannel.setEnabled(true);
+        hoodServoPrimaryChannel.setPowered(true);
+
+        hoodServoSecondaryChannel = servoHub.getServoChannel(ChannelId.kChannelId1);
+
+        hoodServoSecondaryChannel.setEnabled(true);
+        hoodServoSecondaryChannel.setPowered(true);
+
 
     }
 
-    public ServoChannel getHoodServo(){
-        return hoodServo;
+    public ServoChannel getHoodServoPrimaryChannel(){
+        return hoodServoPrimaryChannel;
+    }
+
+    public ServoChannel getHoodServoSecondaryChannel(){
+        return hoodServoSecondaryChannel;
     }
 
      /** Set hood to a target angle in degrees. */
@@ -51,6 +67,7 @@ public class HoodSub extends SubsystemBase{
         int pulseUs = (int) (Constants.hoodConstants.kMinPulseUs + t * (Constants.hoodConstants.kMaxPulseUs - 
         Constants.hoodConstants.kMinPulseUs));
 
-        hoodServo.setPulseWidth(pulseUs);
+        hoodServoPrimaryChannel.setPulseWidth(pulseUs);
+        hoodServoSecondaryChannel.setPulseWidth(pulseUs);
     }
 }

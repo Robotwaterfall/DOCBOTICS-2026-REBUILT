@@ -13,7 +13,7 @@ import frc.robot.subsystems.HoodSub;
 public class hoodServoAdjustCmd extends Command{
 
     private final HoodSub hoodSub;
-    ServoChannel hoodServo;
+    ServoChannel hoodServoPrimary, hoodServoSecondary;
 
     private double distanceFromLimelightToGoalInches;
     public static double desiredHoodAngle;
@@ -21,7 +21,10 @@ public class hoodServoAdjustCmd extends Command{
 
     public hoodServoAdjustCmd(HoodSub hoodSub){
         this.hoodSub = hoodSub;
-        this.hoodServo = hoodSub.getHoodServo(); 
+
+        this.hoodServoPrimary = hoodSub.getHoodServoPrimaryChannel(); 
+        this.hoodServoSecondary = hoodSub.getHoodServoSecondaryChannel();
+
         addRequirements(hoodSub);
 
     }
@@ -65,6 +68,9 @@ public class hoodServoAdjustCmd extends Command{
 
             //Set the angle of the hood
             hoodSub.setHoodAngle(desiredHoodAngle);
+
+            SmartDashboard.putNumber("currentHoodPulseWidthPrimary", hoodServoPrimary.getPulseWidth());
+            SmartDashboard.putNumber("currentHoodPulseWidthSecondary", hoodServoSecondary.getPulseWidth());
 
     }
 
