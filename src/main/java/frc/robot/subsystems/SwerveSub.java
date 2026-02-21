@@ -20,10 +20,9 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.LimelightConstants;
 import frc.robot.config.LimelightHelpers;
 
-import com.studica.frc.AHRS;
-
 import org.littletonrobotics.junction.Logger;
 
+import com.ctre.phoenix6.hardware.Pigeon2;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 
@@ -98,7 +97,9 @@ public class SwerveSub extends SubsystemBase {
 
     private RobotConfig config;
     
-    private final AHRS gyro = new AHRS(AHRS.NavXComType.kUSB1);
+    // CAN ID 1 on the rio CAN bus – change to your real ID / bus name
+    private final Pigeon2 gyro = new Pigeon2(1, "rio");
+
 
     private final Field2d m_Field = new Field2d();
     
@@ -267,11 +268,12 @@ public SwerveModulePosition[] getModulePositionsAuto() { // not updating
     }
 
     public double getHeading(){
-        return Math.IEEEremainder(-gyro.getAngle(), 360); //puts the value between 0 and 360 because gryo is naturally continous
+        double angleDeg = gyro.getRotation2d().getDegrees();
+        return Math.IEEEremainder(-angleDeg, 360); //puts the value between 0 and 360 because gryo is naturally continous
     }
 
     public Rotation2d getRotation2d(){
-        return Rotation2d.fromDegrees(getHeading());
+        return gyro.getRotation2d();
     } // converts into Rotation2d
 
     public void resetSwerveModules(){
