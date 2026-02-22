@@ -108,7 +108,6 @@ public final class Constants {
 
     public static final String Limelight1 = "limelight2+";
     public static final String Limelight2 = "limelight3";
-    public static final String Limelight3 = "limelight3a";
 
   }
 
