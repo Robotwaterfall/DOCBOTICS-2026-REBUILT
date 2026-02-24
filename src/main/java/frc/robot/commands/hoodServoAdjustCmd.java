@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.HoodSub;
 
-public class hoodServoAdjustCmd extends Command{
+public class HoodServoAdjustCmd extends Command{
 
     private final HoodSub hoodSub;
     ServoChannel hoodServoPrimary, hoodServoSecondary;
@@ -19,7 +19,7 @@ public class hoodServoAdjustCmd extends Command{
     public static double desiredHoodAngle;
 
 
-    public hoodServoAdjustCmd(HoodSub hoodSub){
+    public HoodServoAdjustCmd(HoodSub hoodSub){
         this.hoodSub = hoodSub;
 
         this.hoodServoPrimary = hoodSub.getHoodServoPrimaryChannel(); 

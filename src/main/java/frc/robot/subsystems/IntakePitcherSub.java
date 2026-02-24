@@ -1,5 +1,7 @@
 
 package frc.robot.subsystems;
+import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.swerve.utility.PhoenixPIDController;
 import com.revrobotics.spark.SparkMax;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -12,12 +14,10 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 
 public class IntakePitcherSub extends SubsystemBase {
     /**Motor that rotates the intake. */
-    private SparkMax intakePitcherMotor = new SparkMax(IntakePitcherConstants.kIntakePitcherMotorPort, MotorType.kBrushless);
+    private TalonFX intakePitcherMotor = new TalonFX(IntakePitcherConstants.kIntakePitcherMotorPort);
 
-    /**Motor controller configuratiion of the intake pitcher motor. */
-    private SparkMaxConfig intakePitcherMotorConfig = new SparkMaxConfig();
     /**PID controller to rotate the intake to an angular setpoint */
-    private PIDController intakePitchController = new PIDController(
+    private PhoenixPIDController intakePitchController = new PhoenixPIDController(
             IntakePitcherConstants.intakePitcher_kP,
             IntakePitcherConstants.intakePitcher_kI,
             IntakePitcherConstants.intakePitcher_kD);
@@ -25,32 +25,30 @@ public class IntakePitcherSub extends SubsystemBase {
     /**angular set point of the pitcher in degrees. */
     private double pitcherSetpoint_degrees = 0;
 
-    public IntakePitcherSub(){
+    public IntakePitcherSub() {
         intakePitchController.enableContinuousInput(0, 360);
-
-        intakePitcherMotorConfig.absoluteEncoder.positionConversionFactor(IntakePitcherConstants.intakePitcherRotationsToDegrees);
-        intakePitcherMotor.configure(intakePitcherMotorConfig,ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
-
     }
 
 
     /**
      * @return the motor that pitches the intake.
      */
-    public SparkMax getIntakePitcherMotor() {
+    public TalonFX getIntakePitcherMotor() {
         return intakePitcherMotor;
     }
 
     /** @return the PID controller of the intake pitcher */
-    public PIDController getIntakePitchController() {
+    public PhoenixPIDController getIntakePitchController() {
         return intakePitchController;
     }
+    
     /**Sets the angular setpoint of the intake in degrees. */
-    public void setIntakePitchSetpoint_degrees(double setpoint_degrees){
+    public void setIntakePitchSetpoint_degrees(double setpoint_degrees) {
         pitcherSetpoint_degrees = setpoint_degrees;
     }
+
     /**@return the angular setpoint of the intake in degrees. */
-    public double getIntakePitchSetpoint_degrees( ){
+    public double getIntakePitchSetpoint_degrees() {
         return pitcherSetpoint_degrees;
     }
 

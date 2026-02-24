@@ -14,7 +14,7 @@ import frc.robot.commands.ResetHeadingCmd;
 import frc.robot.commands.SwerveJoystickCmd;
 import frc.robot.commands.TeleOpIntakePowerCMD;
 import frc.robot.subsystems.IntakeSub;
-import frc.robot.commands.hoodServoAdjustCmd;
+import frc.robot.commands.HoodServoAdjustCmd;
 import frc.robot.subsystems.HoodSub;
 import frc.robot.subsystems.SwerveSub;
 
@@ -56,7 +56,7 @@ public class RobotContainer {
       () -> driverJoyStick.getRawAxis(4))); // Right trigger
 
     hoodSub.setDefaultCommand(
-      new hoodServoAdjustCmd(hoodSub) //Hood should constantly be adjusting
+      new HoodServoAdjustCmd(hoodSub) //Hood should constantly be adjusting
     );
     
   }
