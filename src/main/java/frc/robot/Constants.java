@@ -134,6 +134,7 @@ public final class Constants {
   }
   public static final class IntakeConstants{
     public static final int kIntakeMotorPort = 2; //TODO:: SET LATER
+    public static final double kIntakeMotorPower = 1.0;
 
   }
     public static final class IntakePitcherConstants{
