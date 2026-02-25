@@ -1,24 +1,25 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.IntakeSub;
 
 public class AutoIntakePowerCmd extends Command {
 
-    IntakeSub intakeSub;
-    Timer elappsedTime;
-    double totalTime;
+  IntakeSub intakeSub;
+  Timer elappsedTime;
+  double totalTime;
 
-    public AutoIntakePowerCmd(IntakeSub intakeSub, double totalTime) {
-        this.intakeSub = intakeSub;
-        this.elappsedTime = new Timer();
-        this.totalTime = totalTime;
-        addRequirements(intakeSub);
-    }
+  public AutoIntakePowerCmd(IntakeSub intakeSub, double totalTime) {
+    this.intakeSub = intakeSub;
+    this.elappsedTime = new Timer();
+    this.totalTime = totalTime;
+    addRequirements(intakeSub);
+  }
 
-    // Called when the command is initially scheduled.
+  // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     intakeSub.setMotorPower(0);
@@ -30,6 +31,7 @@ public class AutoIntakePowerCmd extends Command {
   @Override
   public void execute() {
     intakeSub.setMotorPower(Constants.IntakeConstants.kIntakeMotorPower);
+    SmartDashboard.putData(intakeSub);
   }
 
   // Returns true when the command should end.
@@ -38,7 +40,7 @@ public class AutoIntakePowerCmd extends Command {
     return elappsedTime.get() >= totalTime;
   }
 
-    // Called once the command ends or is interrupted.
+  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     intakeSub.setMotorPower(0);

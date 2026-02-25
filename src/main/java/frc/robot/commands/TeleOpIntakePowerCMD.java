@@ -2,6 +2,7 @@ package frc.robot.commands;
 
 import java.util.function.Supplier;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.IntakeSub;
 
@@ -30,6 +31,7 @@ public class TeleOpIntakePowerCmd extends Command {
   @Override
   public void execute() {
     intakeSub.setMotorPower((intakePowerSpeedSupplier.get() - outakePowerSpeedSupplier.get()) * 0.3);
+    SmartDashboard.putData(intakeSub);
   }
 
 }

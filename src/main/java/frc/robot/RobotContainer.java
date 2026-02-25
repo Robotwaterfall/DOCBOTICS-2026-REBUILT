@@ -15,7 +15,9 @@ import frc.robot.commands.SwerveJoystickCmd;
 import frc.robot.commands.TeleOpIntakePowerCmd;
 import frc.robot.subsystems.IntakeSub;
 import frc.robot.commands.HoodServoAdjustCmd;
+import frc.robot.commands.IdleIntakePitcherCmd;
 import frc.robot.subsystems.HoodSub;
+import frc.robot.subsystems.IntakePitcherSub;
 import frc.robot.subsystems.SwerveSub;
 
 /**
@@ -29,6 +31,7 @@ public class RobotContainer {
   public final SwerveSub swerveSub = new SwerveSub();
   public final IntakeSub intakeSub = new IntakeSub();
   public final HoodSub hoodSub = new HoodSub();
+  public final IntakePitcherSub intakePitcherSub = new IntakePitcherSub();
 
   private final Joystick driverJoyStick = new Joystick(OIConstants.kDriverControllerPort);
 
@@ -57,7 +60,9 @@ public class RobotContainer {
 
     hoodSub.setDefaultCommand(
       new HoodServoAdjustCmd(hoodSub) //Hood should constantly be adjusting
-    );
+      );
+
+    intakePitcherSub.setDefaultCommand(new IdleIntakePitcherCmd(intakePitcherSub));
     
   }
 

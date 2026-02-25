@@ -38,39 +38,39 @@ public class HoodServoAdjustCmd extends Command{
     @Override
     public void execute(){
 
-            // limelight distance calculations 
-            NetworkTable table = NetworkTableInstance.getDefault().getTable(Constants.LimelightConstants.Limelight2);
-            NetworkTableEntry ty = table.getEntry("ty");
-            double targetOffsetAngle_Vertical = ty.getDouble(0.0);
+        // limelight distance calculations 
+        NetworkTable table = NetworkTableInstance.getDefault().getTable(Constants.LimelightConstants.Limelight2);
+        NetworkTableEntry ty = table.getEntry("ty");
+        double targetOffsetAngle_Vertical = ty.getDouble(0.0);
 
-            // how many degrees back is your limelight rotated from perfectly vertical?
-            double limelightMountAngleDegrees = Constants.LimelightConstants.limelightMountAngleDegrees; 
+        // how many degrees back is your limelight rotated from perfectly vertical?
+        double limelightMountAngleDegrees = Constants.LimelightConstants.limelightMountAngleDegrees; 
 
-            // distance from the center of the Limelight lens to the floor
-            double limelightLensHeightInches = Constants.LimelightConstants.limelightLensHeightInches; 
+        // distance from the center of the Limelight lens to the floor
+        double limelightLensHeightInches = Constants.LimelightConstants.limelightLensHeightInches; 
 
-            // distance from the target to the floor
-            double goalHeightInches = Constants.LimelightConstants.goalHeightInches; 
+        // distance from the target to the floor
+        double goalHeightInches = Constants.LimelightConstants.goalHeightInches; 
 
-            double angleToGoalDegrees = limelightMountAngleDegrees + targetOffsetAngle_Vertical;
-            double angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180.0);
-
-
-            //calculate distance
-            distanceFromLimelightToGoalInches = (goalHeightInches - limelightLensHeightInches) / Math.tan(angleToGoalRadians);
-            SmartDashboard.putNumber("distanceAwayFromGoal", distanceFromLimelightToGoalInches);
+        double angleToGoalDegrees = limelightMountAngleDegrees + targetOffsetAngle_Vertical;
+        double angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180.0);
 
 
+        //calculate distance
+        distanceFromLimelightToGoalInches = (goalHeightInches - limelightLensHeightInches) / Math.tan(angleToGoalRadians);
+        SmartDashboard.putNumber("distanceAwayFromGoal", distanceFromLimelightToGoalInches);
 
-            //Find Angle hood needs to be at
-            desiredHoodAngle = Math.atan(Constants.LimelightConstants.goalHeightInches/distanceFromLimelightToGoalInches);
-            SmartDashboard.putNumber("desiredHoodAngle", desiredHoodAngle);
 
-            //Set the angle of the hood
-            hoodSub.setHoodAngle(desiredHoodAngle);
 
-            SmartDashboard.putNumber("currentHoodPulseWidthPrimary", hoodServoPrimary.getPulseWidth());
-            SmartDashboard.putNumber("currentHoodPulseWidthSecondary", hoodServoSecondary.getPulseWidth());
+        //Find Angle hood needs to be at
+        desiredHoodAngle = Math.atan(Constants.LimelightConstants.goalHeightInches/distanceFromLimelightToGoalInches);
+        SmartDashboard.putNumber("desiredHoodAngle", desiredHoodAngle);
+
+        //Set the angle of the hood
+        hoodSub.setHoodAngle(desiredHoodAngle);
+
+        SmartDashboard.putNumber("currentHoodPulseWidthPrimary", hoodServoPrimary.getPulseWidth());
+        SmartDashboard.putNumber("currentHoodPulseWidthSecondary", hoodServoSecondary.getPulseWidth());
 
     }
 
