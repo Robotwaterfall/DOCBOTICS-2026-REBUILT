@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.ResetHeadingCmd;
 import frc.robot.commands.SwerveJoystickCmd;
-import frc.robot.commands.TeleOpIntakePowerCMD;
+import frc.robot.commands.TeleOpIntakePowerCmd;
 import frc.robot.subsystems.IntakeSub;
 import frc.robot.commands.HoodServoAdjustCmd;
 import frc.robot.subsystems.HoodSub;
@@ -51,7 +51,7 @@ public class RobotContainer {
             () -> driverJoyStick.getRawButton(OIConstants.kLockWheelsButton))); 
 
     // Configure trigger bindings (idk what this means but this is for the intake)
-    intakeSub.setDefaultCommand(new TeleOpIntakePowerCMD(intakeSub, 
+    intakeSub.setDefaultCommand(new TeleOpIntakePowerCmd(intakeSub, 
       () -> driverJoyStick.getRawAxis(3), // This is the left trigger  
       () -> driverJoyStick.getRawAxis(4))); // Right trigger
 
