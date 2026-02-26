@@ -5,19 +5,19 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.ResetHeadingCmd;
 import frc.robot.commands.SwerveJoystickCmd;
-import frc.robot.commands.TeleOpIntakePowerCMD;
+import frc.robot.commands.TeleOpIntakePowerCmd;
 import frc.robot.commands.adaptableShooterCmd;
 import frc.robot.subsystems.IntakeSub;
 import frc.robot.subsystems.ShooterSub;
-import frc.robot.commands.hoodServoAdjustCmd;
+import frc.robot.commands.HoodServoAdjustCmd;
+import frc.robot.commands.IdleIntakePitcherCmd;
 import frc.robot.subsystems.HoodSub;
+import frc.robot.subsystems.IntakePitcherSub;
 import frc.robot.subsystems.SwerveSub;
 
 /**
@@ -32,6 +32,7 @@ public class RobotContainer {
   public final IntakeSub intakeSub = new IntakeSub();
   public final HoodSub hoodSub = new HoodSub();
   public final ShooterSub shooterSub = new ShooterSub();
+  public final IntakePitcherSub intakePitcherSub = new IntakePitcherSub();
 
   private final Joystick driverJoyStick = new Joystick(OIConstants.kDriverControllerPort);
 
@@ -54,17 +55,19 @@ public class RobotContainer {
             () -> driverJoyStick.getRawButton(OIConstants.kLockWheelsButton))); 
 
     // Configure trigger bindings (idk what this means but this is for the intake)
-    intakeSub.setDefaultCommand(new TeleOpIntakePowerCMD(intakeSub, 
+    intakeSub.setDefaultCommand(new TeleOpIntakePowerCmd(intakeSub, 
       () -> driverJoyStick.getRawAxis(3), // This is the left trigger  
       () -> driverJoyStick.getRawAxis(4))); // Right trigger
 
     hoodSub.setDefaultCommand(
-      new hoodServoAdjustCmd(hoodSub) //Hood should constantly be adjusting
+      new HoodServoAdjustCmd(hoodSub) //Hood should constantly be adjusting
     );
 
     shooterSub.setDefaultCommand(
       new adaptableShooterCmd(shooterSub, hoodSub)
     );
+
+    intakePitcherSub.setDefaultCommand(new IdleIntakePitcherCmd(intakePitcherSub));
     
   }
 

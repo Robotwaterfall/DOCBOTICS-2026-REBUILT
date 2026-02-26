@@ -1,45 +1,50 @@
 package frc.robot.commands;
 
-import com.revrobotics.spark.SparkMax;
-
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.IntakeSub;
 
-public class AutoIntakePowerCMD extends Command {
+public class AutoIntakePowerCmd extends Command {
 
-    IntakeSub intakeSub;
-    SparkMax intakeMotor;
+  IntakeSub intakeSub;
+  Timer elappsedTime;
+  double totalTime;
 
-    public AutoIntakePowerCMD(IntakeSub intakeSub) {
-        this.intakeSub = intakeSub;
-        this.intakeMotor = intakeSub.getIntakeMotor();
-    }
+  public AutoIntakePowerCmd(IntakeSub intakeSub, double totalTime) {
+    this.intakeSub = intakeSub;
+    this.elappsedTime = new Timer();
+    this.totalTime = totalTime;
+    addRequirements(intakeSub);
+  }
 
-    // Called when the command is initially scheduled.
+  // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     intakeSub.setMotorPower(0);
-    intakeMotor.stopMotor();
+    intakeSub.stopMotor();
+    elappsedTime.start();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    
-
-  }
-
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
-    
+    intakeSub.setMotorPower(Constants.IntakeConstants.kIntakeMotorPower);
+    SmartDashboard.putData(intakeSub);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return elappsedTime.get() >= totalTime;
   }
 
+  // Called once the command ends or is interrupted.
+  @Override
+  public void end(boolean interrupted) {
+    intakeSub.setMotorPower(0);
+    intakeSub.stopMotor();
+  }
 
 }

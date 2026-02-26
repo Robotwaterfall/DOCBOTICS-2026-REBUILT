@@ -2,22 +2,19 @@ package frc.robot.commands;
 
 import java.util.function.Supplier;
 
-import com.revrobotics.spark.SparkMax;
-
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.IntakeSub;
 
-public class TeleOpIntakePowerCMD extends Command {
+public class TeleOpIntakePowerCmd extends Command {
 
     IntakeSub intakeSub;
-    SparkMax intakeMotor;
     public final Supplier<Double> intakePowerSpeedSupplier;
     public final Supplier<Double> outakePowerSpeedSupplier;
 
     // Constructor
-    public TeleOpIntakePowerCMD(IntakeSub intakeSub, Supplier<Double> intakePowerSpeedSupplier, Supplier<Double> outakePowerSpeedSupplier) {
+    public TeleOpIntakePowerCmd(IntakeSub intakeSub, Supplier<Double> intakePowerSpeedSupplier, Supplier<Double> outakePowerSpeedSupplier) {
         this.intakeSub = intakeSub;
-        this.intakeMotor = intakeSub.getIntakeMotor();
         this.intakePowerSpeedSupplier = intakePowerSpeedSupplier;
         this.outakePowerSpeedSupplier = outakePowerSpeedSupplier;
         addRequirements(intakeSub);
@@ -27,13 +24,14 @@ public class TeleOpIntakePowerCMD extends Command {
   @Override
   public void initialize() {
     intakeSub.setMotorPower(0);
-    intakeMotor.stopMotor();
+    intakeSub.stopMotor();
   }
 
   // Called every time the scheduler runs while the command is scheduled. Calculates the power based on given trigger values
   @Override
   public void execute() {
     intakeSub.setMotorPower((intakePowerSpeedSupplier.get() - outakePowerSpeedSupplier.get()) * 0.3);
+    SmartDashboard.putData(intakeSub);
   }
 
 }

@@ -10,7 +10,7 @@ import com.revrobotics.servohub.config.ServoHubConfig;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.Constants.hoodConstants;
+import frc.robot.Constants.HoodConstants;
 
 public class HoodSub extends SubsystemBase{
 
@@ -25,15 +25,15 @@ public class HoodSub extends SubsystemBase{
 
     public HoodSub(){
 
-        servoHub = new ServoHub(hoodConstants.kHoodId);
+        servoHub = new ServoHub(HoodConstants.kHoodId);
 
         ServoHubConfig config = new ServoHubConfig();
 
-        config.channel0.pulseRange(Constants.hoodConstants.kMinPulseUs, Constants.hoodConstants.kCenterPulseUs, 
-        Constants.hoodConstants.kMaxPulseUs);
+        config.channel0.pulseRange(Constants.HoodConstants.kMinPulseUs, Constants.HoodConstants.kCenterPulseUs, 
+        Constants.HoodConstants.kMaxPulseUs);
 
-        config.channel1.pulseRange(Constants.hoodConstants.kMinPulseUs, Constants.hoodConstants.kCenterPulseUs, 
-        Constants.hoodConstants.kMaxPulseUs);
+        config.channel1.pulseRange(Constants.HoodConstants.kMinPulseUs, Constants.HoodConstants.kCenterPulseUs, 
+        Constants.HoodConstants.kMaxPulseUs);
          
 
         servoHub.configure(config, ResetMode.kResetSafeParameters);
@@ -78,13 +78,13 @@ public class HoodSub extends SubsystemBase{
      /** Set hood to a target angle in degrees. */
     public void setHoodAngle(double degrees) {
         // Clamp to allowed range
-        double clampedDeg = Math.max(Constants.hoodConstants.kMinAngleDeg, Math.min(Constants.hoodConstants.kMaxAngleDeg, degrees));
+        double clampedDeg = Math.max(Constants.HoodConstants.kMinAngleDeg, Math.min(Constants.HoodConstants.kMaxAngleDeg, degrees));
 
         // Map [minDeg, maxDeg] → [minPulse, maxPulse]
-        double t = (clampedDeg - Constants.hoodConstants.kMinAngleDeg) / (
-            Constants.hoodConstants.kMaxAngleDeg - Constants.hoodConstants.kMinAngleDeg);
-        int pulseUs = (int) (Constants.hoodConstants.kMinPulseUs + t * (Constants.hoodConstants.kMaxPulseUs - 
-        Constants.hoodConstants.kMinPulseUs));
+        double t = (clampedDeg - Constants.HoodConstants.kMinAngleDeg) / (
+            Constants.HoodConstants.kMaxAngleDeg - Constants.HoodConstants.kMinAngleDeg);
+        int pulseUs = (int) (Constants.HoodConstants.kMinPulseUs + t * (Constants.HoodConstants.kMaxPulseUs - 
+        Constants.HoodConstants.kMinPulseUs));
 
         hoodServoPrimaryChannel.setPulseWidth(pulseUs);
         hoodServoSecondaryChannel.setPulseWidth(pulseUs);
