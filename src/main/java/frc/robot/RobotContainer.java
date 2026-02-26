@@ -13,7 +13,9 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.commands.ResetHeadingCmd;
 import frc.robot.commands.SwerveJoystickCmd;
 import frc.robot.commands.TeleOpIntakePowerCMD;
+import frc.robot.commands.adaptableShooterCmd;
 import frc.robot.subsystems.IntakeSub;
+import frc.robot.subsystems.ShooterSub;
 import frc.robot.commands.hoodServoAdjustCmd;
 import frc.robot.subsystems.HoodSub;
 import frc.robot.subsystems.SwerveSub;
@@ -29,6 +31,7 @@ public class RobotContainer {
   public final SwerveSub swerveSub = new SwerveSub();
   public final IntakeSub intakeSub = new IntakeSub();
   public final HoodSub hoodSub = new HoodSub();
+  public final ShooterSub shooterSub = new ShooterSub();
 
   private final Joystick driverJoyStick = new Joystick(OIConstants.kDriverControllerPort);
 
@@ -58,6 +61,10 @@ public class RobotContainer {
     hoodSub.setDefaultCommand(
       new hoodServoAdjustCmd(hoodSub) //Hood should constantly be adjusting
     );
+
+    shooterSub.setDefaultCommand(
+      new adaptableShooterCmd(shooterSub, hoodSub)
+    );
     
   }
 
@@ -67,6 +74,8 @@ public class RobotContainer {
     new JoystickButton(driverJoyStick, OIConstants.kDriveGyroResetButtonIdx).whileTrue(
       new ResetHeadingCmd(swerveSub)
     );
+
+  
     
   }
 

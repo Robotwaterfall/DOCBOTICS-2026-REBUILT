@@ -98,7 +98,7 @@ public class SwerveSub extends SubsystemBase {
     private RobotConfig config;
     
     // CAN ID 1 on the rio CAN bus – change to your real ID / bus name
-    private final Pigeon2 gyro = new Pigeon2(1, "rio");
+    private final Pigeon2 gyro = new Pigeon2(Constants.DriveConstants.kImuIDport, "rio");
 
 
     private final Field2d m_Field = new Field2d();

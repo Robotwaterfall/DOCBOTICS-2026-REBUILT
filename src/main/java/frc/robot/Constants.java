@@ -93,6 +93,8 @@ public final class Constants {
       public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 2;
       public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 2;
 
+      public static final int kImuIDport = 0; //TODO
+
     public static class autoTargetConstants {
       public static final double autoOrientKp = 0.0035;
 
@@ -129,6 +131,7 @@ public final class Constants {
       public static final int kLockWheelsButton = 9;
 
 
+
       public static final double kDeadband = 0.5;
 
   }
@@ -148,6 +151,24 @@ public final class Constants {
     public static final int kShooterLeadMotorPort = 2; //TODO:: SET LATER
     public static final int kShooterFollower_1_port = 2; //TODO:: SET LATER
     public static final int kShooterFollower_2_port = 2; //TODO:: SET LATER
+
+    public static final int kIndexMotor_Port = 2; //TODO: set later
+
+    public static final double kWheelDiameterMeters = 0.1016; // 4" wheel
+    public static final double kGearRatio = 1.0;
+
+    public static final double kShooterKP = 0.1; //TODO
+    public static final double kShooterKi = 0.1; //TODO
+    public static final double kShooterKd = 0.1; //TODO
+
+    public static final double indexSpeed = 0.4; //TODO
+
+
+    //PHYSICS CONSTANTS
+    public static final double kGravity = 9.8;
+    public static final double heightOfGoalMeters = 1.82; //height of the hub where fuel can enter
+
+    public static final double shooterTolerance = 0; //TODO
   
     
   }
@@ -166,5 +187,10 @@ public final class Constants {
     public static final int kCenterPulseUs = 1500;
     public static final int kMaxPulseUs = 2500;  
     
+  }
+
+  public static final class unitConversions{
+
+    public static final double inchesToMeters = 0.0254; //multiply with inches to get meters
   }
 }

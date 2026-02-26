@@ -19,6 +19,9 @@ public class HoodSub extends SubsystemBase{
     private final ServoChannel hoodServoPrimaryChannel;
     private final ServoChannel hoodServoSecondaryChannel;
 
+    public static double desiredHoodAngle;
+    public static double distanceFromLimelightToGoalInches;
+
 
     public HoodSub(){
 
@@ -56,6 +59,22 @@ public class HoodSub extends SubsystemBase{
         return hoodServoSecondaryChannel;
     }
 
+    public double getDesiredHoodAngle(){
+        return desiredHoodAngle;
+    }
+
+    public void setDesiredHoodAngle(double desiredHoodAngleDegrees){
+         desiredHoodAngle = desiredHoodAngleDegrees;
+    }
+
+    public double getLimelightToGoalInches(){
+        return distanceFromLimelightToGoalInches;
+    }
+
+    public void setLimelightToGoalInches(double limelightToGoalInches){
+        distanceFromLimelightToGoalInches = limelightToGoalInches;
+    }
+
      /** Set hood to a target angle in degrees. */
     public void setHoodAngle(double degrees) {
         // Clamp to allowed range
@@ -69,5 +88,6 @@ public class HoodSub extends SubsystemBase{
 
         hoodServoPrimaryChannel.setPulseWidth(pulseUs);
         hoodServoSecondaryChannel.setPulseWidth(pulseUs);
+
     }
 }
