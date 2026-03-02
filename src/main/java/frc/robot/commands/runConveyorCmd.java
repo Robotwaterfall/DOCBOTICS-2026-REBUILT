@@ -1,5 +1,7 @@
 package frc.robot.commands;
 
+import java.util.function.Supplier;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.ConveyorConstant;
 import frc.robot.Constants.ShooterConstants;
@@ -13,10 +15,13 @@ public class runConveyorCmd extends Command{
 
     double desiredVelocity;
 
-    public runConveyorCmd(ConveyorSub conveyorSub, ShooterSub shooterSub){
+    private Supplier<Boolean> isReversed;
+
+    public runConveyorCmd(ConveyorSub conveyorSub, ShooterSub shooterSub, Supplier<Boolean> isReversed){
 
         this.conveyorSub = conveyorSub;
         this.shooterSub = shooterSub;
+        this.isReversed = isReversed;
 
         desiredVelocity = shooterSub.getDesiredVelocity();
         addRequirements(conveyorSub);
@@ -35,6 +40,8 @@ public class runConveyorCmd extends Command{
 
                     conveyorSub.setConveyorPower(ConveyorConstant.conveyorPower);
 
+                } else if(isReversed.get()){
+                    conveyorSub.setConveyorPower(-ConveyorConstant.conveyorPower);
                 } else{
                     conveyorSub.setConveyorPower(0);
                 }

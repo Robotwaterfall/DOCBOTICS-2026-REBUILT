@@ -30,6 +30,7 @@ import frc.robot.commands.AutoIntakePowerCmd;
 import frc.robot.commands.HoodServoAdjustCmd;
 import frc.robot.commands.IdleIntakePitcherCmd;
 import frc.robot.commands.MoveIntakePitcherCmd;
+import frc.robot.subsystems.ConveyorSub;
 import frc.robot.subsystems.HoodSub;
 import frc.robot.subsystems.IntakePitcherSub;
 import frc.robot.subsystems.SwerveSub;
@@ -75,6 +76,10 @@ public class RobotContainer {
     intakeSub.setDefaultCommand(new TeleOpIntakePowerCmd(intakeSub, 
       () -> driverJoyStick.getRightBumperButtonPressed(), 
       () -> driverJoyStick.getLeftBumperButtonPressed())); 
+    
+    conveyorSub.setDefaultCommand(new runConveyorCmd(
+      conveyorSub, shooterSub, 
+      () -> driverJoyStick.getLeftBumperButtonPressed()));
     
     
 
