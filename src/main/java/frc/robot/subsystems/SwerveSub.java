@@ -98,7 +98,7 @@ public class SwerveSub extends SubsystemBase {
     private RobotConfig config;
     
     // CAN ID 1 on the rio CAN bus – change to your real ID / bus name
-    private final Pigeon2 gyro = new Pigeon2(Constants.DriveConstants.kImuIDport, "rio");
+    private final Pigeon2 gyro = new Pigeon2(Constants.DriveConstants.kImuIdPort, "rio");
 
 
     private final Field2d m_Field = new Field2d();
@@ -166,7 +166,7 @@ public class SwerveSub extends SubsystemBase {
         poseEstimator.update(getRotation2d(),  getModulePositionsAuto()
         );
 
-        boolean doRejectUpdate = LimelightHelpers.getTV("limelight3"); // TODO: Change limelight
+        boolean doRejectUpdate = LimelightHelpers.getTV(LimelightConstants.Limelight3); 
         if(doRejectUpdate){
             LimelightHelpers.PoseEstimate mt1 = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight3");
 

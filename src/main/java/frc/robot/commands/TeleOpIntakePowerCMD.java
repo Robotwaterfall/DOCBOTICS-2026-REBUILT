@@ -4,19 +4,20 @@ import java.util.function.Supplier;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.IntakeConstants;
 import frc.robot.subsystems.IntakeSub;
 
 public class TeleOpIntakePowerCmd extends Command {
 
     IntakeSub intakeSub;
-    public final Supplier<Double> intakePowerSpeedSupplier;
-    public final Supplier<Double> outakePowerSpeedSupplier;
+    public final Supplier<Boolean> intakeSupplier;
+    public final Supplier<Boolean> outakeSupplier;
 
     // Constructor
-    public TeleOpIntakePowerCmd(IntakeSub intakeSub, Supplier<Double> intakePowerSpeedSupplier, Supplier<Double> outakePowerSpeedSupplier) {
+    public TeleOpIntakePowerCmd(IntakeSub intakeSub, Supplier<Boolean> intakeSupplier, Supplier<Boolean> outakeSupplier) {
         this.intakeSub = intakeSub;
-        this.intakePowerSpeedSupplier = intakePowerSpeedSupplier;
-        this.outakePowerSpeedSupplier = outakePowerSpeedSupplier;
+        this.intakeSupplier = intakeSupplier;
+        this.outakeSupplier = outakeSupplier;
         addRequirements(intakeSub);
     }
 
@@ -30,7 +31,13 @@ public class TeleOpIntakePowerCmd extends Command {
   // Called every time the scheduler runs while the command is scheduled. Calculates the power based on given trigger values
   @Override
   public void execute() {
-    intakeSub.setMotorPower((intakePowerSpeedSupplier.get() - outakePowerSpeedSupplier.get()) * 0.3);
+    if(intakeSupplier.get() == true){
+      intakeSub.setMotorPower(IntakeConstants.kIntakeMotorPower);
+    }else if(outakeSupplier.get() == true){
+      intakeSub.setMotorPower(IntakeConstants.kOutakeMotorPower);
+    } else{
+      intakeSub.setMotorPower(0);
+    }
     SmartDashboard.putData(intakeSub);
   }
 

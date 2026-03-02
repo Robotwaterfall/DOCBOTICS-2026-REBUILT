@@ -16,6 +16,12 @@ public class ConveyorSub extends SubsystemBase {
         return conveyorMotor;
     }
 
+    public void setConveyorPower(double power){
+
+        conveyorMotor.set(power);
+
+    }
+
 
 
 

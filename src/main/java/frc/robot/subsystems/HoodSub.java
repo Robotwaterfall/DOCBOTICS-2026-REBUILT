@@ -1,7 +1,5 @@
 package frc.robot.subsystems;
 
-import java.io.Console;
-
 import com.revrobotics.servohub.ServoChannel;
 import com.revrobotics.servohub.ServoHub;
 import com.revrobotics.servohub.ServoChannel.ChannelId;

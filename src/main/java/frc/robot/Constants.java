@@ -50,15 +50,15 @@ public final class Constants {
               new Translation2d(-kWheelBase / 2, -kTrackWidth / 2),
               new Translation2d(-kWheelBase / 2, kTrackWidth / 2));
 
-    public static final int kFrontLeftDriveMotorPort = 5;
-    public static final int kBackLeftDriveMotorPort = 8;
-    public static final int kFrontRightDriveMotorPort = 7;
-    public static final int kBackRightDriveMotorPort = 3;
+    public static final int kFrontLeftDriveMotorPort = 1; //TODO CHANGE ALL SWERVE IDS
+    public static final int kBackLeftDriveMotorPort = 2;
+    public static final int kFrontRightDriveMotorPort = 3;
+    public static final int kBackRightDriveMotorPort = 4;
 
-    public static final int kFrontLeftTurningMotorPort = 10;
-    public static final int kBackLeftTurningMotorPort = 2;
-    public static final int kFrontRightTurningMotorPort = 6;
-    public static final int kBackRightTurningMotorPort = 4;
+    public static final int kFrontLeftTurningMotorPort = 5;
+    public static final int kBackLeftTurningMotorPort = 6;
+    public static final int kFrontRightTurningMotorPort = 7;
+    public static final int kBackRightTurningMotorPort = 8;
 
     public static final boolean kFrontLeftTurningEncoderReversed = true;
     public static final boolean kBackLeftTurningEncoderReversed = true;
@@ -70,10 +70,10 @@ public final class Constants {
     public static final boolean kFrontRightDriveEncoderReversed = true;
     public static final boolean kBackRightDriveEncoderReversed = true;
 
-    public static final int kFrontLeftDriveAbsoluteEncoderPort = 20;
-    public static final int kBackLeftDriveAbsoluteEncoderPort = 21;
-    public static final int kFrontRightDriveAbsoluteEncoderPort = 19;
-    public static final int kBackRightDriveAbsoluteEncoderPort = 22;
+    public static final int kFrontLeftDriveAbsoluteEncoderPort = 9;
+    public static final int kBackLeftDriveAbsoluteEncoderPort = 10;
+    public static final int kFrontRightDriveAbsoluteEncoderPort = 11;
+    public static final int kBackRightDriveAbsoluteEncoderPort = 12;
 
     public static final boolean kFrontLeftDriveAbsoluteEncoderReversed = false;
     public static final boolean kBackLeftDriveAbsoluteEncoderReversed = false;
@@ -93,7 +93,7 @@ public final class Constants {
     public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 2;
     public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 2;
 
-      public static final int kImuIDport = 0; //TODO
+      public static final int kImuIdPort = 13; //TODO
 
     public static class autoTargetConstants {
       public static final double autoOrientKp = 0.0035;
@@ -136,29 +136,33 @@ public final class Constants {
 
   }
   public static final class IntakeConstants{
-    public static final int kIntakeMotorPort = 2; //TODO:: SET LATER
-    public static final double kIntakeMotorPower = 1.0;
+    public static final int kIntakeMotorPort = 14; //TODO:: SET LATER
+    public static final double kIntakeMotorPower = 1.0; //TODO
+    public static final double kOutakeMotorPower = -1.0; //TODO
 
   }
 
   public static final class IntakePitcherConstants {
-    public static final int kIntakePitcherMotorPort = 2; //TODO:: SET LATER
+    public static final int kIntakePitcherMotorPort = 15; //TODO:: SET LATER
     public static final double kDegreesPerMotorRotation = 360 / (9 * 48/20 * 48/20 * 24/12); // Degrees / gear ratio gives degrees to motor revolutions
+
     public static final double kMinPitchDegrees = 0;
-    public static final double kMaxPitchDegrees = 120;
+    public static final double kMaxPitchDegrees = 90; //TODO
+
     public static final double kPitcherIn = 0; // Setpoint positions
-    public static final double kPitcherOut = 120; //
+    public static final double kPitcherOut = 90; //TODO
+
     public static double intakePitcher_kP = 0;
     public static double intakePitcher_kI = 0;
     public static double intakePitcher_kD = 0;
   }
 
   public static final class ShooterConstants {
-    public static final int kShooterLeadMotorPort = 2; //TODO:: SET LATER
-    public static final int kShooterFollower_1_port = 2; //TODO:: SET LATER
-    public static final int kShooterFollower_2_port = 2; //TODO:: SET LATER
+    public static final int kShooterLeadMotorPort = 16; //TODO:: SET LATER
+    public static final int kShooterFollower_1_port = 17; //TODO:: SET LATER
+    public static final int kShooterFollower_2_port = 18; //TODO:: SET LATER
 
-    public static final int kIndexMotor_Port = 2; //TODO: set later
+    public static final int kIndexMotor_Port = 19; //TODO: set later
 
     public static final double kWheelDiameterMeters = 0.1016; // 4" wheel
     public static final double kGearRatio = 1.0;
@@ -179,13 +183,14 @@ public final class Constants {
     
   }
     public static final class ConveyorConstant {
-    public static final int kConveyorMotorPort = 2; //TODO:: SET LATER
+    public static final int kConveyorMotorPort = 20; //TODO:: SET LATER
+    public static final double conveyorPower = 0.6;
  
 
   }
 
   public static final class HoodConstants{
-    public static final int kHoodId = 0; //TODO: change can id for hood
+    public static final int kHoodId = 21; //TODO: change can id for hood
 
     public static final double kMinAngleDeg = 0.0; //TODO:tune
     public static final double kMaxAngleDeg = 180.0;
@@ -198,5 +203,11 @@ public final class Constants {
   public static final class unitConversions{
 
     public static final double inchesToMeters = 0.0254; //multiply with inches to get meters
+  }
+
+  public static final class autoConstants{
+
+    public static final double timeElapsedShootingSecounds = 8; //TODO
+    public static final double timeBetweenPitcherInAndOut = 1; //TODO
   }
 }

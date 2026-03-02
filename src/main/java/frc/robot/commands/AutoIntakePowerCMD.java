@@ -9,12 +9,12 @@ import frc.robot.subsystems.IntakeSub;
 public class AutoIntakePowerCmd extends Command {
 
   IntakeSub intakeSub;
-  Timer elappsedTime;
+  Timer elapsedTime;
   double totalTime;
 
   public AutoIntakePowerCmd(IntakeSub intakeSub, double totalTime) {
     this.intakeSub = intakeSub;
-    this.elappsedTime = new Timer();
+    this.elapsedTime = new Timer();
     this.totalTime = totalTime;
     addRequirements(intakeSub);
   }
@@ -24,7 +24,7 @@ public class AutoIntakePowerCmd extends Command {
   public void initialize() {
     intakeSub.setMotorPower(0);
     intakeSub.stopMotor();
-    elappsedTime.start();
+    elapsedTime.start();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -37,7 +37,7 @@ public class AutoIntakePowerCmd extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return elappsedTime.get() >= totalTime;
+    return elapsedTime.get() >= totalTime;
   }
 
   // Called once the command ends or is interrupted.

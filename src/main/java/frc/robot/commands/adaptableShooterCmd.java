@@ -2,7 +2,6 @@ package frc.robot.commands;
 
 import java.util.function.Supplier;
 
-import edu.wpi.first.units.AngleUnit;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
@@ -21,13 +20,21 @@ public class adaptableShooterCmd extends Command{
 
     private double desiredVelocity;
 
+    private Supplier<Double> shootSupplier;
+
+    private boolean isAuto;
+
   
     
 
-    public adaptableShooterCmd(ShooterSub shooterSub, HoodSub hoodSub) {
+    public adaptableShooterCmd(ShooterSub shooterSub, HoodSub hoodSub, Supplier<Double> shootSupplier
+    , boolean isAuto) {
 
        this.shooterSub = shooterSub;
        this.hoodSub = hoodSub;
+
+       this.shootSupplier = shootSupplier;
+       this.isAuto = isAuto;
 
        desiredHoodAngle = hoodSub.getDesiredHoodAngle();
        distanceAwayFromGoal = hoodSub.getLimelightToGoalInches();
@@ -82,10 +89,17 @@ public class adaptableShooterCmd extends Command{
         
     }
 
+    @Override
+    public void end(boolean interrupted){
+        shooterSub.setDesiredVelocity(0);
+        shooterSub.stopMotors();
+
+    }
+
 
     @Override
     public boolean isFinished() {
-        return false;
+        return shootSupplier.get() <= 0.3 && !isAuto; //if the robot is in auto we dont want the shooter to stop
     }
 
     
