@@ -40,7 +40,7 @@ public class ConveyorSub extends SubsystemBase {
 
         String str = " ";
 
-        str += "isConveyorOn: " + isConveyorOn();
+        str += "isConveyorOn: " + isConveyorOn(); //To check if conveyor is on
 
         
 

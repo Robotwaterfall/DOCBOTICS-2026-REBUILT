@@ -93,8 +93,8 @@ public class HoodSub extends SubsystemBase{
     public String toString(){
         String str = " ";
 
-        str += "DesiredHoodAngle" + getDesiredHoodAngle();
-        str += "distanceAwayFromGoalInches" + getLimelightToGoalInches();
+        str += "DesiredHoodAngle" + getDesiredHoodAngle(); //to show desired hood angle
+        str += "distanceAwayFromGoalInches" + getLimelightToGoalInches(); //how far we are away from goal
 
         return str;
 
