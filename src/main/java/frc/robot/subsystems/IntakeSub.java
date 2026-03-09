@@ -1,13 +1,15 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
+import frc.robot.Constants.IntakeConstants;;
 
 public class IntakeSub extends SubsystemBase {
 
-    private final TalonFX intakeMotor = new TalonFX(Constants.IntakeConstants.kIntakeMotorPort);
+    private final SparkMax intakeMotor = new SparkMax(IntakeConstants.kIntakeMotorPort, MotorType.kBrushless);
 
     /**
      * Description: Sets the intake motor's power
@@ -32,17 +34,18 @@ public class IntakeSub extends SubsystemBase {
     @Override
     public String toString() {
         String str = "";
+        double power = this.intakeMotor.getAppliedOutput();
 
         str += "Intake Roller Information";
-        str += "\nMotor Power: " + this.intakeMotor.getDutyCycle().getValueAsDouble();
-        if (this.intakeMotor.getDutyCycle().getValueAsDouble() != 0)
-            str += "\nCurrently: " + (this.intakeMotor.getDutyCycle().getValueAsDouble() > 0 ? "INTAKING" : "OUTAKING");
+        str += "\nMotor Power: " + power;
+        if (power != 0)
+            str += "\nCurrently: " + (power > 0 ? "INTAKING" : "OUTAKING");
 
         return str;
     }
 
     // Getter for debugging 
-    public TalonFX getIntakeMotor() {
+    public SparkMax getIntakeMotor() {
         return intakeMotor;
     }
 
