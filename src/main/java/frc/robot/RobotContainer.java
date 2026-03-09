@@ -6,7 +6,6 @@ package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
-
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -52,12 +51,22 @@ public class RobotContainer {
 
   private final XboxController driverJoyStick = new XboxController(OIConstants.kDriverControllerPort);
 
+  private final TelemetryManager teleManager = new TelemetryManager(Constants.telemetryUpdate);
+
   private final SendableChooser<Command> autoChooser;
 
 
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
+
+    //register telemetry from different subsystems
+    registerSubsystems();
+
+    //run telemetry
+    runTelemetry();
+
+    
 
      // Configure the trigger bindings
     swerveSub.setDefaultCommand(
@@ -84,14 +93,9 @@ public class RobotContainer {
     
 
     hoodSub.setDefaultCommand(
-      new HoodServoAdjustCmd(hoodSub) //Hood should constantly be adjusting
+      new HoodServoAdjustCmd(hoodSub) //Hood should constantly be adjusting if april tag is detected
     );
 
-    shooterSub.setDefaultCommand(
-      new adaptableShooterCmd(shooterSub, hoodSub, 
-      () -> driverJoyStick.getRightTriggerAxis(),
-      false)
-    );
 
     intakePitcherSub.setDefaultCommand(new IdleIntakePitcherCmd(intakePitcherSub));
 
@@ -138,6 +142,20 @@ public class RobotContainer {
   
   
     
+  }
+
+  private void registerSubsystems(){
+
+    teleManager.registerSubsystem("Conveyor: ", conveyorSub);
+    teleManager.registerSubsystem("Hood: ", hoodSub);
+    teleManager.registerSubsystem("IntakePitcher: ", intakePitcherSub);
+    teleManager.registerSubsystem("Intake: ", intakeSub);
+    teleManager.registerSubsystem("Shooter: ", shooterSub);
+
+  }
+
+  public void runTelemetry(){
+    teleManager.update();
   }
 
 

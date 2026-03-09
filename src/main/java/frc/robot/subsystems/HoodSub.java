@@ -88,4 +88,15 @@ public class HoodSub extends SubsystemBase{
         hoodServoSecondaryChannel.setPulseWidth(pulseUs);
 
     }
+
+    @Override
+    public String toString(){
+        String str = " ";
+
+        str += "DesiredHoodAngle" + getDesiredHoodAngle();
+        str += "distanceAwayFromGoalInches" + getLimelightToGoalInches();
+
+        return str;
+
+    }
 }

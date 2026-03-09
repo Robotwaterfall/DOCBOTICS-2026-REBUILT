@@ -65,7 +65,7 @@ public class adaptableShooterCmd extends Command{
                             (distanceAwayMeters * Math.tan(theta) - Constants.ShooterConstants.heightOfGoalMeters);
 
         if(denominator <= 0){
-            SmartDashboard.putString("ShooterStatus: ", "CANT SHOOT. MOVE!!!");
+            SmartDashboard.putString("ShooterStatus: ", "IMPOSIBLE SHOT. MOVE!!!");
             desiredVelocity = -1;
         }
 
@@ -73,11 +73,11 @@ public class adaptableShooterCmd extends Command{
 
         shooterSub.setShooterVelocityMPS(desiredVelocity);
 
-        SmartDashboard.putNumber("DesiredVelocityOuput: ", desiredVelocity);
+       
 
 
 
-
+        //If the velocity is within tolerance start to transfer the balls from holding towards shooter
         if((shooterSub.getShooter_LeadVelocity()) > (desiredVelocity - ShooterConstants.shooterTolerance) &&
                 (shooterSub.getShooter_LeadVelocity()) < (desiredVelocity + ShooterConstants.shooterTolerance)){
 

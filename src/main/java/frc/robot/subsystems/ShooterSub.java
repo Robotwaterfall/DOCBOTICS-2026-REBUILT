@@ -27,8 +27,6 @@ public class ShooterSub extends SubsystemBase {
 
     public static double desiredVelocity;
 
-
-
     public ShooterSub() {
 
         TalonFXConfiguration cfg = new TalonFXConfiguration();
@@ -66,11 +64,11 @@ public class ShooterSub extends SubsystemBase {
     }
 
     public double getShooterFollower_1Velocity(){
-        return shooter_lead.getVelocity().getValueAsDouble();
+        return shooterFollower_1.getVelocity().getValueAsDouble();
     }
 
     public double getShooterFollower_2Velocity(){
-        return shooter_lead.getVelocity().getValueAsDouble();
+        return shooterFollower_2.getVelocity().getValueAsDouble();
     }
 
     public double getDesiredVelocity(){
@@ -85,7 +83,21 @@ public class ShooterSub extends SubsystemBase {
         indexMotor.set(indexPower);
     }
 
-   
+    public double getAverageShootingVelocityMPS(){
+        double averageVelocity = (shooter_lead.getVelocity().getValueAsDouble() 
+                                    + 
+                                    shooterFollower_1.getVelocity().getValueAsDouble()
+                                    + 
+                                    shooterFollower_2.getVelocity().getValueAsDouble()) 
+                                    / 3;
+
+        return averageVelocity;
+    }
+
+    public boolean isAtSetVelocityMPS(){
+        return  (getShooter_LeadVelocity()) > (desiredVelocity - ShooterConstants.shooterTolerance) &&
+                (getShooter_LeadVelocity()) < (desiredVelocity + ShooterConstants.shooterTolerance);
+    }
 
     public void stopMotors() {
         /* Stop shooter motors. */
@@ -102,4 +114,20 @@ public class ShooterSub extends SubsystemBase {
         indexMotor.stopMotor();
 
     }
-}
+
+    @Override
+    public String toString(){
+
+        String str = " ";
+
+        str += "Shooter Subsystem Information";
+        str += "currentDesiredVelocityMPS: " + getDesiredVelocity();
+        str += "averageVelocityMPS: " + getAverageShootingVelocityMPS();
+        str += "atDesiredVelocityMPS: " + isAtSetVelocityMPS();
+
+        return str;
+
+        }
+
+            
+    }

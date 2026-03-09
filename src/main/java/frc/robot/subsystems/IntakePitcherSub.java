@@ -53,7 +53,7 @@ public class IntakePitcherSub extends SubsystemBase {
       intakePitcherMotor.configure(intakePitcherMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
       // PID controller setup
-      intakePitchController.setTolerance(2.0); // degrees
+      intakePitchController.setTolerance(IntakePitcherConstants.intakePitcherToleranceDegrees); // degrees
 
     }
 

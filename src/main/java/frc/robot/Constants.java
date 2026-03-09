@@ -152,9 +152,11 @@ public final class Constants {
     public static final double kPitcherIn = 0; // Setpoint positions
     public static final double kPitcherOut = 90; //TODO
 
-    public static double intakePitcher_kP = 0;
+    public static double intakePitcher_kP = 0; //TODO
     public static double intakePitcher_kI = 0;
     public static double intakePitcher_kD = 0;
+
+    public static double intakePitcherToleranceDegrees = 2; //TODO
   }
 
   public static final class ShooterConstants {
@@ -210,4 +212,6 @@ public final class Constants {
     public static final double timeElapsedShootingSecounds = 8; //TODO
     public static final double timeBetweenPitcherInAndOut = 1; //TODO
   }
+
+  public static final double telemetryUpdate = 0.1; //Update every 100ms
 }

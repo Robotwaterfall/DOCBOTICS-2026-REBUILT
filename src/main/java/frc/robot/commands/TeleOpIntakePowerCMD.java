@@ -38,7 +38,7 @@ public class TeleOpIntakePowerCmd extends Command {
     } else{
       intakeSub.setMotorPower(0);
     }
-    SmartDashboard.putData(intakeSub);
+    
   }
 
 }

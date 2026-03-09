@@ -168,7 +168,7 @@ public class SwerveSub extends SubsystemBase {
 
         boolean doRejectUpdate = LimelightHelpers.getTV(LimelightConstants.Limelight3); 
         if(doRejectUpdate){
-            LimelightHelpers.PoseEstimate mt1 = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight3");
+            LimelightHelpers.PoseEstimate mt1 = LimelightHelpers.getBotPoseEstimate_wpiBlue(LimelightConstants.Limelight3);
 
 
             if(mt1.tagCount > 0){

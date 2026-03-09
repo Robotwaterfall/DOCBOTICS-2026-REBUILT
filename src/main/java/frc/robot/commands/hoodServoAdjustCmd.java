@@ -65,15 +65,11 @@ public class HoodServoAdjustCmd extends Command{
 
 
 
-        //Find Angle hood needs to be at
-        desiredHoodAngle = Math.atan(Constants.LimelightConstants.goalHeightInches/distanceFromLimelightToGoalInches);
-        SmartDashboard.putNumber("desiredHoodAngle", desiredHoodAngle);
+        //UNFINISHED   
 
         //Set the angle of the hood
         hoodSub.setHoodAngle(desiredHoodAngle);
 
-        SmartDashboard.putNumber("currentHoodPulseWidthPrimary", hoodServoPrimary.getPulseWidth());
-        SmartDashboard.putNumber("currentHoodPulseWidthSecondary", hoodServoSecondary.getPulseWidth());
 
     }
 
