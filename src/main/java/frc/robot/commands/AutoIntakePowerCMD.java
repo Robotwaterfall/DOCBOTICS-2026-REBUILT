@@ -37,12 +37,15 @@ public class AutoIntakePowerCmd extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+
+    //finish when time gets to target time
     return elapsedTime.get() >= totalTime;
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    //stop motors and set power 0
     intakeSub.setMotorPower(0);
     intakeSub.stopMotor();
   }

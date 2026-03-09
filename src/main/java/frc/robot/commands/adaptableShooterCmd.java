@@ -47,6 +47,8 @@ public class adaptableShooterCmd extends Command{
 
     @Override
     public void initialize() {
+
+        //before command starts stop the motors
         shooterSub.stopMotors();
         
 
@@ -91,8 +93,9 @@ public class adaptableShooterCmd extends Command{
 
     @Override
     public void end(boolean interrupted){
+        //when the command ends stop motors and set velocity to 0
         shooterSub.setDesiredVelocity(0);
-        shooterSub.stopMotors();
+        shooterSub.stopMotors(); 
 
     }
 

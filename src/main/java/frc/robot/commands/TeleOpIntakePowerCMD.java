@@ -2,7 +2,6 @@ package frc.robot.commands;
 
 import java.util.function.Supplier;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.subsystems.IntakeSub;
@@ -24,6 +23,7 @@ public class TeleOpIntakePowerCmd extends Command {
   // Called when the command is initially scheduled. Preps motors.
   @Override
   public void initialize() {
+    //stop intake when command initializes
     intakeSub.setMotorPower(0);
     intakeSub.stopMotor();
   }
@@ -31,6 +31,8 @@ public class TeleOpIntakePowerCmd extends Command {
   // Called every time the scheduler runs while the command is scheduled. Calculates the power based on given trigger values
   @Override
   public void execute() {
+    //if intake supplier button is pressed intake, otherwise if the outtake button is pressed
+    //outtake.
     if(intakeSupplier.get() == true){
       intakeSub.setMotorPower(IntakeConstants.kIntakeMotorPower);
     }else if(outakeSupplier.get() == true){

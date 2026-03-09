@@ -29,12 +29,14 @@ public class runConveyorCmd extends Command{
 
     @Override
     public void initialize(){
+        //when command starts set conveyor power to 0
         conveyorSub.setConveyorPower(0);
 
     }
 
     @Override
     public void execute(){
+        //if the shooter gets to desired velocity start the conveyor for shooting
         if((shooterSub.getShooter_LeadVelocity()) > (desiredVelocity - ShooterConstants.shooterTolerance) &&
                 (shooterSub.getShooter_LeadVelocity()) < (desiredVelocity + ShooterConstants.shooterTolerance)){
 

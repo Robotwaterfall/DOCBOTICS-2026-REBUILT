@@ -14,6 +14,7 @@ public class ResetHeadingCmd extends Command  {
     }
     @Override
     public void execute() {
+        //reset heading
         swerveSub.zeroHeading();
     }
 

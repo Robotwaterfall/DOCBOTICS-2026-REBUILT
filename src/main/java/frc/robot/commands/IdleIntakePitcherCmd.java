@@ -19,6 +19,7 @@ public class IdleIntakePitcherCmd extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    //when command starts stop motors and set power 0
     intakePitcherSub.setMotorPower(0);
     intakePitcherSub.stopMotor();
   }
@@ -26,6 +27,7 @@ public class IdleIntakePitcherCmd extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    //when command executes push pitcher out and idle so that we are ready to pick up fuel
     intakePitcherSub.movePicherToSetpoint(IntakePitcherConstants.kPitcherOut);
     SmartDashboard.putData(intakePitcherSub);
   }

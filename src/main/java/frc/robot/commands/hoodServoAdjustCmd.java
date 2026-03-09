@@ -5,7 +5,6 @@ import com.revrobotics.servohub.ServoChannel;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.HoodSub;
@@ -61,7 +60,6 @@ public class HoodServoAdjustCmd extends Command{
 
         //calculate distance
         distanceFromLimelightToGoalInches = (goalHeightInches - limelightLensHeightInches) / Math.tan(angleToGoalRadians);
-        SmartDashboard.putNumber("distanceAwayFromGoal", distanceFromLimelightToGoalInches);
 
 
 

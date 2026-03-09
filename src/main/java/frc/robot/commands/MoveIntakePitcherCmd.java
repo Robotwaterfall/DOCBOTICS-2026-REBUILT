@@ -27,6 +27,7 @@ public class MoveIntakePitcherCmd extends Command{
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    //move intake pitcher to deg
     intakePitcherSub.movePicherToSetpoint(intakePitcherPosDeg);
  
   }
@@ -34,6 +35,7 @@ public class MoveIntakePitcherCmd extends Command{
 
   @Override
   public boolean isFinished(){
+    //when the pitcher is at the set setpoint stop command
     return intakePitcherSub.getIntakePitchSetpoint_degrees() == intakePitcherPosDeg;
 
   }
