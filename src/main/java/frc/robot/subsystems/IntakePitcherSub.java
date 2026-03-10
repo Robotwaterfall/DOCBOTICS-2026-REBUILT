@@ -4,6 +4,7 @@ import com.revrobotics.spark.SparkMax;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.Constants.IntakePitcherConstants;
 
 import com.revrobotics.spark.SparkBase.PersistMode;
@@ -46,7 +47,7 @@ public class IntakePitcherSub extends SubsystemBase {
         .reverseSoftLimitEnabled(true);
 
       // Motor behavior
-      intakePitcherMotorConfig.idleMode(IdleMode.kBrake);
+      intakePitcherMotorConfig.idleMode(Constants.IntakePitcherConstants.pitcherIdleMode);
       intakePitcherMotorConfig.smartCurrentLimit(40);
 
       // Apply config
@@ -67,28 +68,19 @@ public class IntakePitcherSub extends SubsystemBase {
     public void movePicherToSetpoint(double degrees) {
 
         // Positions
-        this.targetAngle = degrees;
-        this.currentAngle = intakePitcherMotor.getEncoder().getPosition() * IntakePitcherConstants.kDegreesPerMotorRotation;
+        targetAngle = degrees;
+        currentAngle = intakePitcherMotor.getEncoder().getPosition() * IntakePitcherConstants.kDegreesPerMotorRotation;
 
         // PID
         double output = intakePitchController.calculate(currentAngle, targetAngle);
-        output = MathUtil.clamp(output, -0.5, 0.5);
+        output = MathUtil.clamp(output, -Constants.IntakePitcherConstants.pitcherMaxSpeed, 
+            Constants.IntakePitcherConstants.pitcherMaxSpeed);
 
         // Setting power
         intakePitcherMotor.set(output);
 
     }
 
-
-    /**
-     * Description: Sets the intake motor's power
-     * Pre-Condition: Motor is initialized (Power is between -1 and 1?)
-     * Post-Condition: The motor's power is set
-     * @param power The desired power for the motor
-     */
-    public void setMotorPower(double power) {
-        intakePitcherMotor.set(power);
-    }
 
     /**
      * Description: Stops the motor

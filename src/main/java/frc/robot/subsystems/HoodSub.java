@@ -1,11 +1,13 @@
 package frc.robot.subsystems;
 
+import java.util.Map;
+import org.opencv.core.Mat;
 import com.revrobotics.servohub.ServoChannel;
 import com.revrobotics.servohub.ServoHub;
 import com.revrobotics.servohub.ServoChannel.ChannelId;
 import com.revrobotics.servohub.ServoHub.ResetMode;
 import com.revrobotics.servohub.config.ServoHubConfig;
-
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.HoodConstants;
@@ -14,10 +16,10 @@ public class HoodSub extends SubsystemBase{
 
     private final ServoHub servoHub;
 
-    private final ServoChannel hoodServoPrimaryChannel;
-    private final ServoChannel hoodServoSecondaryChannel;
+    private final ServoChannel hoodLinActRightChannel;
+    private final ServoChannel hoodLinActLeftChannel;
 
-    public static double desiredHoodAngle;
+    public static double hoodAngle;
     public static double distanceFromLimelightToGoalInches;
 
 
@@ -36,33 +38,33 @@ public class HoodSub extends SubsystemBase{
 
         servoHub.configure(config, ResetMode.kResetSafeParameters);
 
-        hoodServoPrimaryChannel = servoHub.getServoChannel(ChannelId.kChannelId0);
+        hoodLinActRightChannel = servoHub.getServoChannel(ChannelId.kChannelId0);
 
-        hoodServoPrimaryChannel.setEnabled(true);
-        hoodServoPrimaryChannel.setPowered(true);
+        hoodLinActRightChannel.setEnabled(true);
+        hoodLinActRightChannel.setPowered(true);
 
-        hoodServoSecondaryChannel = servoHub.getServoChannel(ChannelId.kChannelId1);
+        hoodLinActLeftChannel = servoHub.getServoChannel(ChannelId.kChannelId1);
 
-        hoodServoSecondaryChannel.setEnabled(true);
-        hoodServoSecondaryChannel.setPowered(true);
+        hoodLinActLeftChannel.setEnabled(true);
+        hoodLinActLeftChannel.setPowered(true);
 
 
     }
 
-    public ServoChannel getHoodServoPrimaryChannel(){
-        return hoodServoPrimaryChannel;
+    public ServoChannel getHoodLinActRightChannel(){
+        return hoodLinActRightChannel;
     }
 
-    public ServoChannel getHoodServoSecondaryChannel(){
-        return hoodServoSecondaryChannel;
+    public ServoChannel getHoodLinActLeftChannel(){
+        return hoodLinActLeftChannel;
     }
 
-    public double getDesiredHoodAngle(){
-        return desiredHoodAngle;
+    public double getHoodAngle(){
+        return hoodAngle;
     }
 
-    public void setDesiredHoodAngle(double desiredHoodAngleDegrees){
-         desiredHoodAngle = desiredHoodAngleDegrees;
+    public void setHoodAngle(double hoodAngle){
+         hoodAngle = HoodSub.hoodAngle;
     }
 
     public double getLimelightToGoalInches(){
@@ -73,27 +75,40 @@ public class HoodSub extends SubsystemBase{
         distanceFromLimelightToGoalInches = limelightToGoalInches;
     }
 
-     /** Set hood to a target angle in degrees. */
-    public void setHoodAngle(double degrees) {
-        // Clamp to allowed range
-        double clampedDeg = Math.max(Constants.HoodConstants.kMinAngleDeg, Math.min(Constants.HoodConstants.kMaxAngleDeg, degrees));
+    private double map(
+        double x,
+        double inMin, double inMax,
+        double outMin, double outMax
+        ){
 
-        // Map [minDeg, maxDeg] → [minPulse, maxPulse]
-        double t = (clampedDeg - Constants.HoodConstants.kMinAngleDeg) / (
-            Constants.HoodConstants.kMaxAngleDeg - Constants.HoodConstants.kMinAngleDeg);
-        int pulseUs = (int) (Constants.HoodConstants.kMinPulseUs + t * (Constants.HoodConstants.kMaxPulseUs - 
-        Constants.HoodConstants.kMinPulseUs));
-
-        hoodServoPrimaryChannel.setPulseWidth(pulseUs);
-        hoodServoSecondaryChannel.setPulseWidth(pulseUs);
-
+        return outMin + (x - inMin) * (outMax - outMin) / (inMax - inMin);
     }
+
+    private double inchesToPulseWidth(double extensionInches){
+        MathUtil.clamp(extensionInches, Constants.HoodConstants.minExtensionInches, 
+            Constants.HoodConstants.maxExtensionInches);
+
+             return map(extensionInches, 
+               HoodConstants.minExtensionInches, HoodConstants.maxExtensionInches,
+               HoodConstants.kMinPulseUs,        HoodConstants.kMaxPulseUs);
+    }
+
+   private double degreeToInches(double angleDegree){
+        return HoodConstants.a3 * Math.pow(angleDegree, 3) + HoodConstants.a2 * Math.pow(angleDegree, 2) + 
+            HoodConstants.a1 * angleDegree + HoodConstants.a0;
+   }
+
+   public void setHoodAngle(double hoodAngle){
+        hoodLinActLeftChannel.setPulseWidth(hoodAngle);
+   }
+
+    
 
     @Override
     public String toString(){
         String str = " ";
 
-        str += "DesiredHoodAngle" + getDesiredHoodAngle(); //to show desired hood angle
+        str += "DesiredHoodAngle" + getHoodAngle(); //to show desired hood angle
         str += "distanceAwayFromGoalInches" + getLimelightToGoalInches(); //how far we are away from goal
 
         return str;

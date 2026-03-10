@@ -20,7 +20,6 @@ public class MoveIntakePitcherCmd extends Command{
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    intakePitcherSub.setMotorPower(0);
     intakePitcherSub.stopMotor();
   }
 

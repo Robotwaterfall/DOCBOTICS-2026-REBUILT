@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
@@ -157,14 +158,18 @@ public final class Constants {
     public static double intakePitcher_kD = 0;
 
     public static double intakePitcherToleranceDegrees = 2; //TODO
+
+    public static final IdleMode pitcherIdleMode = IdleMode.kBrake;
+
+    public static final double pitcherMaxSpeed = 0.5; //Has to be in between -1 and 1 //TODO
   }
 
   public static final class ShooterConstants {
-    public static final int kShooterLeadMotorPort = 16; //TODO:: SET LATER
-    public static final int kShooterFollower_1_port = 17; //TODO:: SET LATER
-    public static final int kShooterFollower_2_port = 18; //TODO:: SET LATER
+    public static final int kShooterLeadMotorId = 16; //TODO:: SET LATER
+    public static final int kShooterFollowerRightId = 17; //TODO:: SET LATER
+    public static final int kShooterFollowerLeftId = 18; //TODO:: SET LATER
 
-    public static final int kIndexMotor_Port = 19; //TODO: set later
+    public static final int kIndexMotorId = 19; //TODO: set later
 
     public static final double kWheelDiameterMeters = 0.1016; // 4" wheel
     public static final double kGearRatio = 1.0;
@@ -172,6 +177,8 @@ public final class Constants {
     public static final double kShooterKP = 0.1; //TODO
     public static final double kShooterKi = 0.1; //TODO
     public static final double kShooterKd = 0.1; //TODO
+    public static final double kShooterKs = 0.1; //TODO
+    public static final double kShooterKv = 0.1; //TODO
 
     public static final double indexSpeed = 0.4; //TODO
 
@@ -196,10 +203,18 @@ public final class Constants {
 
     public static final double kMinAngleDeg = 0.0; //TODO:tune
     public static final double kMaxAngleDeg = 180.0;
-    public static final int kMinPulseUs = 500;  //TODO:tune
-    public static final int kCenterPulseUs = 1500;
-    public static final int kMaxPulseUs = 2500;  
+    public static final int kMinPulseUs = 1600;  //this is the hardware limit of the Lin act //TODO:tune
+    public static final int kCenterPulseUs = 1750;
+    public static final int kMaxPulseUs = 2000;
     
+    public static final double maxExtensionInches = 5.5; //as far as we go out
+    public static final double minExtensionInches = 3; //as far as we retract //TODO: tune
+    
+    //these are the constants for the cubic approximation to convert from angle to inches
+    public static final double a0 = 8.15031546257;
+    public static final double a1 = 0.0376843712267;
+    public static final double a2 = -0.00289877526491;
+    public static final double a3 = 1.49396327886e-05;
   }
 
   public static final class unitConversions{

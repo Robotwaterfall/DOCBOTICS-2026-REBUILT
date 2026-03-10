@@ -1,6 +1,5 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix6.hardware.TalonFX;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
@@ -13,7 +12,7 @@ public class IntakeSub extends SubsystemBase {
 
     /**
      * Description: Sets the intake motor's power
-     * Pre-Condition: Motor is initialized (Power is between -1 and 1?)
+     * Pre-Condition: Motor is initialized (Power is between -1 and 1)
      * Post-Condition: The motor's power is set
      * @param power The desired power for the motor
      */

@@ -21,11 +21,11 @@ public class HoodServoAdjustCmd extends Command{
     public HoodServoAdjustCmd(HoodSub hoodSub){
         this.hoodSub = hoodSub;
 
-        this.hoodServoPrimary = hoodSub.getHoodServoPrimaryChannel(); 
-        this.hoodServoSecondary = hoodSub.getHoodServoSecondaryChannel();
+        this.hoodServoPrimary = hoodSub.getHoodLinActRightChannel(); 
+        this.hoodServoSecondary = hoodSub.getHoodLinActLeftChannel();
 
-        distanceFromLimelightToGoalInches = hoodSub.getDesiredHoodAngle();
-        desiredHoodAngle = hoodSub.getDesiredHoodAngle();
+        distanceFromLimelightToGoalInches = hoodSub.getHoodAngle();
+        desiredHoodAngle = hoodSub.getHoodAngle();
 
         addRequirements(hoodSub);
 

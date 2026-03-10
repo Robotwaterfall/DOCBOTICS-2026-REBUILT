@@ -36,7 +36,7 @@ public class adaptableShooterCmd extends Command{
        this.shootSupplier = shootSupplier;
        this.isAuto = isAuto;
 
-       desiredHoodAngle = hoodSub.getDesiredHoodAngle();
+       desiredHoodAngle = hoodSub.getHoodAngle();
        distanceAwayFromGoal = hoodSub.getLimelightToGoalInches();
 
        desiredVelocity = shooterSub.getDesiredVelocity();
@@ -49,7 +49,7 @@ public class adaptableShooterCmd extends Command{
     public void initialize() {
 
         //before command starts stop the motors
-        shooterSub.stopMotors();
+        shooterSub.stopShooterMotors();
         
 
     }
@@ -80,8 +80,8 @@ public class adaptableShooterCmd extends Command{
 
 
         //If the velocity is within tolerance start to transfer the balls from holding towards shooter
-        if((shooterSub.getShooter_LeadVelocity()) > (desiredVelocity - ShooterConstants.shooterTolerance) &&
-                (shooterSub.getShooter_LeadVelocity()) < (desiredVelocity + ShooterConstants.shooterTolerance)){
+        if((shooterSub.getShooterLeadVelocity()) > (desiredVelocity - ShooterConstants.shooterTolerance) &&
+                (shooterSub.getShooterLeadVelocity()) < (desiredVelocity + ShooterConstants.shooterTolerance)){
 
                     shooterSub.setIndexSpeed(ShooterConstants.indexSpeed);
 
@@ -95,7 +95,7 @@ public class adaptableShooterCmd extends Command{
     public void end(boolean interrupted){
         //when the command ends stop motors and set velocity to 0
         shooterSub.setDesiredVelocity(0);
-        shooterSub.stopMotors(); 
+        shooterSub.stopShooterMotors(); 
 
     }
 

@@ -22,7 +22,6 @@ public class ConveyorSub extends SubsystemBase {
         conveyorMotor.set(power);
         conveyorPower = power;
 
-
     }
 
     public double getConveyorPower(){

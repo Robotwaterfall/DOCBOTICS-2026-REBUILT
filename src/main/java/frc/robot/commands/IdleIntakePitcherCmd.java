@@ -20,7 +20,6 @@ public class IdleIntakePitcherCmd extends Command {
   @Override
   public void initialize() {
     //when command starts stop motors and set power 0
-    intakePitcherSub.setMotorPower(0);
     intakePitcherSub.stopMotor();
   }
 

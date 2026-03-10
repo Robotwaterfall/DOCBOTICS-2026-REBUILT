@@ -37,8 +37,8 @@ public class runConveyorCmd extends Command{
     @Override
     public void execute(){
         //if the shooter gets to desired velocity start the conveyor for shooting
-        if((shooterSub.getShooter_LeadVelocity()) > (desiredVelocity - ShooterConstants.shooterTolerance) &&
-                (shooterSub.getShooter_LeadVelocity()) < (desiredVelocity + ShooterConstants.shooterTolerance)){
+        if((shooterSub.getShooterLeadVelocity()) > (desiredVelocity - ShooterConstants.shooterTolerance) &&
+                (shooterSub.getShooterLeadVelocity()) < (desiredVelocity + ShooterConstants.shooterTolerance)){
 
                     conveyorSub.setConveyorPower(ConveyorConstant.conveyorPower);
 
