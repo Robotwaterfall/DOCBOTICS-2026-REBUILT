@@ -51,15 +51,15 @@ public final class Constants {
               new Translation2d(-kWheelBase / 2, -kTrackWidth / 2),
               new Translation2d(-kWheelBase / 2, kTrackWidth / 2));
 
-    public static final int kFrontLeftDriveMotorPort = 1; //TODO CHANGE ALL SWERVE IDS
-    public static final int kBackLeftDriveMotorPort = 2;//TODO
-    public static final int kFrontRightDriveMotorPort = 3;//TODO
-    public static final int kBackRightDriveMotorPort = 4;//TODO
+    public static final int kFrontLeftDriveMotorPort = 15; 
+    public static final int kBackLeftDriveMotorPort = 13;
+    public static final int kFrontRightDriveMotorPort = 11;
+    public static final int kBackRightDriveMotorPort = 14;
 
-    public static final int kFrontLeftTurningMotorPort = 5;//TODO
-    public static final int kBackLeftTurningMotorPort = 6;//TODO
-    public static final int kFrontRightTurningMotorPort = 7;//TODO
-    public static final int kBackRightTurningMotorPort = 8;//TODO
+    public static final int kFrontLeftTurningMotorPort = 6;
+    public static final int kBackLeftTurningMotorPort = 16;
+    public static final int kFrontRightTurningMotorPort = 20;
+    public static final int kBackRightTurningMotorPort = 12;
 
     public static final boolean kFrontLeftTurningEncoderReversed = true;
     public static final boolean kBackLeftTurningEncoderReversed = true;
@@ -71,20 +71,20 @@ public final class Constants {
     public static final boolean kFrontRightDriveEncoderReversed = true;
     public static final boolean kBackRightDriveEncoderReversed = true;
 
-    public static final int kFrontLeftDriveAbsoluteEncoderPort = 9; //TODO
-    public static final int kBackLeftDriveAbsoluteEncoderPort = 10;//TODO
-    public static final int kFrontRightDriveAbsoluteEncoderPort = 11;//TODO
-    public static final int kBackRightDriveAbsoluteEncoderPort = 12;//TODO
+    public static final int kFrontLeftDriveAbsoluteEncoderPort = 29; 
+    public static final int kBackLeftDriveAbsoluteEncoderPort = 26;
+    public static final int kFrontRightDriveAbsoluteEncoderPort = 27;
+    public static final int kBackRightDriveAbsoluteEncoderPort = 28;
 
     public static final boolean kFrontLeftDriveAbsoluteEncoderReversed = false;
     public static final boolean kBackLeftDriveAbsoluteEncoderReversed = false;
     public static final boolean kFrontRightDriveAbsoluteEncoderReversed = false;
     public static final boolean kBackRightDriveAbsoluteEncoderReversed = false;
 
-    public static final double kFrontLeftDriveAbsoluteEncoderOffsetRad = 0.3481 * 2 * Math.PI; //TODO
-    public static final double kBackLeftDriveAbsoluteEncoderOffsetRad = 0.2556 * 2 * Math.PI;
-    public static final double kFrontRightDriveAbsoluteEncoderOffsetRad = -0.3181 * 2 * Math.PI;
-    public static final double kBackRightDriveAbsoluteEncoderOffsetRad = 0.094971 * 2 * Math.PI;
+    public static final double kFrontLeftDriveAbsoluteEncoderOffsetRad = 0.419434 * 2 * Math.PI; //TODO
+    public static final double kBackLeftDriveAbsoluteEncoderOffsetRad = 0.172607 * 2 * Math.PI;
+    public static final double kFrontRightDriveAbsoluteEncoderOffsetRad = -0.076172 * 2 * Math.PI;
+    public static final double kBackRightDriveAbsoluteEncoderOffsetRad = -0.344971 * 2 * Math.PI;
 
     public static final double kPhysicalMaxSpeedMetersPerSecond = 5;
     public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 2 * 2 * Math.PI;
@@ -94,7 +94,7 @@ public final class Constants {
     public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 2;
     public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 2;
 
-      public static final int kImuIdPort = 13; //TODO
+      public static final int kImuIdPort = 21; 
 
     public static class autoTargetConstants {
       public static final double autoOrientKp = 0.0035;
@@ -192,14 +192,14 @@ public final class Constants {
     
   }
     public static final class ConveyorConstant {
-    public static final int kConveyorMotorPort = 20; //TODO:: SET LATER
+    public static final int kConveyorMotorPort = 7;
     public static final double conveyorPower = 0.6;
  
 
   }
 
   public static final class HoodConstants{
-    public static final int kHoodId = 21; //TODO: change can id for hood
+    public static final int kHoodId = 3; //TODO: change can id for hood
 
     public static final double kMinAngleDeg = 0.0; //TODO:tune
     public static final double kMaxAngleDeg = 180.0;
