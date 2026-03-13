@@ -6,14 +6,14 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.subsystems.IntakeSub;
 
-public class TeleOpIntakePowerCmd extends Command {
+public class TeleOpIntakePowerCMD extends Command {
 
     IntakeSub intakeSub;
     public final Supplier<Boolean> intakeSupplier;
     public final Supplier<Boolean> outakeSupplier;
 
     // Constructor
-    public TeleOpIntakePowerCmd(IntakeSub intakeSub, Supplier<Boolean> intakeSupplier, Supplier<Boolean> outakeSupplier) {
+    public TeleOpIntakePowerCMD(IntakeSub intakeSub, Supplier<Boolean> intakeSupplier, Supplier<Boolean> outakeSupplier) {
         this.intakeSub = intakeSub;
         this.intakeSupplier = intakeSupplier;
         this.outakeSupplier = outakeSupplier;

@@ -8,7 +8,7 @@ import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.ConveyorSub;
 import frc.robot.subsystems.ShooterSub;
 
-public class runConveyorCmd extends Command{
+public class RunConveyorCMD extends Command{
 
     ConveyorSub conveyorSub;
     ShooterSub shooterSub;
@@ -17,7 +17,7 @@ public class runConveyorCmd extends Command{
 
     private Supplier<Boolean> isReversed;
 
-    public runConveyorCmd(ConveyorSub conveyorSub, ShooterSub shooterSub, Supplier<Boolean> isReversed){
+    public RunConveyorCMD(ConveyorSub conveyorSub, ShooterSub shooterSub, Supplier<Boolean> isReversed){
 
         this.conveyorSub = conveyorSub;
         this.shooterSub = shooterSub;

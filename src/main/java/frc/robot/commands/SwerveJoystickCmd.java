@@ -17,7 +17,7 @@ import frc.robot.subsystems.SwerveSub;
 
  
 
-public class SwerveJoystickCmd extends Command {
+public class SwerveJoystickCMD extends Command {
 
       private final SwerveSub swerveSubsystem;
 
@@ -46,7 +46,7 @@ public class SwerveJoystickCmd extends Command {
 
     // };
       
-  public SwerveJoystickCmd(
+  public SwerveJoystickCMD(
           SwerveSub swerveSubsystem, 
           Supplier <Double> xSpdFunction,
            Supplier<Double> ySpdFunction, 

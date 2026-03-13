@@ -12,7 +12,7 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.config.LimelightHelpers;
 import frc.robot.subsystems.SwerveSub;
 
-public class SwerveLimelightLockCmd extends Command {
+public class SwerveLimelightLockCMD extends Command {
    
       private final SwerveSub swerveSubsystem;
 
@@ -35,7 +35,7 @@ public class SwerveLimelightLockCmd extends Command {
     // };
 
 
-    public SwerveLimelightLockCmd( SwerveSub swerveSubsystem, 
+    public SwerveLimelightLockCMD( SwerveSub swerveSubsystem, 
           Supplier <Double> xSpdFunction,
            Supplier<Double> ySpdFunction, 
            double speed) { 
@@ -68,7 +68,7 @@ public class SwerveLimelightLockCmd extends Command {
 
       lockonAngularVelocity *= -1.0;
 
-      // gett latest values from joystick
+      //get latest values from joystick
       //swerveSubsystem.orientToTarget();
       double xspeed = xSpdFunction.get();
       double yspeed = ySpdFunction.get();

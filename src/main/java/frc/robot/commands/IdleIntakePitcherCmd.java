@@ -5,12 +5,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.IntakePitcherConstants;
 import frc.robot.subsystems.IntakePitcherSub;
 
-public class IdleIntakePitcherCmd extends Command {
+public class IdleIntakePitcherCMD extends Command {
 
   IntakePitcherSub intakePitcherSub;
 
   // Constructor
-  public IdleIntakePitcherCmd(IntakePitcherSub intakePitcherSub) {
+  public IdleIntakePitcherCMD(IntakePitcherSub intakePitcherSub) {
     this.intakePitcherSub = intakePitcherSub;
     addRequirements(intakePitcherSub);
   }

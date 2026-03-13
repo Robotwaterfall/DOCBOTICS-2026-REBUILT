@@ -3,14 +3,14 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.IntakePitcherSub;
 
-public class MoveIntakePitcherCmd extends Command{
+public class MoveIntakePitcherCMD extends Command{
 
     IntakePitcherSub intakePitcherSub;
 
     double intakePitcherPosDeg;
 
     // Constructor
-  public MoveIntakePitcherCmd(IntakePitcherSub intakePitcherSub, double intakePitcherPosDeg) {
+  public MoveIntakePitcherCMD(IntakePitcherSub intakePitcherSub, double intakePitcherPosDeg) {
     this.intakePitcherSub = intakePitcherSub;
     this.intakePitcherPosDeg = intakePitcherPosDeg;
     addRequirements(intakePitcherSub);

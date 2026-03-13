@@ -18,17 +18,17 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.IntakePitcherConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.autoConstants;
-import frc.robot.commands.ResetHeadingCmd;
-import frc.robot.commands.SwerveJoystickCmd;
-import frc.robot.commands.TeleOpIntakePowerCmd;
-import frc.robot.commands.adaptableShooterCmd;
-import frc.robot.commands.runConveyorCmd;
+import frc.robot.commands.ResetHeadingCMD;
+import frc.robot.commands.SwerveJoystickCMD;
+import frc.robot.commands.TeleOpIntakePowerCMD;
+import frc.robot.commands.AdaptableShooterCMD;
+import frc.robot.commands.RunConveyorCMD;
 import frc.robot.subsystems.IntakeSub;
 import frc.robot.subsystems.ShooterSub;
-import frc.robot.commands.AutoIntakePowerCmd;
-import frc.robot.commands.HoodServoAdjustCmd;
-import frc.robot.commands.IdleIntakePitcherCmd;
-import frc.robot.commands.MoveIntakePitcherCmd;
+import frc.robot.commands.AutoIntakePowerCMD;
+import frc.robot.commands.HoodServoAdjustCMD;
+import frc.robot.commands.IdleIntakePitcherCMD;
+import frc.robot.commands.MoveIntakePitcherCMD;
 import frc.robot.subsystems.ConveyorSub;
 import frc.robot.subsystems.HoodSub;
 import frc.robot.subsystems.IntakePitcherSub;
@@ -70,7 +70,7 @@ public class RobotContainer {
 
      // Configure the trigger bindings
     swerveSub.setDefaultCommand(
-        new SwerveJoystickCmd(
+        new SwerveJoystickCMD(
             swerveSub,
             () -> -driverJoyStick.getRawAxis(OIConstants.kDriverYAxis),
             () -> driverJoyStick.getRawAxis(OIConstants.kDriverXAxis),
@@ -82,22 +82,22 @@ public class RobotContainer {
             () -> driverJoyStick.getRawButton(OIConstants.kLockWheelsButton))); 
 
     
-    intakeSub.setDefaultCommand(new TeleOpIntakePowerCmd(intakeSub, 
+    intakeSub.setDefaultCommand(new TeleOpIntakePowerCMD(intakeSub, 
       () -> driverJoyStick.getRightBumperButtonPressed(), 
       () -> driverJoyStick.getLeftBumperButtonPressed())); 
     
-    conveyorSub.setDefaultCommand(new runConveyorCmd(
+    conveyorSub.setDefaultCommand(new RunConveyorCMD(
       conveyorSub, shooterSub, 
       () -> driverJoyStick.getLeftBumperButtonPressed()));
     
     
 
     hoodSub.setDefaultCommand(
-      new HoodServoAdjustCmd(hoodSub) //Hood should constantly be adjusting if april tag is detected
+      new HoodServoAdjustCMD(hoodSub) //Hood should constantly be adjusting if april tag is detected
     );
 
     //Intake pitcher should be idle by default, but can be moved to different angles when the MoveIntakePitcherCmd is scheduled
-    intakePitcherSub.setDefaultCommand(new IdleIntakePitcherCmd(intakePitcherSub)); 
+    intakePitcherSub.setDefaultCommand(new IdleIntakePitcherCMD(intakePitcherSub)); 
 
     autoChooser = AutoBuilder.buildAutoChooser(); //Default auto will be 'Commands.none()'
     SmartDashboard.putData("AutoMode: ", autoChooser);
@@ -108,7 +108,7 @@ public class RobotContainer {
   private void configureBindings() {
 
     new JoystickButton(driverJoyStick, OIConstants.kDriveGyroResetButtonIdx).whileTrue(
-      new ResetHeadingCmd(swerveSub)
+      new ResetHeadingCMD(swerveSub)
     );
 
     //This command runs the shooter routine
@@ -119,13 +119,13 @@ public class RobotContainer {
         
       new ParallelCommandGroup(
 
-          new adaptableShooterCmd(shooterSub, hoodSub,() -> 1.0, true),
-          new HoodServoAdjustCmd(hoodSub),
+          new AdaptableShooterCMD(shooterSub, hoodSub,() -> 1.0, true),
+          new HoodServoAdjustCMD(hoodSub),
 
           new SequentialCommandGroup(
-            new MoveIntakePitcherCmd(intakePitcherSub, IntakePitcherConstants.kPitcherIn),
+            new MoveIntakePitcherCMD(intakePitcherSub, IntakePitcherConstants.kPitcherIn),
             new WaitCommand(autoConstants.timeBetweenPitcherInAndOut),
-            new MoveIntakePitcherCmd(intakePitcherSub, IntakePitcherConstants.kPitcherOut)
+            new MoveIntakePitcherCMD(intakePitcherSub, IntakePitcherConstants.kPitcherOut)
           ).repeatedly()
 
         ));
@@ -133,7 +133,7 @@ public class RobotContainer {
 
     Command intakeFor5Secounds = 
       new SequentialCommandGroup(
-        new AutoIntakePowerCmd(intakeSub, 5)
+        new AutoIntakePowerCMD(intakeSub, 5)
       );
     NamedCommands.registerCommand("intakeFor5Secounds", intakeFor5Secounds);
 

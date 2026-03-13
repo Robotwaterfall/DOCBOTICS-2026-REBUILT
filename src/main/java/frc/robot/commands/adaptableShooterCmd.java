@@ -9,7 +9,7 @@ import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.HoodSub;
 import frc.robot.subsystems.ShooterSub;
 
-public class adaptableShooterCmd extends Command{
+public class AdaptableShooterCMD extends Command{
 
     ShooterSub shooterSub;
     HoodSub hoodSub;
@@ -27,7 +27,8 @@ public class adaptableShooterCmd extends Command{
   
     
 
-    public adaptableShooterCmd(ShooterSub shooterSub, HoodSub hoodSub, Supplier<Double> shootSupplier
+    public AdaptableShooterCMD
+(ShooterSub shooterSub, HoodSub hoodSub, Supplier<Double> shootSupplier
     , boolean isAuto) {
 
        this.shooterSub = shooterSub;

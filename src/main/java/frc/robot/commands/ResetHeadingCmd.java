@@ -4,10 +4,10 @@ import edu.wpi.first.wpilibj2.command.Command;
 
 import frc.robot.subsystems.SwerveSub;
 
-public class ResetHeadingCmd extends Command  {
+public class ResetHeadingCMD extends Command  {
     private final SwerveSub swerveSub;
 
-    public ResetHeadingCmd(SwerveSub swerveSub){
+    public ResetHeadingCMD(SwerveSub swerveSub){
         this.swerveSub = swerveSub;
         addRequirements(swerveSub);
          

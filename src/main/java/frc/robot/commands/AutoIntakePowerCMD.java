@@ -6,13 +6,13 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.IntakeSub;
 
-public class AutoIntakePowerCmd extends Command {
+public class AutoIntakePowerCMD extends Command {
 
   IntakeSub intakeSub;
   Timer elapsedTime;
   double totalTime;
 
-  public AutoIntakePowerCmd(IntakeSub intakeSub, double totalTime) {
+  public AutoIntakePowerCMD(IntakeSub intakeSub, double totalTime) {
     this.intakeSub = intakeSub;
     this.elapsedTime = new Timer();
     this.totalTime = totalTime;
