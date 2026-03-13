@@ -9,6 +9,15 @@ import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.HoodSub;
 import frc.robot.subsystems.ShooterSub;
 
+/*
+ * Do the calculations in ShooterPhysics.java for readability. Make sure all units are in inches.
+ * 
+ * This shoot command should grab ideal velocity from ShooterPhysics and set the motors to this velocity.
+ * 
+ * Flutter intake to help index into shooter maybe...
+ * 
+ */
+
 public class AdaptableShooterCMD extends Command{
 
     ShooterSub shooterSub;
@@ -27,9 +36,8 @@ public class AdaptableShooterCMD extends Command{
   
     
 
-    public AdaptableShooterCMD
-(ShooterSub shooterSub, HoodSub hoodSub, Supplier<Double> shootSupplier
-    , boolean isAuto) {
+    public AdaptableShooterCMD(ShooterSub shooterSub, HoodSub hoodSub, 
+                                Supplier<Double> shootSupplier, boolean isAuto) {
 
        this.shooterSub = shooterSub;
        this.hoodSub = hoodSub;
@@ -60,7 +68,6 @@ public class AdaptableShooterCMD extends Command{
 
         double theta = Math.toRadians(desiredHoodAngle);
         double distanceAwayMeters = Math.abs(distanceAwayFromGoal * Constants.unitConversions.inchesToMeters);
-
 
         double numerator = Constants.ShooterConstants.kGravity * Math.pow(distanceAwayMeters, 2);
 

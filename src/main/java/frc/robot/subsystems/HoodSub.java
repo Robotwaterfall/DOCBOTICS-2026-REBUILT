@@ -17,12 +17,10 @@ public class HoodSub extends SubsystemBase{
     private final ServoChannel hoodLinActRightChannel;
     private final ServoChannel hoodLinActLeftChannel;
 
-    public static double hoodAngle;
-    public static double distanceFromLimelightToGoalInches;
-
+    private double hoodAngle;
+    private double distanceFromLimelightToGoalInches;
 
     public HoodSub(){
-
         servoHub = new ServoHub(HoodConstants.kHoodId);
 
         ServoHubConfig config = new ServoHubConfig();
@@ -38,6 +36,7 @@ public class HoodSub extends SubsystemBase{
 
         hoodLinActRightChannel = servoHub.getServoChannel(ChannelId.kChannelId0);
 
+        // Channels MUST be enabled and powered to use .setPulseWidth
         hoodLinActRightChannel.setEnabled(true);
         hoodLinActRightChannel.setPowered(true);
 
@@ -45,8 +44,6 @@ public class HoodSub extends SubsystemBase{
 
         hoodLinActLeftChannel.setEnabled(true);
         hoodLinActLeftChannel.setPowered(true);
-
-
     }
 
     public ServoChannel getHoodLinActRightChannel(){
@@ -61,10 +58,6 @@ public class HoodSub extends SubsystemBase{
         return hoodAngle;
     }
 
-    public void setHoodAngle(double hoodAngle){
-         hoodAngle = HoodSub.hoodAngle;
-    }
-
     public double getLimelightToGoalInches(){
         return distanceFromLimelightToGoalInches;
     }
@@ -73,40 +66,45 @@ public class HoodSub extends SubsystemBase{
         distanceFromLimelightToGoalInches = limelightToGoalInches;
     }
 
+    // Primary service method for HoodServoAdjustCMD
+    public void setHoodAngle(double hoodAngle){
+        this.hoodAngle = hoodAngle;
+        int desiredPulseWidth = inchesToPulseWidth(degreeToInches(hoodAngle));
+        
+        hoodLinActLeftChannel.setPulseWidth(desiredPulseWidth);
+        hoodLinActRightChannel.setPulseWidth(desiredPulseWidth);
+    }
+
+    // Scalar mapping for inches to pulse width to use
     private double map(
         double x,
         double inMin, double inMax,
         double outMin, double outMax
         ){
-
         return outMin + (x - inMin) * (outMax - outMin) / (inMax - inMin);
     }
+    
+    // int return type required because .setPulseWidth has int param
 
-    private double inchesToPulseWidth(double extensionInches){
+    private int inchesToPulseWidth(double extensionInches){
         MathUtil.clamp(extensionInches, Constants.HoodConstants.minExtensionInches, 
             Constants.HoodConstants.maxExtensionInches);
-
-             return map(extensionInches, 
-               HoodConstants.minExtensionInches, HoodConstants.maxExtensionInches,
-               HoodConstants.kMinPulseUs,        HoodConstants.kMaxPulseUs);
+        
+        return (int)map(extensionInches, // Casting done *here* instead of map method to avoid int division -> avoids excessive rounding
+            HoodConstants.minExtensionInches, HoodConstants.maxExtensionInches,
+            HoodConstants.kMinPulseUs,        HoodConstants.kMaxPulseUs);
     }
 
    private double degreeToInches(double angleDegree){
+        // This is the cubic approx for the path the hood takes
         return HoodConstants.a3 * Math.pow(angleDegree, 3) + HoodConstants.a2 * Math.pow(angleDegree, 2) + 
             HoodConstants.a1 * angleDegree + HoodConstants.a0;
    }
 
-
-
-    
-
     @Override
     public String toString(){
         String str = " ";
-
-        str += "DesiredHoodAngle" + getHoodAngle(); //to show desired hood angle
-        str += "distanceAwayFromGoalInches" + getLimelightToGoalInches(); //how far we are away from goal
-
+        str += "DesiredHoodAngle" + getHoodAngle(); // To show desired hood angle
         return str;
 
     }

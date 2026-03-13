@@ -9,11 +9,20 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.HoodSub;
 
+/*
+ * Like AdaptableShooterCMD.java, use ShooterPhysics to compute desired angle. Then this command sets the angle.
+ * 
+ * This avoids doing tedious calculations for limelight here and focuses on how to operate the hood.
+ */
+
 public class HoodServoAdjustCMD extends Command{
 
     private final HoodSub hoodSub;
     ServoChannel hoodServoPrimary, hoodServoSecondary;
 
+    /*
+     * Originally public...why?
+     */
     private double distanceFromLimelightToGoalInches;
     private double desiredHoodAngle;
 

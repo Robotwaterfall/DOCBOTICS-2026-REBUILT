@@ -8,6 +8,11 @@ import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.ConveyorSub;
 import frc.robot.subsystems.ShooterSub;
 
+/*
+ * Consider adding juggling command to help ball intake. This command would be RunConveyorShooting or something.
+ * 
+ */
+
 public class RunConveyorCMD extends Command{
 
     ConveyorSub conveyorSub;

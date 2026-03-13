@@ -184,6 +184,15 @@ public final class Constants {
 
 
     //PHYSICS CONSTANTS
+
+    /*
+     *
+     * 
+     *  Make sure these are in inches/ inches derived units to avoid tedious conversions!!!
+     * 
+     * 
+     */
+
     public static final double kGravity = 9.8;
     public static final double heightOfGoalMeters = 1.82; //height of the hub where fuel can enter
 
