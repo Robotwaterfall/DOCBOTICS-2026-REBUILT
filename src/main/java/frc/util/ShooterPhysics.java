@@ -22,7 +22,7 @@
  * - No motor or hardware dependencies
  */
 
-package frc.robot;
+package frc.util;
 
 public class ShooterPhysics {
 
