@@ -36,18 +36,25 @@ public class runConveyorCmd extends Command{
 
     @Override
     public void execute(){
-        //if the shooter gets to desired velocity start the conveyor for shooting
-        if((shooterSub.getShooterLeadVelocity()) > (desiredVelocity - ShooterConstants.shooterTolerance) &&
-                (shooterSub.getShooterLeadVelocity()) < (desiredVelocity + ShooterConstants.shooterTolerance)){
 
-                    conveyorSub.setConveyorPower(ConveyorConstant.conveyorPower);
+        conveyorSub.setConveyorPower(0.5);
+        // //if the shooter gets to desired velocity start the conveyor for shooting
+        // if((shooterSub.getShooterLeadVelocity()) > (desiredVelocity - ShooterConstants.shooterTolerance) &&
+        //         (shooterSub.getShooterLeadVelocity()) < (desiredVelocity + ShooterConstants.shooterTolerance)){
 
-                } else if(isReversed.get()){
-                    conveyorSub.setConveyorPower(-ConveyorConstant.conveyorPower);
-                } else{
-                    conveyorSub.setConveyorPower(0);
-                }
+        //             conveyorSub.setConveyorPower(ConveyorConstant.conveyorPower);
 
+        //         } else if(isReversed.get()){
+        //             conveyorSub.setConveyorPower(-ConveyorConstant.conveyorPower);
+        //         } else{
+        //             conveyorSub.setConveyorPower(0);
+        //         }
+
+    }
+
+    @Override
+    public void end(boolean interrupted){
+        conveyorSub.setConveyorPower(0);
     }
 
 

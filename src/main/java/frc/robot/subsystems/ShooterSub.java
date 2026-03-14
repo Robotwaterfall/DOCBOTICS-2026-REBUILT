@@ -64,6 +64,20 @@ public class ShooterSub extends SubsystemBase {
 
     }
 
+    /**
+     * Description: Sets the power to motors directly. (To be used for testing purposes only)
+     * Pre-Condition: Power is between -1 and 1, where 1 is full forward power and -1 is full reverse power. All objects and hardware are initalized
+     * Post-Condition: Motors will be set to the desired power
+     * @param power The desired power
+     */
+    public void powerMotors(double power){
+        double clampedPower = Math.max(-1, Math.min(1, power)); // Clamp power between -1 and 1
+
+        shooterLead.set(clampedPower);
+        shooterFollowerRight.set(clampedPower);
+        shooterFollowerLeft.set(clampedPower);
+    }
+
     public double getShooterLeadVelocity(){
         return shooterLead.getVelocity().getValueAsDouble();
     }
@@ -75,6 +89,20 @@ public class ShooterSub extends SubsystemBase {
     public double getShooterFollowerLeftVelocity(){
         return shooterFollowerLeft.getVelocity().getValueAsDouble();
     }
+
+    public void setShooterLeadSpeed(double speed){
+        shooterLead.set(speed);
+    }
+
+    public void setShooterFollowerRightSpeed(double speed){
+        shooterFollowerRight.set(speed);
+    }
+
+    public void setShooterFollowerLeftSpeed(double speed){
+        shooterFollowerLeft.set(speed);
+    }
+
+ 
 
     public double getDesiredVelocity(){
         return desiredVelocity;

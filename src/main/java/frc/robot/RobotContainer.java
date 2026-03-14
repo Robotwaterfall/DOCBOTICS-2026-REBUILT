@@ -1,3 +1,8 @@
+
+
+
+
+
 // Copyright (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
@@ -85,13 +90,13 @@ public class RobotContainer {
             () -> driverJoyStick.getRawButton(OIConstants.kLockWheelsButton))); 
 
     
-    // intakeSub.setDefaultCommand(new TeleOpIntakePowerCmd(intakeSub, 
-    //   () -> driverJoyStick.getRightBumperButtonPressed(), 
-    //   () -> driverJoyStick.getLeftBumperButtonPressed())); 
+    intakeSub.setDefaultCommand(new TeleOpIntakePowerCmd(intakeSub, 
+      () -> driverJoyStick.getAButton(), 
+      () -> driverJoyStick.getLeftBumperButtonPressed())); 
     
-    conveyorSub.setDefaultCommand(new runConveyorCmd(
-      conveyorSub, shooterSub, 
-      () -> driverJoyStick.getLeftBumperButtonPressed()));
+    // conveyorSub.setDefaultCommand(new runConveyorCmd(
+    //   conveyorSub, shooterSub, 
+    //   () -> driverJoyStick.getLeftBumperButtonPressed()));
     
     
 
@@ -114,9 +119,16 @@ public class RobotContainer {
       new ResetHeadingCmd(swerveSub)
     );
 
-    new JoystickButton(driverJoyStick, 6).whileTrue(
-      new DumpShooterCmd(shooterSub)
+    new JoystickButton(driverJoyStick, 2).whileTrue(
+      new runConveyorCmd(conveyorSub, shooterSub, () -> false)
     );
+
+    
+    new JoystickButton(driverJoyStick, 3).whileTrue(
+      new adaptableShooterCmd(shooterSub, hoodSub)
+    );
+
+
 
     //This command runs the shooter routine
     // Command adaptableShootCommand = 
@@ -156,8 +168,8 @@ public class RobotContainer {
     teleManager.registerSubsystem("Conveyor: ", conveyorSub);
     // teleManager.registerSubsystem("Hood: ", hoodSub);
     // teleManager.registerSubsystem("IntakePitcher: ", intakePitcherSub);
-    // teleManager.registerSubsystem("Intake: ", intakeSub);
-    // teleManager.registerSubsystem("Shooter: ", shooterSub);
+    teleManager.registerSubsystem("Intake: ", intakeSub);
+    teleManager.registerSubsystem("Shooter: ", shooterSub);
 
   }
 

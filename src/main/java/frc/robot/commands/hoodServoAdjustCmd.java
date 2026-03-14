@@ -11,65 +11,65 @@ import frc.robot.subsystems.HoodSub;
 
 public class HoodServoAdjustCmd extends Command{
 
-    private final HoodSub hoodSub;
-    ServoChannel hoodServoPrimary, hoodServoSecondary;
+    // private final HoodSub hoodSub;
+    // ServoChannel hoodServoPrimary, hoodServoSecondary;
 
-    private double distanceFromLimelightToGoalInches;
-    private double desiredHoodAngle;
-
-
-    public HoodServoAdjustCmd(HoodSub hoodSub){
-        this.hoodSub = hoodSub;
-
-        this.hoodServoPrimary = hoodSub.getHoodLinActRightChannel(); 
-        this.hoodServoSecondary = hoodSub.getHoodLinActLeftChannel();
-
-        distanceFromLimelightToGoalInches = hoodSub.getHoodAngle();
-        desiredHoodAngle = hoodSub.getHoodAngle();
-
-        addRequirements(hoodSub);
-
-    }
-
-    @Override
-    public void initialize(){
+    // private double distanceFromLimelightToGoalInches;
+    // private double desiredHoodAngle;
 
 
-    }
+    // public HoodServoAdjustCmd(HoodSub hoodSub){
+    //     this.hoodSub = hoodSub;
 
-    @Override
-    public void execute(){
+    //     this.hoodServoPrimary = hoodSub.getHoodLinActRightChannel(); 
+    //     this.hoodServoSecondary = hoodSub.getHoodLinActLeftChannel();
 
-        // limelight distance calculations 
-        NetworkTable table = NetworkTableInstance.getDefault().getTable(Constants.LimelightConstants.Limelight2);
-        NetworkTableEntry ty = table.getEntry("ty");
-        double targetOffsetAngle_Vertical = ty.getDouble(0.0);
+    //     distanceFromLimelightToGoalInches = hoodSub.getHoodAngle();
+    //     desiredHoodAngle = hoodSub.getHoodAngle();
 
-        // how many degrees back is your limelight rotated from perfectly vertical?
-        double limelightMountAngleDegrees = Constants.LimelightConstants.limelightMountAngleDegrees; 
+    //     addRequirements(hoodSub);
 
-        // distance from the center of the Limelight lens to the floor
-        double limelightLensHeightInches = Constants.LimelightConstants.limelightLensHeightInches; 
+    // }
 
-        // distance from the target to the floor
-        double goalHeightInches = Constants.LimelightConstants.goalHeightInches; 
-
-        double angleToGoalDegrees = limelightMountAngleDegrees + targetOffsetAngle_Vertical;
-        double angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180.0);
+    // @Override
+    // public void initialize(){
 
 
-        //calculate distance
-        distanceFromLimelightToGoalInches = (goalHeightInches - limelightLensHeightInches) / Math.tan(angleToGoalRadians);
+    // }
+
+    // @Override
+    // public void execute(){
+
+    //     // limelight distance calculations 
+    //     NetworkTable table = NetworkTableInstance.getDefault().getTable(Constants.LimelightConstants.Limelight2);
+    //     NetworkTableEntry ty = table.getEntry("ty");
+    //     double targetOffsetAngle_Vertical = ty.getDouble(0.0);
+
+    //     // how many degrees back is your limelight rotated from perfectly vertical?
+    //     double limelightMountAngleDegrees = Constants.LimelightConstants.limelightMountAngleDegrees; 
+
+    //     // distance from the center of the Limelight lens to the floor
+    //     double limelightLensHeightInches = Constants.LimelightConstants.limelightLensHeightInches; 
+
+    //     // distance from the target to the floor
+    //     double goalHeightInches = Constants.LimelightConstants.goalHeightInches; 
+
+    //     double angleToGoalDegrees = limelightMountAngleDegrees + targetOffsetAngle_Vertical;
+    //     double angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180.0);
+
+
+    //     //calculate distance
+    //     distanceFromLimelightToGoalInches = (goalHeightInches - limelightLensHeightInches) / Math.tan(angleToGoalRadians);
 
 
 
-        //UNFINISHED   
+    //     //UNFINISHED   
 
-        //Set the angle of the hood
-        hoodSub.setHoodAngle(desiredHoodAngle);
+    //     //Set the angle of the hood
+    //     hoodSub.setHoodAngle(desiredHoodAngle);
 
 
-    }
+    // }
 
    
 

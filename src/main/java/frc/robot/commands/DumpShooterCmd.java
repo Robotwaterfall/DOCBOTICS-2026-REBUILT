@@ -21,9 +21,7 @@ public class DumpShooterCmd extends Command{
 
     public void execute(){
 
-        shooterSub.setShooterVelocityMPS(1);
-
-
+        shooterSub.setShooterVelocityMPS(-0.5);
 
     }
 
