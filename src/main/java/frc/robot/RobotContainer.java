@@ -6,6 +6,8 @@ package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -26,6 +28,7 @@ import frc.robot.commands.runConveyorCmd;
 import frc.robot.subsystems.IntakeSub;
 import frc.robot.subsystems.ShooterSub;
 import frc.robot.commands.AutoIntakePowerCmd;
+import frc.robot.commands.DumpShooterCmd;
 import frc.robot.commands.HoodServoAdjustCmd;
 import frc.robot.commands.IdleIntakePitcherCmd;
 import frc.robot.commands.MoveIntakePitcherCmd;
@@ -82,9 +85,9 @@ public class RobotContainer {
             () -> driverJoyStick.getRawButton(OIConstants.kLockWheelsButton))); 
 
     
-    intakeSub.setDefaultCommand(new TeleOpIntakePowerCmd(intakeSub, 
-      () -> driverJoyStick.getRightBumperButtonPressed(), 
-      () -> driverJoyStick.getLeftBumperButtonPressed())); 
+    // intakeSub.setDefaultCommand(new TeleOpIntakePowerCmd(intakeSub, 
+    //   () -> driverJoyStick.getRightBumperButtonPressed(), 
+    //   () -> driverJoyStick.getLeftBumperButtonPressed())); 
     
     conveyorSub.setDefaultCommand(new runConveyorCmd(
       conveyorSub, shooterSub, 
@@ -92,12 +95,12 @@ public class RobotContainer {
     
     
 
-    hoodSub.setDefaultCommand(
-      new HoodServoAdjustCmd(hoodSub) //Hood should constantly be adjusting if april tag is detected
-    );
+    // hoodSub.setDefaultCommand(
+    //   new HoodServoAdjustCmd(hoodSub) //Hood should constantly be adjusting if april tag is detected
+    // );
 
 
-    intakePitcherSub.setDefaultCommand(new IdleIntakePitcherCmd(intakePitcherSub));
+    // intakePitcherSub.setDefaultCommand(new IdleIntakePitcherCmd(intakePitcherSub));
 
     autoChooser = AutoBuilder.buildAutoChooser(); //Default auto will be 'Commands.none()'
     SmartDashboard.putData("AutoMode: ", autoChooser);
@@ -111,31 +114,35 @@ public class RobotContainer {
       new ResetHeadingCmd(swerveSub)
     );
 
+    new JoystickButton(driverJoyStick, 6).whileTrue(
+      new DumpShooterCmd(shooterSub)
+    );
+
     //This command runs the shooter routine
-    Command adaptableShootCommand = 
-      new ParallelDeadlineGroup(
+    // Command adaptableShootCommand = 
+    //   new ParallelDeadlineGroup(
         
-      new WaitCommand(autoConstants.timeElapsedShootingSecounds),
+    //   new WaitCommand(autoConstants.timeElapsedShootingSecounds),
         
-      new ParallelCommandGroup(
+    //   new ParallelCommandGroup(
 
-          new adaptableShooterCmd(shooterSub, hoodSub,() -> 1.0, true),
-          new HoodServoAdjustCmd(hoodSub),
+    //       new adaptableShooterCmd(shooterSub, hoodSub,() -> 1.0, true),
+    //       new HoodServoAdjustCmd(hoodSub),
 
-          new SequentialCommandGroup(
-            new MoveIntakePitcherCmd(intakePitcherSub, IntakePitcherConstants.kPitcherIn),
-            new WaitCommand(autoConstants.timeBetweenPitcherInAndOut),
-            new MoveIntakePitcherCmd(intakePitcherSub, IntakePitcherConstants.kPitcherOut)
-          ).repeatedly()
+    //       new SequentialCommandGroup(
+    //         new MoveIntakePitcherCmd(intakePitcherSub, IntakePitcherConstants.kPitcherIn),
+    //         new WaitCommand(autoConstants.timeBetweenPitcherInAndOut),
+    //         new MoveIntakePitcherCmd(intakePitcherSub, IntakePitcherConstants.kPitcherOut)
+    //       ).repeatedly()
 
-        ));
-    NamedCommands.registerCommand("adaptableShooterCommand", adaptableShootCommand);
+    //     ));
+    // NamedCommands.registerCommand("adaptableShooterCommand", adaptableShootCommand);
 
-    Command intakeFor5Secounds = 
-      new SequentialCommandGroup(
-        new AutoIntakePowerCmd(intakeSub, 5)
-      );
-    NamedCommands.registerCommand("intakeFor5Secounds", intakeFor5Secounds);
+    // Command intakeFor5Secounds = 
+    //   new SequentialCommandGroup(
+    //     new AutoIntakePowerCmd(intakeSub, 5)
+    //   );
+    // NamedCommands.registerCommand("intakeFor5Secounds", intakeFor5Secounds);
 
 
 
@@ -147,10 +154,10 @@ public class RobotContainer {
   private void registerSubsystems(){
 
     teleManager.registerSubsystem("Conveyor: ", conveyorSub);
-    teleManager.registerSubsystem("Hood: ", hoodSub);
-    teleManager.registerSubsystem("IntakePitcher: ", intakePitcherSub);
-    teleManager.registerSubsystem("Intake: ", intakeSub);
-    teleManager.registerSubsystem("Shooter: ", shooterSub);
+    // teleManager.registerSubsystem("Hood: ", hoodSub);
+    // teleManager.registerSubsystem("IntakePitcher: ", intakePitcherSub);
+    // teleManager.registerSubsystem("Intake: ", intakeSub);
+    // teleManager.registerSubsystem("Shooter: ", shooterSub);
 
   }
 

@@ -19,7 +19,7 @@ public class HoodSub extends SubsystemBase{
     private final ServoChannel hoodLinActRightChannel;
     private final ServoChannel hoodLinActLeftChannel;
 
-    public static double hoodAngle;
+    public static double HoodAngle;
     public static double distanceFromLimelightToGoalInches;
 
 
@@ -60,11 +60,11 @@ public class HoodSub extends SubsystemBase{
     }
 
     public double getHoodAngle(){
-        return hoodAngle;
+        return HoodAngle;
     }
 
-    public void setHoodAngle(double hoodAngle){
-         hoodAngle = HoodSub.hoodAngle;
+    public void setHoodAngle(double m_hoodAngle){
+         HoodAngle = m_hoodAngle;
     }
 
     public double getLimelightToGoalInches(){
@@ -98,9 +98,6 @@ public class HoodSub extends SubsystemBase{
             HoodConstants.a1 * angleDegree + HoodConstants.a0;
    }
 
-   public void setHoodAngle(double hoodAngle){
-        hoodLinActLeftChannel.setPulseWidth(hoodAngle);
-   }
 
     
 
