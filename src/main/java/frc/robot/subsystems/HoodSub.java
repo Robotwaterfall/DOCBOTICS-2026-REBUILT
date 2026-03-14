@@ -1,7 +1,5 @@
 package frc.robot.subsystems;
 
-import java.util.Map;
-import org.opencv.core.Mat;
 import com.revrobotics.servohub.ServoChannel;
 import com.revrobotics.servohub.ServoHub;
 import com.revrobotics.servohub.ServoChannel.ChannelId;
@@ -98,9 +96,7 @@ public class HoodSub extends SubsystemBase{
             HoodConstants.a1 * angleDegree + HoodConstants.a0;
    }
 
-   public void setHoodAngle(double hoodAngle){
-        hoodLinActLeftChannel.setPulseWidth(hoodAngle);
-   }
+
 
     
 

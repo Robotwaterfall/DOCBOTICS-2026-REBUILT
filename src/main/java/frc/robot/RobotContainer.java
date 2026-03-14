@@ -96,8 +96,8 @@ public class RobotContainer {
       new HoodServoAdjustCmd(hoodSub) //Hood should constantly be adjusting if april tag is detected
     );
 
-
-    intakePitcherSub.setDefaultCommand(new IdleIntakePitcherCmd(intakePitcherSub));
+    //Intake pitcher should be idle by default, but can be moved to different angles when the MoveIntakePitcherCmd is scheduled
+    intakePitcherSub.setDefaultCommand(new IdleIntakePitcherCmd(intakePitcherSub)); 
 
     autoChooser = AutoBuilder.buildAutoChooser(); //Default auto will be 'Commands.none()'
     SmartDashboard.putData("AutoMode: ", autoChooser);

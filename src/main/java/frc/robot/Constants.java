@@ -41,9 +41,9 @@ public final class Constants {
 
   public static final class DriveConstants {
 
-      public static final double kTrackWidth = Units.inchesToMeters(20.594);
+      public static final double kTrackWidth = Units.inchesToMeters(20.594); //TODO: measure track width and set here
       // Distance between right and left wheels
-      public static final double kWheelBase = Units.inchesToMeters(25.50); //CHANGED
+      public static final double kWheelBase = Units.inchesToMeters(25.50); //TODO: measure wheel base and set here
       // Distance between front and back wheels
       public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(
               new Translation2d(kWheelBase / 2, -kTrackWidth / 2),
@@ -58,7 +58,7 @@ public final class Constants {
 
     public static final int kFrontLeftTurningMotorPort = 6;
     public static final int kBackLeftTurningMotorPort = 16;
-    public static final int kFrontRightTurningMotorPort = 20;
+    public static final int kFrontRightTurningMotorPort = 32;
     public static final int kBackRightTurningMotorPort = 12;
 
     public static final boolean kFrontLeftTurningEncoderReversed = true;
@@ -66,8 +66,8 @@ public final class Constants {
     public static final boolean kFrontRightTurningEncoderReversed = true;
     public static final boolean kBackRightTurningEncoderReversed = true;
 
-    public static final boolean kFrontLeftDriveEncoderReversed = false;
-    public static final boolean kBackLeftDriveEncoderReversed = false;
+    public static final boolean kFrontLeftDriveEncoderReversed = true;
+    public static final boolean kBackLeftDriveEncoderReversed = true;
     public static final boolean kFrontRightDriveEncoderReversed = true;
     public static final boolean kBackRightDriveEncoderReversed = true;
 
@@ -81,10 +81,10 @@ public final class Constants {
     public static final boolean kFrontRightDriveAbsoluteEncoderReversed = false;
     public static final boolean kBackRightDriveAbsoluteEncoderReversed = false;
 
-    public static final double kFrontLeftDriveAbsoluteEncoderOffsetRad = 0.419434 * 2 * Math.PI; //TODO
-    public static final double kBackLeftDriveAbsoluteEncoderOffsetRad = 0.172607 * 2 * Math.PI;
-    public static final double kFrontRightDriveAbsoluteEncoderOffsetRad = -0.076172 * 2 * Math.PI;
-    public static final double kBackRightDriveAbsoluteEncoderOffsetRad = -0.344971 * 2 * Math.PI;
+    public static final double kFrontLeftDriveAbsoluteEncoderOffsetRad = 0.422852 * 2 * Math.PI; 
+    public static final double kBackLeftDriveAbsoluteEncoderOffsetRad = 0.162354 * 2 * Math.PI;
+    public static final double kFrontRightDriveAbsoluteEncoderOffsetRad = -0.083252 * 2 * Math.PI;
+    public static final double kBackRightDriveAbsoluteEncoderOffsetRad = -0.341797 * 2 * Math.PI;
 
     public static final double kPhysicalMaxSpeedMetersPerSecond = 5;
     public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 2 * 2 * Math.PI;
@@ -99,15 +99,15 @@ public final class Constants {
     public static class autoTargetConstants {
       public static final double autoOrientKp = 0.0035;
 
-      public static final double autoLockKp = 0;
+      public static final double autoLockKp = 0; //TODO
 
     }
   }
 
   public static final class LimelightConstants {
 
-    public static final String Limelight2 = "limelight2+";
-    public static final String Limelight3 = "limelight3";
+    public static final String Limelight2 = "limelight-track";
+    public static final String Limelight3 = "limelight3"; //TODO
 
     public static final double limelightMountAngleDegrees = 60.0; //TODO
     public static final double limelightLensHeightInches = 20.0; //TODO
@@ -125,7 +125,7 @@ public final class Constants {
 
       public static final int kDriveGyroResetButtonIdx = 7;
     
-      public static final int kSlowModeIdx = 4;
+      public static final int kSlowModeIdx = 9;
 
       public static final int kDriverFieldOrientedButtonIdx = 5;
 
@@ -137,25 +137,25 @@ public final class Constants {
 
   }
   public static final class IntakeConstants{
-    public static final int kIntakeMotorPort = 14; //TODO:: SET LATER
-    public static final double kIntakeMotorPower = 1.0; //TODO
-    public static final double kOutakeMotorPower = -1.0; //TODO
+    public static final int kIntakeMotorPort = 3; 
+    public static final double kIntakeMotorPower = -1.0; //reverse power to intake, positive power to outtake
+    public static final double kOutakeMotorPower = 1.0; 
 
   }
 
   public static final class IntakePitcherConstants {
-    public static final int kIntakePitcherMotorPort = 15; //TODO:: SET LATER
+    public static final int kIntakePitcherMotorPort = 2; 
     public static final double kDegreesPerMotorRotation = 360 / (9 * 48/20 * 48/20 * 24/12); // Degrees / gear ratio gives degrees to motor revolutions
 
-    public static final double kMinPitchDegrees = 0;
+    public static final double kMinPitchDegrees = 0; //TODO: set min and max pitch degrees based on physical limits of the mechanism
     public static final double kMaxPitchDegrees = 90; //TODO
 
     public static final double kPitcherIn = 0; // Setpoint positions
     public static final double kPitcherOut = 90; //TODO
 
     public static double intakePitcher_kP = 0; //TODO
-    public static double intakePitcher_kI = 0;
-    public static double intakePitcher_kD = 0;
+    public static double intakePitcher_kI = 0; //TODO
+    public static double intakePitcher_kD = 0; //TODO
 
     public static double intakePitcherToleranceDegrees = 2; //TODO
 
@@ -165,11 +165,11 @@ public final class Constants {
   }
 
   public static final class ShooterConstants {
-    public static final int kShooterLeadMotorId = 16; //TODO:: SET LATER
-    public static final int kShooterFollowerRightId = 17; //TODO:: SET LATER
-    public static final int kShooterFollowerLeftId = 18; //TODO:: SET LATER
+    public static final int kShooterLeadMotorId = 24;
+    public static final int kShooterFollowerRightId = 23;
+    public static final int kShooterFollowerLeftId = 22; 
 
-    public static final int kIndexMotorId = 19; //TODO: set later
+    public static final int kIndexMotorId = 25; 
 
     public static final double kWheelDiameterMeters = 0.1016; // 4" wheel
     public static final double kGearRatio = 1.0;
@@ -180,7 +180,7 @@ public final class Constants {
     public static final double kShooterKs = 0.1; //TODO
     public static final double kShooterKv = 0.1; //TODO
 
-    public static final double indexSpeed = 0.4; //TODO
+    public static final double indexSpeed = 1; 
 
 
     //PHYSICS CONSTANTS
@@ -193,17 +193,17 @@ public final class Constants {
   }
     public static final class ConveyorConstant {
     public static final int kConveyorMotorPort = 7;
-    public static final double conveyorPower = 0.6;
+    public static final double conveyorPower = 0.8; //TODO
  
 
   }
 
   public static final class HoodConstants{
-    public static final int kHoodId = 3; //TODO: change can id for hood
+    public static final int kHoodId = 30; 
 
     public static final double kMinAngleDeg = 0.0; //TODO:tune
     public static final double kMaxAngleDeg = 180.0;
-    public static final int kMinPulseUs = 1600;  //this is the hardware limit of the Lin act //TODO:tune
+    public static final int kMinPulseUs = 1650;  //this is the hardware limit of the Lin act //TODO:tune
     public static final int kCenterPulseUs = 1750;
     public static final int kMaxPulseUs = 2000;
     
