@@ -6,7 +6,7 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IntakeConstants;;
 
-public class IntakeRollerSub extends SubsystemBase {
+public class IntakeRollersSub extends SubsystemBase {
 
     private final SparkMax intakeRollerMotor = new SparkMax(IntakeConstants.kIntakeMotorPort, MotorType.kBrushless);
 
