@@ -31,6 +31,11 @@ public class MoveIntakePitcherCMD extends Command{
  
   }
 
+  @Override
+  public void end(boolean interupeted) {
+    intakePitcherSub.stopMotor();
+  }
+
 
   @Override
   public boolean isFinished(){
