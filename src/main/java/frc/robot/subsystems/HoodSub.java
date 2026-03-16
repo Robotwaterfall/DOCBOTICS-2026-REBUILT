@@ -103,7 +103,7 @@ public class HoodSub extends SubsystemBase{
 
     @Override
     public String toString(){
-        String str = " ";
+        String str = "";
         str += "DesiredHoodAngle" + getHoodAngle(); // To show desired hood angle
         return str;
 

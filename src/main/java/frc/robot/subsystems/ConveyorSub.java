@@ -29,7 +29,7 @@ public class ConveyorSub extends SubsystemBase {
 
     @Override
     public String toString(){
-        String str = " ";
+        String str = "";
         str += "isConveyorOn: " + isConveyorOn(); //To check if conveyor is on
         return str;
     }

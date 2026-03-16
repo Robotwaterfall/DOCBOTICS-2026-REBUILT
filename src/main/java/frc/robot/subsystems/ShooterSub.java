@@ -117,12 +117,12 @@ public class ShooterSub extends SubsystemBase {
     @Override
     public String toString(){
 
-        String str = " ";
+        String str = "";
 
         str += "Shooter Subsystem Information";
-        str += "currentDesiredVelocityMPS: " + getDesiredVelocity();
-        str += "averageVelocityMPS: " + getAverageShootingVelocityMPS();
-        str += "atDesiredVelocityMPS: " + isAtSetVelocityMPS();
+        str += "\ncurrentDesiredVelocityMPS: " + getDesiredVelocity();
+        str += "\naverageVelocityMPS: " + getAverageShootingVelocityMPS();
+        str += "\natDesiredVelocityMPS: " + isAtSetVelocityMPS();
 
         return str;
 
