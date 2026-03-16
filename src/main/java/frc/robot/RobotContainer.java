@@ -23,7 +23,7 @@ import frc.robot.commands.SwerveJoystickCMD;
 import frc.robot.commands.TeleOpIntakePowerCMD;
 import frc.robot.commands.AdaptableShooterCMD;
 import frc.robot.commands.RunConveyorCMD;
-import frc.robot.subsystems.IntakeSub;
+import frc.robot.subsystems.IntakeRollerSub;
 import frc.robot.subsystems.ShooterSub;
 import frc.robot.commands.AutoIntakePowerCMD;
 import frc.robot.commands.HoodServoAdjustCMD;
@@ -44,7 +44,7 @@ import frc.util.TelemetryManager;
 public class RobotContainer {
 
   public final SwerveSub swerveSub = new SwerveSub();
-  public final IntakeSub intakeSub = new IntakeSub();
+  public final IntakeRollerSub intakeSub = new IntakeRollerSub();
   public final HoodSub hoodSub = new HoodSub();
   public final ShooterSub shooterSub = new ShooterSub();
   public final IntakePitcherSub intakePitcherSub = new IntakePitcherSub();

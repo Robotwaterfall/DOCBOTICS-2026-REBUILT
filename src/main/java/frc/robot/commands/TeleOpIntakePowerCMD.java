@@ -4,16 +4,16 @@ import java.util.function.Supplier;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.IntakeConstants;
-import frc.robot.subsystems.IntakeSub;
+import frc.robot.subsystems.IntakeRollerSub;
 
 public class TeleOpIntakePowerCMD extends Command {
 
-    IntakeSub intakeSub;
+    IntakeRollerSub intakeSub;
     public final Supplier<Boolean> intakeSupplier;
     public final Supplier<Boolean> outakeSupplier;
 
     // Constructor
-    public TeleOpIntakePowerCMD(IntakeSub intakeSub, Supplier<Boolean> intakeSupplier, Supplier<Boolean> outakeSupplier) {
+    public TeleOpIntakePowerCMD(IntakeRollerSub intakeSub, Supplier<Boolean> intakeSupplier, Supplier<Boolean> outakeSupplier) {
         this.intakeSub = intakeSub;
         this.intakeSupplier = intakeSupplier;
         this.outakeSupplier = outakeSupplier;

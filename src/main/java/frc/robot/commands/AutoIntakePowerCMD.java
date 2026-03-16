@@ -4,15 +4,15 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
-import frc.robot.subsystems.IntakeSub;
+import frc.robot.subsystems.IntakeRollerSub;
 
 public class AutoIntakePowerCMD extends Command {
 
-  IntakeSub intakeSub;
+  IntakeRollerSub intakeSub;
   Timer elapsedTime;
   double totalTime;
 
-  public AutoIntakePowerCMD(IntakeSub intakeSub, double totalTime) {
+  public AutoIntakePowerCMD(IntakeRollerSub intakeSub, double totalTime) {
     this.intakeSub = intakeSub;
     this.elapsedTime = new Timer();
     this.totalTime = totalTime;

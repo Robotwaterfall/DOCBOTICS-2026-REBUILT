@@ -6,9 +6,9 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IntakeConstants;;
 
-public class IntakeSub extends SubsystemBase {
+public class IntakeRollerSub extends SubsystemBase {
 
-    private final SparkMax intakeMotor = new SparkMax(IntakeConstants.kIntakeMotorPort, MotorType.kBrushless);
+    private final SparkMax intakeRollerMotor = new SparkMax(IntakeConstants.kIntakeMotorPort, MotorType.kBrushless);
 
     /**
      * Description: Sets the intake motor's power
@@ -17,7 +17,7 @@ public class IntakeSub extends SubsystemBase {
      * @param power The desired power for the motor
      */
     public void setMotorPower(double power) {
-        intakeMotor.set(power);
+        intakeRollerMotor.set(power);
     }
 
     /**
@@ -26,14 +26,14 @@ public class IntakeSub extends SubsystemBase {
      * Post-Condition: Motor is stopped
      */
     public void stopMotor() {
-        intakeMotor.stopMotor();
+        intakeRollerMotor.stopMotor();
     }
 
 
     @Override
     public String toString() {
         String str = "";
-        double power = this.intakeMotor.getAppliedOutput();
+        double power = this.intakeRollerMotor.getAppliedOutput();
 
         str += "Intake Roller Information";
         str += "\nMotor Power: " + power;
@@ -44,8 +44,8 @@ public class IntakeSub extends SubsystemBase {
     }
 
     // Getter for debugging 
-    public SparkMax getIntakeMotor() {
-        return intakeMotor;
+    public SparkMax getIntakeRollerMotor() {
+        return intakeRollerMotor;
     }
 
 }
