@@ -21,8 +21,6 @@ public class ShooterSub extends SubsystemBase {
     public TalonFX shooterFollowerRight = new TalonFX(ShooterConstants.kShooterFollowerRightId);
     public TalonFX shooterFollowerLeft = new TalonFX(ShooterConstants.kShooterFollowerLeftId);
 
-    public TalonFX indexMotor = new TalonFX(ShooterConstants.kIndexMotorId);
-
     private final VelocityVoltage velocityRequest = new VelocityVoltage(0);
 
     public static double desiredVelocity;
@@ -84,9 +82,6 @@ public class ShooterSub extends SubsystemBase {
         desiredVelocity = desiredV;
     }
 
-    public void setIndexSpeed(double indexPower){
-        indexMotor.set(indexPower);
-    }
 
     public double getAverageShootingVelocityMPS(){
         double averageVelocity = (shooterLead.getVelocity().getValueAsDouble() 
@@ -110,9 +105,6 @@ public class ShooterSub extends SubsystemBase {
         shooterFollowerLeft.stopMotor();
     }
 
-    public void stopIndexMotor(){
-        indexMotor.stopMotor();
-    }
 
     @Override
     public String toString(){
