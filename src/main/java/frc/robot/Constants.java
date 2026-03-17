@@ -123,13 +123,13 @@ public final class Constants {
       public static final int kDriverYAxis = 1;
       public static final int kDriverRotAxis = 4;
 
-      public static final int kDriveGyroResetButtonIdx = 7;
+      public static final int kDriveGyroResetButtonIdx = 10;
     
-      public static final int kSlowModeIdx = 9;
+      public static final int kSlowModeIdx = 14;
 
-      public static final int kDriverFieldOrientedButtonIdx = 5;
+      public static final int kDriverFieldOrientedButtonIdx = 9;
 
-      public static final int kLockWheelsButton = 9;
+      public static final int kLockWheelsButton = 13;
 
 
 
