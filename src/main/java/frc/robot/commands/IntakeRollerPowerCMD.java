@@ -3,14 +3,14 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.IntakeRollersSub;
 
-public class IntakePowerCMD extends Command {
+public class IntakeRollerPowerCMD extends Command {
 
     IntakeRollersSub intakeRollerSub;
     double intakeRollerPower = 0;
   
 
     // Constructor
-    public IntakePowerCMD(IntakeRollersSub intakeSub, double intakeRollerPower) {
+    public IntakeRollerPowerCMD(IntakeRollersSub intakeSub, double intakeRollerPower) {
         this.intakeRollerSub = intakeSub;
         this.intakeRollerPower = intakeRollerPower;
        
