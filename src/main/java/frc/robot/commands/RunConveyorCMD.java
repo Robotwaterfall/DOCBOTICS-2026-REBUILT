@@ -1,12 +1,7 @@
 package frc.robot.commands;
 
-import java.util.function.Supplier;
-
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.ConveyorConstant;
-import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.ConveyorSub;
-import frc.robot.subsystems.ShooterSub;
 
 /*
  * Consider adding juggling command to help ball intake. This command would be RunConveyorShooting or something.

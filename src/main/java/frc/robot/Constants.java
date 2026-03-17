@@ -226,11 +226,6 @@ public final class Constants {
     public static final double a3 = 1.49396327886e-05;
   }
 
-  public static final class unitConversions{
-
-    public static final double inchesToMeters = 0.0254; //multiply with inches to get meters
-  }
-
   public static final class autoConstants{
 
     public static final double timeElapsedShootingSecounds = 8; //TODO

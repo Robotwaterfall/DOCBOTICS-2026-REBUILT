@@ -32,12 +32,6 @@ public class MoveIntakePitcherCMD extends Command{
   }
 
   @Override
-  public void end(boolean interupeted) {
-    intakePitcherSub.stopMotor();
-  }
-
-
-  @Override
   public boolean isFinished(){
     //when the pitcher is at the set setpoint stop command
     return intakePitcherSub.getIntakePitchSetpoint_degrees() == intakePitcherPosDeg;
