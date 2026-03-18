@@ -37,7 +37,6 @@ public class SwerveSub extends SubsystemBase {
     private final SwerveDrivePoseEstimator poseEstimator;
     private final Field2d m_Field = new Field2d();
     private RobotConfig config;
-    private double limeLightTX = 0;
 
     public SwerveSub() {
         // 1. Initialize Swerve Modules
@@ -223,19 +222,5 @@ public class SwerveSub extends SubsystemBase {
         for (SwerveModule module : swerveModules) {
             module.stop();
         }
-    }
-
-    public double orientToTarget() {
-        if (LimelightHelpers.getTV(LimelightConstants.Limelight2)) {
-            limeLightTX = LimelightHelpers.getTX(LimelightConstants.Limelight2);
-        }
-        double targetingAngularVelocity = limeLightTX * Constants.DriveConstants.autoTargetConstants.autoOrientKp;
-        targetingAngularVelocity *= DriveConstants.kPhysicalMaxAngularSpeedRadiansPerSecond;
-        targetingAngularVelocity *= -1.0;
-
-        if (Math.abs(targetingAngularVelocity) <= 0.001) {
-            targetingAngularVelocity = 0;
-        }
-        return targetingAngularVelocity;
     }
 }

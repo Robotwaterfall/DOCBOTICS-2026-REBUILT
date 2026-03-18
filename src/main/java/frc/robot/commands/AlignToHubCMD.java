@@ -1,16 +1,16 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.LimelightSub;
 import frc.robot.subsystems.SwerveSub;
+import frc.robot.util.PoseManager;
 
 public class AlignToHubCMD extends Command{
 
-    LimelightSub llSub;
+    PoseManager poseManager;
     SwerveSub swerveSub;
 
-    public AlignToHubCMD(LimelightSub llSub, SwerveSub swerveSub){
-        this.llSub = llSub;
+    public AlignToHubCMD(PoseManager poseManager, SwerveSub swerveSub){
+        this.poseManager = poseManager;
         this.swerveSub = swerveSub;
         addRequirements(swerveSub);
 

@@ -7,11 +7,11 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.IntakeConstants;;
+import frc.robot.Constants.IntakeRollerConstants;;
 
 public class IntakeRollersSub extends SubsystemBase {
 
-    private final SparkMax intakeRollerMotor = new SparkMax(IntakeConstants.kIntakeMotorPort, MotorType.kBrushless);
+    private final SparkMax intakeRollerMotor = new SparkMax(IntakeRollerConstants.kIntakeMotorPort, MotorType.kBrushless);
     private final SparkMaxConfig intakeRollerMotorConfig = new SparkMaxConfig();
 
     public IntakeRollersSub(){

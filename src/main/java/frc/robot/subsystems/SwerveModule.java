@@ -6,7 +6,7 @@ import com.revrobotics.ResetMode;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
-
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
@@ -47,6 +47,8 @@ public class SwerveModule {
 
         driveMotorConfig
         .inverted(driveMotorReversed);
+
+        driveMotorConfig.idleMode(IdleMode.kBrake);
 
         turningMotorConfig
         .inverted(turningMotorReversed);

@@ -30,7 +30,7 @@ public class AutoIntakeRollerPowerCMD extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intakeSub.setMotorPower(Constants.IntakeConstants.kIntakeMotorPower);
+    intakeSub.setMotorPower(Constants.IntakeRollerConstants.kIntakeMotorPower);
     SmartDashboard.putData(intakeSub);
   }
 

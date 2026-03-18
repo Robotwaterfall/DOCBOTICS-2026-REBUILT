@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.Constants.IntakePitcherConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.ResetHeadingCMD;
 import frc.robot.commands.SwerveJoystickCMD;
@@ -74,9 +75,9 @@ public class RobotContainer {
             driverJoyStick.getRawButton(OIConstants.kDriverFieldOrientedButtonIdx), 
             () -> driverJoyStick.getRawButton(OIConstants.kLockWheelsButton))); 
 
-
     //Intake pitcher should be idle by default
-    intakePitcherSub.setDefaultCommand(new MoveIntakePitcherCMD(intakePitcherSub, 0)); 
+    intakePitcherSub.setDefaultCommand(new MoveIntakePitcherCMD(intakePitcherSub, 
+      IntakePitcherConstants.kPitcherOut)); 
     
   }
 

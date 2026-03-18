@@ -125,18 +125,18 @@ public final class Constants {
 
       public static final int kDriveGyroResetButtonIdx = 10;
     
-      public static final int kSlowModeIdx = 14;
+      public static final int kSlowModeIdx = 11;
 
       public static final int kDriverFieldOrientedButtonIdx = 9;
 
-      public static final int kLockWheelsButton = 13;
+      public static final int kLockWheelsButton = 12;
 
 
 
       public static final double kDeadband = 0.5;
 
   }
-  public static final class IntakeConstants{
+  public static final class IntakeRollerConstants{
     public static final int kIntakeMotorPort = 3; 
     public static final double kIntakeMotorPower = -1.0; //reverse power to intake, positive power to outtake
     public static final double kOutakeMotorPower = 1.0; 
@@ -231,6 +231,17 @@ public final class Constants {
     public static final double timeElapsedShootingSecounds = 8; //TODO
     public static final double timeBetweenPitcherInAndOut = 1; //TODO
   }
+
+  public static final class Pose2DConstants{
+    // DEFAULT METERS
+    public static final double fieldWidth = 16.54175;
+    public static final double xHubPose = 8.23; //default blue
+    public static final double yHubPose = 8.23; //default blue
+
+    public static final double xHubPoseRed = fieldWidth - yHubPose;
+  }
+
+
 
   public static final double telemetryUpdate = 0.1; //Update every 100ms
 }

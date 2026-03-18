@@ -1,24 +1,41 @@
-package frc.robot.subsystems;
+package frc.robot.util;
 
+import java.util.Optional;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.DriverStation;
+import frc.robot.Constants.Pose2DConstants;
+import frc.robot.subsystems.SwerveSub;
 
-public class LimelightSub extends SubsystemBase{
+public class PoseManager {
 
     private double distMeters = 0;
     private Rotation2d heading;
     private double targetDeg = 0;
     private double errorDeg = 0;
 
+    private Pose2d redHubPose2d = new Pose2d(Pose2DConstants.xHubPose, Pose2DConstants.yHubPose, 
+        new Rotation2d());
+        
+    private Pose2d blueHubPose2d = new Pose2d(Pose2DConstants.xHubPose, Pose2DConstants.yHubPose, 
+        new Rotation2d());
+
     SwerveSub swerveSub;
 
-    public LimelightSub(SwerveSub swerveSub){
+    public PoseManager(SwerveSub swerveSub){
         this.swerveSub = swerveSub;
 
+    }
+
+    public Pose2d getAllianceHubPose2d(){
+       
+        return DriverStation.getAlliance()
+        .map(alliance -> alliance == DriverStation.Alliance.Blue ? blueHubPose2d : redHubPose2d)
+        .orElse(blueHubPose2d); //If driver station is not detected by default it will be blue alliance
+        
     }
 
     // returns inches away from target
@@ -56,7 +73,7 @@ public class LimelightSub extends SubsystemBase{
     public String toString(){
         String str = " ";
 
-        str += "Limelight Information: ";
+        str += "Pose Information: ";
         str += "\nInchesAwayFromTarget: " + Units.metersToInches(distMeters);
         str += "\nHeadingErrorDegrees: " +  errorDeg;
         str += "\nRotation2DRobotHeading: " + heading;
