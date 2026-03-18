@@ -9,85 +9,77 @@ import edu.wpi.first.wpilibj.DriverStation;
 import frc.robot.Constants.Pose2DConstants;
 import frc.robot.subsystems.SwerveSub;
 
-public class PoseManager {
+public final class PoseManager {
 
-    private double distMeters = 0;
-    private Rotation2d heading;
-    private double targetDeg = 0;
-    private double errorDeg = 0;
+    // Prevent instantiation
+    private PoseManager() {}
 
-    private Pose2d redHubPose2d = new Pose2d(Pose2DConstants.xHubPose, Pose2DConstants.yHubPoseRed, 
-        new Rotation2d());
-        
-    private Pose2d blueHubPose2d = new Pose2d(Pose2DConstants.xHubPose, Pose2DConstants.yHubPose, 
-        new Rotation2d());
+    // Static state (optional but preserved from original class)
+    private static double distMeters = 0;
+    private static Rotation2d heading = new Rotation2d();
+    private static double targetDeg = 0;
+    private static double errorDeg = 0;
 
-    SwerveSub swerveSub;
+    private static final Pose2d redHubPose2d =
+        new Pose2d(Pose2DConstants.xHubPose, Pose2DConstants.yHubPose, new Rotation2d());
 
-    public PoseManager(SwerveSub swerveSub){
-        this.swerveSub = swerveSub;
+    private static final Pose2d blueHubPose2d =
+        new Pose2d(Pose2DConstants.xHubPose, Pose2DConstants.yHubPose, new Rotation2d());
 
-    }
-
-    public Pose2d getAllianceHubPose2d(){
-       
+    /** Returns the hub pose for the current alliance */
+    public static Pose2d getAllianceHubPose2d() {
         return DriverStation.getAlliance()
-        .map(alliance -> alliance == DriverStation.Alliance.Blue ? blueHubPose2d : redHubPose2d)
-        .orElse(blueHubPose2d); //If driver station is not detected by default it will be blue alliance
-        
+            .map(alliance -> alliance == DriverStation.Alliance.Blue ? blueHubPose2d : redHubPose2d)
+            .orElse(blueHubPose2d);
     }
 
-    // returns inches away from target
-    public double getDistanceToTargetInches(Pose2d targetPose){
+    /** Returns inches away from target */
+    public static double getDistanceToTargetInches(SwerveSub swerveSub, Pose2d targetPose) {
         Pose2d robotPose = swerveSub.getPose();
+        if (robotPose == null || targetPose == null) return -1.0;
 
-        if(robotPose == null || targetPose == null) return -1.0;
-
-        distMeters =  robotPose.getTranslation().getDistance(targetPose.getTranslation());
-
+        distMeters = robotPose.getTranslation().getDistance(targetPose.getTranslation());
         return Units.metersToInches(distMeters);
     }
 
-        /** Degrees to face target (0=along X-axis, CCW positive) */  
-    public double getHeadingToTargetDegrees(Pose2d targetPose) {  
-        Pose2d robotPose = swerveSub.getPose();  
-        if (robotPose == null || targetPose == null) return 0.0;  
-        
-        Translation2d toTarget = targetPose.getTranslation().minus(robotPose.getTranslation());  
-        heading = Rotation2d.fromRadians(Math.atan2(toTarget.getY(), toTarget.getX()));  
-        return heading.getDegrees();  
-    }  
+    /** Degrees to face target (0 = along X-axis, CCW positive) */
+    public static double getHeadingToTargetDegrees(SwerveSub swerveSub, Pose2d targetPose) {
+        Pose2d robotPose = swerveSub.getPose();
+        if (robotPose == null || targetPose == null) return 0.0;
 
-    /** Error from current heading to target (degrees, -180 to 180) */  
-    public double getHeadingErrorDegrees(Pose2d targetPose) {  
-        Pose2d robotPose = swerveSub.getPose();  
+        Translation2d toTarget =
+            targetPose.getTranslation().minus(robotPose.getTranslation());
 
-        targetDeg = getHeadingToTargetDegrees(targetPose);  
-        errorDeg = MathUtil.angleModulus(robotPose.getRotation().getDegrees() - targetDeg);
-
-        return errorDeg;
+        heading = Rotation2d.fromRadians(Math.atan2(toTarget.getY(), toTarget.getX()));
+        return heading.getDegrees();
     }
-    
-    public double getHeadingErrorDegreesHub(){
-         Pose2d robotPose = swerveSub.getPose();  
 
-        targetDeg = getHeadingToTargetDegrees(getAllianceHubPose2d());  
+    /** Error from current heading to target (degrees, -180 to 180) */
+    public static double getHeadingErrorDegrees(SwerveSub swerveSub, Pose2d targetPose) {
+        Pose2d robotPose = swerveSub.getPose();
+        if (robotPose == null || targetPose == null) return 0.0;
+
+        targetDeg = getHeadingToTargetDegrees(swerveSub, targetPose);
         errorDeg = MathUtil.angleModulus(robotPose.getRotation().getDegrees() - targetDeg);
 
         return errorDeg;
     }
 
-    @Override
-    public String toString(){
-        String str = " ";
+     public static double getHeadingErrorDegreesHub(SwerveSub swerveSub) {
+        Pose2d robotPose = swerveSub.getPose();
+        if (robotPose == null || getAllianceHubPose2d() == null) return 0.0;
 
-        str += "Pose Information: ";
-        str += "\nInchesAwayFromTarget: " + Units.metersToInches(distMeters);
-        str += "\nHeadingErrorDegrees: " +  errorDeg;
-        str += "\nRotation2DRobotHeading: " + heading;
+        targetDeg = getHeadingToTargetDegrees(swerveSub, getAllianceHubPose2d());
+        errorDeg = MathUtil.angleModulus(robotPose.getRotation().getDegrees() - targetDeg);
 
-        return str;
-
+        return errorDeg;
     }
 
+    /** Debug string */
+    public static String getDebugString() {
+        return "Pose Information:"
+            + "\nInchesAwayFromTarget: " + Units.metersToInches(distMeters)
+            + "\nHeadingErrorDegrees: " + errorDeg
+            + "\nRotation2DRobotHeading: " + heading;
+    }
 }

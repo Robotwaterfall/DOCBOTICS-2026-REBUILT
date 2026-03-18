@@ -8,11 +8,9 @@ import frc.robot.util.PoseManager;
 
 public class AlignToHubCMD extends Command{
 
-    PoseManager poseManager;
     SwerveSub swerveSub;
 
-    public AlignToHubCMD(PoseManager poseManager, SwerveSub swerveSub){
-        this.poseManager = poseManager;
+    public AlignToHubCMD(SwerveSub swerveSub){
         this.swerveSub = swerveSub;
         addRequirements(swerveSub);
 
@@ -25,7 +23,7 @@ public class AlignToHubCMD extends Command{
 
     @Override
     public void execute(){
-        double headingErrorDeg = poseManager.getHeadingErrorDegreesHub();
+        double headingErrorDeg = PoseManager.getHeadingErrorDegreesHub(swerveSub);
 
         double rotSpeeds = Constants.SwerveModuleConstants.kTurning * headingErrorDeg;
         rotSpeeds = MathUtil.clamp(rotSpeeds, -Constants.SwerveModuleConstants.kMax_Rotational_Speed,
