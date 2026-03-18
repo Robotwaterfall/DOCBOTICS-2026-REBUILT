@@ -37,6 +37,8 @@ public final class Constants {
 
     public static final double kTurning = 0.3; // TODO: Tune this kp for turning
 
+    public static final double kMax_Rotational_Speed = 0.5;
+
   }
 
   public static final class DriveConstants {
@@ -94,7 +96,8 @@ public final class Constants {
     public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 2;
     public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 2;
 
-      public static final int kImuIdPort = 21; 
+    public static final int kImuIdPort = 21;
+    
 
     public static class autoTargetConstants {
       public static final double autoOrientKp = 0.0035;
@@ -234,11 +237,11 @@ public final class Constants {
 
   public static final class Pose2DConstants{
     // DEFAULT METERS
-    public static final double fieldWidth = 16.54175;
+    public static final double fieldWidthInches = 16.54175;
     public static final double xHubPose = 8.23; //default blue
     public static final double yHubPose = 8.23; //default blue
 
-    public static final double xHubPoseRed = fieldWidth - yHubPose;
+    public static final double yHubPoseRed = fieldWidthInches - yHubPose;
   }
 
 

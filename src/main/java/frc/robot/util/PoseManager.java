@@ -1,6 +1,5 @@
 package frc.robot.util;
 
-import java.util.Optional;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -17,7 +16,7 @@ public class PoseManager {
     private double targetDeg = 0;
     private double errorDeg = 0;
 
-    private Pose2d redHubPose2d = new Pose2d(Pose2DConstants.xHubPose, Pose2DConstants.yHubPose, 
+    private Pose2d redHubPose2d = new Pose2d(Pose2DConstants.xHubPose, Pose2DConstants.yHubPoseRed, 
         new Rotation2d());
         
     private Pose2d blueHubPose2d = new Pose2d(Pose2DConstants.xHubPose, Pose2DConstants.yHubPose, 
@@ -67,7 +66,16 @@ public class PoseManager {
         errorDeg = MathUtil.angleModulus(robotPose.getRotation().getDegrees() - targetDeg);
 
         return errorDeg;
-    }   
+    }
+    
+    public double getHeadingErrorDegreesHub(){
+         Pose2d robotPose = swerveSub.getPose();  
+
+        targetDeg = getHeadingToTargetDegrees(getAllianceHubPose2d());  
+        errorDeg = MathUtil.angleModulus(robotPose.getRotation().getDegrees() - targetDeg);
+
+        return errorDeg;
+    }
 
     @Override
     public String toString(){

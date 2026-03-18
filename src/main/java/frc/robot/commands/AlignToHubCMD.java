@@ -1,6 +1,8 @@
 package frc.robot.commands;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.SwerveSub;
 import frc.robot.util.PoseManager;
 
@@ -23,6 +25,12 @@ public class AlignToHubCMD extends Command{
 
     @Override
     public void execute(){
+        double headingErrorDeg = poseManager.getHeadingErrorDegreesHub();
+
+        double rotSpeeds = Constants.SwerveModuleConstants.kTurning * headingErrorDeg;
+        rotSpeeds = MathUtil.clamp(rotSpeeds, -Constants.SwerveModuleConstants.kMax_Rotational_Speed,
+                                    Constants.SwerveModuleConstants.kMax_Rotational_Speed
+        );
         
     }
 
