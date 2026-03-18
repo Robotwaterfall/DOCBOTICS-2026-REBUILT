@@ -24,12 +24,12 @@ public final class Constants {
 
   public static class SwerveModuleConstants {
 
-    public static final double kWheelDiameterMeters = Units.inchesToMeters(4);
+    public static final double kWheelDiameterInches = Units.inchesToMeters(4);
 
     public static final double kDriveMotorGearRatio = 1 / 6.75;
     public static final double kTurningMotorGearRatio = 1 / 12.8;
 
-    public static final double kDriveEncoderRot2Meter = kDriveMotorGearRatio * Math.PI * kWheelDiameterMeters;
+    public static final double kDriveEncoderRot2Meter = kDriveMotorGearRatio * Math.PI * kWheelDiameterInches;
     public static final double kTurningEncoderRot2Rad = kTurningMotorGearRatio * 2 * Math.PI;
 
     public static final double kDriveEncoderRPM2MeterPerSec = kDriveEncoderRot2Meter / 60;
@@ -171,7 +171,7 @@ public final class Constants {
 
     public static final int kIndexMotorId = 25; 
 
-    public static final double kWheelDiameterMeters = 0.1016; // 4" wheel
+    public static final double kWheelDiameterInches = 4.0; // 4" wheel
     public static final double kGearRatio = 1.0;
 
     public static final double kShooterKP = 0.1; //TODO
@@ -193,8 +193,8 @@ public final class Constants {
      * 
      */
 
-    public static final double kGravity = 9.8;
-    public static final double heightOfGoalMeters = 1.82; //height of the hub where fuel can enter
+    public static final double kGravity = 386.09; //in/s^2
+    public static final double kHeightOfHubInches = 72; //height of the hub where fuel can enter
 
     public static final double shooterTolerance = 0; //TODO
   
