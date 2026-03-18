@@ -45,12 +45,11 @@ public class ShooterSub extends SubsystemBase {
 
    
 
-    public void setShooterVelocityMPS(double wheelVelocityMetersPerSecond){
+    public void setShooterVelocityIPS(double wheelVelocityInchesPerSecond){
 
-         // wheel m/s -> wheel rotations per second
-        double wheelCircumference = Math.PI * ShooterConstants.kWheelDiameterMeters;
-        double wheelRps = wheelVelocityMetersPerSecond / wheelCircumference;
-
+         // wheel in/s -> wheel rotations per second
+        double wheelCircumference = Math.PI * ShooterConstants.kWheelDiameterInches;
+        double wheelRps = wheelVelocityInchesPerSecond / wheelCircumference;
         // wheel rps -> motor rps (motorRot / wheelRot)
         double motorRps = wheelRps * ShooterConstants.kGearRatio;
 
@@ -83,7 +82,7 @@ public class ShooterSub extends SubsystemBase {
     }
 
 
-    public double getAverageShootingVelocityMPS(){
+    public double getAverageShootingVelocityIPS(){
         double averageVelocity = (shooterLead.getVelocity().getValueAsDouble() 
                                     + 
                                     shooterFollowerRight.getVelocity().getValueAsDouble()
@@ -94,7 +93,7 @@ public class ShooterSub extends SubsystemBase {
         return averageVelocity;
     }
 
-    public boolean isAtSetVelocityMPS(){
+    public boolean isAtSetVelocityIPS(){
         return  (getShooterLeadVelocity()) > (desiredVelocity - ShooterConstants.shooterTolerance) &&
                 (getShooterLeadVelocity()) < (desiredVelocity + ShooterConstants.shooterTolerance);
     }
@@ -112,9 +111,9 @@ public class ShooterSub extends SubsystemBase {
         String str = "";
 
         str += "Shooter Subsystem Information";
-        str += "\ncurrentDesiredVelocityMPS: " + getDesiredVelocity();
-        str += "\naverageVelocityMPS: " + getAverageShootingVelocityMPS();
-        str += "\natDesiredVelocityMPS: " + isAtSetVelocityMPS();
+        str += "\ncurrentDesiredVelocityIPS: " + getDesiredVelocity();
+        str += "\naverageVelocityIPS: " + getAverageShootingVelocityIPS();
+        str += "\natDesiredVelocityIPS: " + isAtSetVelocityIPS();
 
         return str;
 
