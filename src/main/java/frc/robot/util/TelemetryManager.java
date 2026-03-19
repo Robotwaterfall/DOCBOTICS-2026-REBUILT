@@ -28,6 +28,4 @@ public class TelemetryManager {
                     SmartDashboard.putString(entry.getKey(), entry.getValue().toString());
                 }
     }
-
-
 }

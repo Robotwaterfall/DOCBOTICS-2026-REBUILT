@@ -187,20 +187,10 @@ public final class Constants {
     public static final double kShooterKs = 0.1; //TODO
     public static final double kShooterKv = 0.1; //TODO
 
-    public static final double indexSpeed = 1; 
+    public static final double kIndexSpeed = 1; 
 
+    public static final double kWarmupVelocityFPS = 60; //TODO: find the warmup velocity in feet per second
 
-    //PHYSICS CONSTANTS
-
-    /*
-     *
-     * 
-     *  Make sure these are in inches/ inches derived units to avoid tedious conversions!!!
-     * 
-     * 
-     */
-
-    public static final double kGravity = 386.09; //in/s^2
     public static final double kHeightOfHubInches = 72; //height of the hub where fuel can enter
 
     public static final double shooterTolerance = 2.0; //TODO
@@ -217,6 +207,7 @@ public final class Constants {
   public static final class HoodConstants{
     public static final int kHoodId = 30; 
 
+    public static final double kDefaultAngleDeg = 60; //TODO: set default hood angle 
     public static final double kMinAngleDeg = 0.0; //TODO:tune
     public static final double kMaxAngleDeg = 180.0;
     public static final int kMinPulseUs = 1650;  //this is the hardware limit of the Lin act //TODO:tune
