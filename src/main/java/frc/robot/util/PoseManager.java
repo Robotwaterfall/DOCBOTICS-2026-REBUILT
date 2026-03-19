@@ -1,5 +1,6 @@
 package frc.robot.util;
 
+import com.pathplanner.lib.util.FlippingUtil;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -20,18 +21,19 @@ public final class PoseManager {
     private static double targetDeg = 0;
     private static double errorDeg = 0;
 
-    private static final Pose2d redHubPose2d =
-        new Pose2d(Pose2DConstants.xHubPose, Pose2DConstants.yHubPose, new Rotation2d());
-
-    private static final Pose2d blueHubPose2d =
-        new Pose2d(Pose2DConstants.xHubPose, Pose2DConstants.yHubPose, new Rotation2d());
+    private static final Pose2d HubPose2d = new Pose2d(Pose2DConstants.xHubPose,
+        Pose2DConstants.yHubPose,new Rotation2d()
+    );
 
     /** Returns the hub pose for the current alliance */
     public static Pose2d getAllianceHubPose2d() {
-        return DriverStation.getAlliance()
-            .map(alliance -> alliance == DriverStation.Alliance.Blue ? blueHubPose2d : redHubPose2d)
-            .orElse(blueHubPose2d);
-    }
+    
+    return DriverStation.getAlliance()
+        .map(alliance -> alliance == DriverStation.Alliance.Red 
+            ? FlippingUtil.flipFieldPose(HubPose2d) 
+            : HubPose2d)
+        .orElse(HubPose2d);
+}
 
     /** Returns inches away from target */
     public static double getDistanceToTargetInches(SwerveSub swerveSub, Pose2d targetPose) {
@@ -76,7 +78,8 @@ public final class PoseManager {
     }
 
     /** Debug string */
-    public static String getDebugString() {
+    @Override
+    public String toString() {
         return "Pose Information:"
             + "\nInchesAwayFromTarget: " + Units.metersToInches(distMeters)
             + "\nHeadingErrorDegrees: " + errorDeg
