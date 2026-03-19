@@ -48,9 +48,9 @@ public class ShooterLookup {
     }
 
     // Returns interpolated ShooterParams object for a given distance in feet
-    public static ShooterParams getInterpolated(double distance) {
-        Map.Entry<Double, ShooterParams> lower = table.floorEntry(distance);
-        Map.Entry<Double, ShooterParams> upper = table.ceilingEntry(distance);
+    public static ShooterParams getInterpolated(double distanceFt) {
+        Map.Entry<Double, ShooterParams> lower = table.floorEntry(distanceFt);
+        Map.Entry<Double, ShooterParams> upper = table.ceilingEntry(distanceFt);
 
         if (lower == null) return upper.getValue();
         if (upper == null) return lower.getValue();
@@ -58,7 +58,7 @@ public class ShooterLookup {
 
         double d0 = lower.getKey();
         double d1 = upper.getKey();
-        double t = (distance - d0) / (d1 - d0);
+        double t = (distanceFt - d0) / (d1 - d0);
 
         double angle = lerp(lower.getValue().angleDeg, upper.getValue().angleDeg, t);
         double velocity = lerp(lower.getValue().velocityFps, upper.getValue().velocityFps, t);

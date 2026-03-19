@@ -116,7 +116,7 @@ public final class PoseManager {
     /** Debug string */
     @Override
     public String toString() {
-        String str = " ";
+        String str = "";
             str += "Pose Information:";
             str += "\nInchesAwayFromTarget: " + Units.metersToInches(distMeters);
             str += "\nHeadingErrorDegrees: " + errorDeg;
