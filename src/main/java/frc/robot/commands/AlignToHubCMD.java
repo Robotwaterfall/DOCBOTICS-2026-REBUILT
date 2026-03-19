@@ -42,4 +42,9 @@ public class AlignToHubCMD extends Command{
         
     }
 
+    @Override
+    public void end(boolean interrupted){
+        swerveSub.driveRobotRelative(new ChassisSpeeds(0,0,0));
+    }
+
 }
