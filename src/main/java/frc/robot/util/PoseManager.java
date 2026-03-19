@@ -42,6 +42,16 @@ public final class PoseManager {
         return Units.metersToInches(distMeters);
     }
 
+    /** Returns inches away from hub */
+    public static double getDistanceToHubInches(SwerveSub swerveSub) {
+        Pose2d targetPose = getAllianceHubPose2d();
+        Pose2d robotPose = swerveSub.getPose();
+        if (robotPose == null || targetPose == null) return -1.0;
+
+        distMeters = robotPose.getTranslation().getDistance(targetPose.getTranslation());
+        return Units.metersToInches(distMeters);
+    }
+
     /** Degrees to face target (0 = along X-axis, CCW positive) */
     public static double getHeadingToTargetDegrees(SwerveSub swerveSub, Pose2d targetPose) {
         Pose2d robotPose = swerveSub.getPose();
