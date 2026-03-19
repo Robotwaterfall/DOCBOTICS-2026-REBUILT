@@ -37,13 +37,13 @@ public class HoodSub extends SubsystemBase{
         hoodLinActRightChannel = servoHub.getServoChannel(ChannelId.kChannelId0);
 
         // Channels MUST be enabled and powered to use .setPulseWidth
-        hoodLinActRightChannel.setEnabled(true);
-        hoodLinActRightChannel.setPowered(true);
+        hoodLinActRightChannel.setEnabled(false);
+        hoodLinActRightChannel.setPowered(false);
 
         hoodLinActLeftChannel = servoHub.getServoChannel(ChannelId.kChannelId1);
 
-        hoodLinActLeftChannel.setEnabled(true);
-        hoodLinActLeftChannel.setPowered(true);
+        hoodLinActLeftChannel.setEnabled(false);
+        hoodLinActLeftChannel.setPowered(false);
     }
 
     public ServoChannel getHoodLinActRightChannel(){

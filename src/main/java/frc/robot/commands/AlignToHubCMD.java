@@ -1,6 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.SwerveSub;
@@ -25,16 +26,19 @@ public class AlignToHubCMD extends Command{
     public void execute(){
         double headingErrorDeg = PoseManager.getHeadingErrorDegreesHub(swerveSub);
 
-        double rotSpeeds = Constants.SwerveModuleConstants.kTurning * headingErrorDeg;
-        rotSpeeds = MathUtil.clamp(rotSpeeds, -Constants.SwerveModuleConstants.kMax_Rotational_Speed,
-                                    Constants.SwerveModuleConstants.kMax_Rotational_Speed
+        double rotSpeeds = Constants.LockOnPoseConstants.kTurning * Math.toRadians(headingErrorDeg);
+        rotSpeeds = MathUtil.clamp(rotSpeeds, -Constants.LockOnPoseConstants.kMax_Rotational_Speed,
+                                    Constants.LockOnPoseConstants.kMax_Rotational_Speed
         );
+
+        swerveSub.driveRobotRelative(new ChassisSpeeds(0, 0, rotSpeeds));;
         
     }
 
     @Override
     public boolean isFinished(){
-        return false;
+        return Math.abs(PoseManager.getHeadingErrorDegreesHub(swerveSub)) 
+                            <= Constants.LockOnPoseConstants.headingToleranceDeg;
         
     }
 

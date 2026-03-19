@@ -37,9 +37,15 @@ public final class Constants {
 
     public static final double kTurning = 0.3; // TODO: Tune this kp for turning
 
-    public static final double kMax_Rotational_Speed = 0.5;
-
   }
+
+  public static final class LockOnPoseConstants {
+
+    public static final double kMax_Rotational_Speed = 0.5;//TODO:find max lock on speed
+    public static final double headingToleranceDeg = 2.0; //TODO:find tolerance 
+    public static final double kTurning = 0.3; //TODO
+
+  } 
 
   public static final class DriveConstants {
 
