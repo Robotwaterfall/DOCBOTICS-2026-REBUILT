@@ -231,15 +231,17 @@ public final class Constants {
   }
 
   public static final class Pose2DConstants{
-    // DEFAULT METERS
-    public static final double fieldWidthInches = 16.54175;
+    
     public static final double xHubPose = 8.23; //default blue
     public static final double yHubPose = 8.23; //default blue
 
-    public static final double yHubPoseRed = fieldWidthInches - yHubPose;
+    public static final double ALLIANCE_ZONE_X_MIN_BLUEin = 0.0;
+    public static final double ALLIANCE_ZONE_X_MAX_BLUEin = 182.11;
+    public static final double ALLIANCE_ZONE_Y_MIN_BLUEin = 0.0;
+    public static final double ALLIANCE_ZONE_Y_MAX_BLUEin = 317.68; 
+
+    
   }
-
-
-
+  
   public static final double telemetryUpdate = 0.1; //Update every 100ms
 }

@@ -20,6 +20,7 @@ public final class PoseManager {
     private static Rotation2d heading = new Rotation2d();
     private static double targetDeg = 0;
     private static double errorDeg = 0;
+    private static boolean isInAllianceZone = false;
 
     private static final Pose2d HubPose2d = new Pose2d(Pose2DConstants.xHubPose,
         Pose2DConstants.yHubPose,new Rotation2d()
@@ -33,7 +34,32 @@ public final class PoseManager {
             ? FlippingUtil.flipFieldPose(HubPose2d) 
             : HubPose2d)
         .orElse(HubPose2d);
-}
+    }
+
+    public static boolean isInAllianceZone(SwerveSub swerveSub){
+
+        Pose2d robotPose = swerveSub.getPose();
+        if(robotPose == null){return false;}
+        
+        Pose2d fieldPose = FlippingUtil.flipFieldPose(robotPose);
+
+        double x = fieldPose.getX();
+        double y = fieldPose.getY();
+
+        boolean inX = x >= Pose2DConstants.ALLIANCE_ZONE_X_MIN_BLUEin && 
+                            x <= Pose2DConstants.ALLIANCE_ZONE_X_MAX_BLUEin;
+
+        boolean inY = y >= Pose2DConstants.ALLIANCE_ZONE_Y_MIN_BLUEin && 
+                            y <= Pose2DConstants.ALLIANCE_ZONE_Y_MAX_BLUEin;
+
+        if(inX && inY){
+            isInAllianceZone = true;
+        } else{
+            isInAllianceZone = false;
+        }
+
+        return inX && inY;
+    }
 
     /** Returns inches away from target */
     public static double getDistanceToTargetInches(SwerveSub swerveSub, Pose2d targetPose) {
@@ -90,9 +116,12 @@ public final class PoseManager {
     /** Debug string */
     @Override
     public String toString() {
-        return "Pose Information:"
-            + "\nInchesAwayFromTarget: " + Units.metersToInches(distMeters)
-            + "\nHeadingErrorDegrees: " + errorDeg
-            + "\nRotation2DRobotHeading: " + heading;
+        String str = " ";
+            str += "Pose Information:";
+            str += "\nInchesAwayFromTarget: " + Units.metersToInches(distMeters);
+            str += "\nHeadingErrorDegrees: " + errorDeg;
+            str += "\nRotation2DRobotHeading: " + heading;
+            str += "\nIsInAllianceZone: " + isInAllianceZone;
+            return str;
     }
 }
