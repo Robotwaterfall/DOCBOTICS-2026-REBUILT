@@ -6,96 +6,101 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 import frc.robot.Constants.ShooterConstants;
 
 public class ShooterSub extends SubsystemBase {
-    /*
-     * Note: In phoenix tuner Hardware, the m_rightShooterFollow
-     * controller must be configured to follow the m_leftShooterLead controller
-     * and be inverted relative to the m_leftShooterLead controller’s direction.*
-     * 
-     * /* Shoter controllers to shooter fuel
-     */
+
     public TalonFX shooterLead = new TalonFX(ShooterConstants.kShooterLeadMotorId);
     public TalonFX shooterFollowerRight = new TalonFX(ShooterConstants.kShooterFollowerRightId);
     public TalonFX shooterFollowerLeft = new TalonFX(ShooterConstants.kShooterFollowerLeftId);
 
     private final VelocityVoltage velocityRequest = new VelocityVoltage(0);
 
-    public static double desiredVelocity;
+    public static double desiredVelocityFPS;
 
     public ShooterSub() {
 
         TalonFXConfiguration cfg = new TalonFXConfiguration();
 
-        cfg.Slot0.kS = Constants.ShooterConstants.kShooterKs;
-        cfg.Slot0.kV = Constants.ShooterConstants.kShooterKv;
-        cfg.Slot0.kP = Constants.ShooterConstants.kShooterKP;
-        cfg.Slot0.kI = Constants.ShooterConstants.kShooterKi;
-        cfg.Slot0.kD = Constants.ShooterConstants.kShooterKd;
+        cfg.Slot0.kS = ShooterConstants.kShooterKs;
+        cfg.Slot0.kV = ShooterConstants.kShooterKv;
+        cfg.Slot0.kP = ShooterConstants.kShooterKP;
+        cfg.Slot0.kI = ShooterConstants.kShooterKi;
+        cfg.Slot0.kD = ShooterConstants.kShooterKd;
 
         cfg.MotorOutput.NeutralMode = NeutralModeValue.Coast;
 
         shooterLead.getConfigurator().apply(cfg);
         shooterFollowerRight.getConfigurator().apply(cfg);
         shooterFollowerLeft.getConfigurator().apply(cfg);
-
     }
 
-   
+    public void setShooterVelocityFPS(double wheelVelocityFeetPerSecond) {
+        
+        desiredVelocityFPS = wheelVelocityFeetPerSecond;
 
-    public void setShooterVelocityIPS(double wheelVelocityInchesPerSecond){
+        double wheelVelocityInchesPerSecond = wheelVelocityFeetPerSecond * 12.0;
 
-         // wheel in/s -> wheel rotations per second
         double wheelCircumference = Math.PI * ShooterConstants.kWheelDiameterInches;
         double wheelRps = wheelVelocityInchesPerSecond / wheelCircumference;
-        // wheel rps -> motor rps (motorRot / wheelRot)
+
         double motorRps = wheelRps * ShooterConstants.kGearRatio;
+        motorRps = Math.abs(motorRps);
 
         shooterLead.setControl(velocityRequest.withVelocity(motorRps));
         shooterFollowerRight.setControl(velocityRequest.withVelocity(motorRps));
         shooterFollowerLeft.setControl(velocityRequest.withVelocity(motorRps));
-
-        
-
     }
 
-    public double getShooterLeadVelocity(){
+    public double getShooterLeadVelocityRPS() {
         return shooterLead.getVelocity().getValueAsDouble();
     }
 
-    public double getShooterFollowerRightVelocity(){
+    public double getShooterFollowerRightVelocityRPS() {
         return shooterFollowerRight.getVelocity().getValueAsDouble();
     }
 
-    public double getShooterFollowerLeftVelocity(){
+    public double getShooterFollowerLeftVelocityRPS() {
         return shooterFollowerLeft.getVelocity().getValueAsDouble();
     }
 
-    public double getDesiredVelocity(){
-        return desiredVelocity;
+    public double getShooterLeadVelocityFPS() {
+        double motorRps = shooterLead.getVelocity().getValueAsDouble();
+        double wheelRps = motorRps / ShooterConstants.kGearRatio;
+        double wheelCircumference = Math.PI * ShooterConstants.kWheelDiameterInches;
+        double inchesPerSecond = wheelRps * wheelCircumference;
+        return inchesPerSecond / 12.0;
     }
 
-    public void setDesiredVelocity(double desiredV){
-        desiredVelocity = desiredV;
+    public double getShooterFollowerRightVelocityFPS() {
+        double motorRps = shooterFollowerRight.getVelocity().getValueAsDouble();
+        double wheelRps = motorRps / ShooterConstants.kGearRatio;
+        double wheelCircumference = Math.PI * ShooterConstants.kWheelDiameterInches;
+        double inchesPerSecond = wheelRps * wheelCircumference;
+        return inchesPerSecond / 12.0;
     }
 
-
-    public double getAverageShootingVelocityIPS(){
-        double averageVelocity = (shooterLead.getVelocity().getValueAsDouble() 
-                                    + 
-                                    shooterFollowerRight.getVelocity().getValueAsDouble()
-                                    + 
-                                    shooterFollowerLeft.getVelocity().getValueAsDouble()) 
-                                    / 3;
-
-        return averageVelocity;
+    public double getShooterFollowerLeftVelocityFPS() {
+        double motorRps = shooterFollowerLeft.getVelocity().getValueAsDouble();
+        double wheelRps = motorRps / ShooterConstants.kGearRatio;
+        double wheelCircumference = Math.PI * ShooterConstants.kWheelDiameterInches;
+        double inchesPerSecond = wheelRps * wheelCircumference;
+        return inchesPerSecond / 12.0;
     }
 
-    public boolean isAtSetVelocityIPS(){
-        return  (getShooterLeadVelocity()) > (desiredVelocity - ShooterConstants.shooterTolerance) &&
-                (getShooterLeadVelocity()) < (desiredVelocity + ShooterConstants.shooterTolerance);
+    public double getDesiredVelocityFPS() {
+        return desiredVelocityFPS;
+    }
+
+    public double getAverageMotorVelocityFPS() {
+        return (getShooterLeadVelocityFPS()
+                + getShooterFollowerRightVelocityFPS()
+                + getShooterFollowerLeftVelocityFPS()) / 3.0;
+    }
+
+    public boolean isAtSetVelocityFPS() {
+        return (getShooterLeadVelocityFPS()) > (desiredVelocityFPS - ShooterConstants.shooterTolerance)
+                && (getShooterLeadVelocityFPS()) < (desiredVelocityFPS + ShooterConstants.shooterTolerance);
     }
 
     public void stopShooterMotors() {
@@ -104,20 +109,16 @@ public class ShooterSub extends SubsystemBase {
         shooterFollowerLeft.stopMotor();
     }
 
-
     @Override
-    public String toString(){
+    public String toString() {
 
         String str = "";
 
         str += "Shooter Subsystem Information";
-        str += "\ncurrentDesiredVelocityIPS: " + getDesiredVelocity();
-        str += "\naverageVelocityIPS: " + getAverageShootingVelocityIPS();
-        str += "\natDesiredVelocityIPS: " + isAtSetVelocityIPS();
+        str += "\ncurrentDesiredVelocityFPS: " + getDesiredVelocityFPS();
+        str += "\naverageMotorVelocityRPS: " + getAverageMotorVelocityFPS();
+        str += "\natDesiredVelocityFPS: " + isAtSetVelocityFPS();
 
         return str;
-
-        }
-
-            
     }
+}

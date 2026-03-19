@@ -118,10 +118,8 @@ public final class Constants {
     public static final String Limelight2 = "limelight-track";
     public static final String Limelight3 = "limelight3"; //TODO
 
-    public static final double limelightMountAngleDegrees = 60.0; //TODO
-    public static final double limelightLensHeightInches = 20.0; //TODO
-    public static final double goalHeightInches = 49.5;
-
+    public static final double limelightMountAngleDegrees = 28.1; //TODO
+    public static final double limelightLensHeightInches = 26.0; //TODO
   }
 
     public static final class OIConstants {
@@ -205,7 +203,7 @@ public final class Constants {
     public static final double kGravity = 386.09; //in/s^2
     public static final double kHeightOfHubInches = 72; //height of the hub where fuel can enter
 
-    public static final double shooterTolerance = 0; //TODO
+    public static final double shooterTolerance = 2.0; //TODO
   
     
   }
