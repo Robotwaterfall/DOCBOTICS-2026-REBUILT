@@ -155,7 +155,7 @@ public final class Constants {
     public static final double kDegreesPerMotorRotation = 360 / (9 * 48/20 * 48/20 * 24/12); // Degrees / gear ratio gives degrees to motor revolutions
 
     public static final double kMinPitchDegrees = 0; //TODO: set min and max pitch degrees based on physical limits of the mechanism
-    public static final double kMaxPitchDegrees = 90; //TODO
+    public static final double kMaxPitchDegrees = 100; //TODO
 
     public static final double kPitcherIn = 0; // Setpoint positions
     public static final double kPitcherOut = 90; //TODO
@@ -165,6 +165,8 @@ public final class Constants {
     public static double intakePitcher_kD = 0; //TODO
 
     public static double intakePitcherToleranceDegrees = 2; //TODO
+
+    public static double intakePitcherWaitTimeSec = 0.8; //TODO
 
     public static final IdleMode pitcherIdleMode = IdleMode.kBrake;
 
