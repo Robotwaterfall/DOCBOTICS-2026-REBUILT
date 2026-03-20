@@ -101,10 +101,23 @@ public class HoodSub extends SubsystemBase{
             HoodConstants.a1 * angleDegree + HoodConstants.a0;
    }
 
+   public boolean isAtSetAngle(){
+        int desiredPulseWidth = inchesToPulseWidth(degreeToInches(hoodAngle));
+        int currentLeftPulseWidth = hoodLinActLeftChannel.getPulseWidth();
+        int currentRightPulseWidth = hoodLinActRightChannel.getPulseWidth();
+
+        return Math.abs(currentLeftPulseWidth - desiredPulseWidth) <= Constants.HoodConstants.kHoodToleranceUs &&
+            Math.abs(currentRightPulseWidth - desiredPulseWidth) <= Constants.HoodConstants.kHoodToleranceUs;
+   }
+
     @Override
     public String toString(){
         String str = "";
-        str += "DesiredHoodAngle" + getHoodAngle(); // To show desired hood angle
+        str += "Hood Subsystem: ";
+        str += "\nDesiredHoodAngle" + getHoodAngle(); // To show desired hood angle
+        str += "\nCurrentLeftPulseWidth" + hoodLinActLeftChannel.getPulseWidth();
+        str += "\nCurrentRightPulseWidth" + hoodLinActRightChannel.getPulseWidth();
+        str += "\nisAtSetAngle" + isAtSetAngle();
         return str;
 
     }

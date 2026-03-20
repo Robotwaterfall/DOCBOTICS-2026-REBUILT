@@ -22,8 +22,13 @@ public class RunShooterCMD extends Command{
         addRequirements(shooterSub);
     }
 
-     @Override
+    @Override
     public void initialize(){
+        shooterSub.setShooterVelocityFPS(0);
+    }
+
+    @Override
+    public void execute(){
         double distanceFeet = targetDistanceInches / 12.0;
 
         ShooterLookup.ShooterParams params = ShooterLookup.getInterpolated(distanceFeet);

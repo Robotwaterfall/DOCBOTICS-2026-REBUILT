@@ -209,15 +209,14 @@ public final class Constants {
   public static final class HoodConstants{
     public static final int kHoodId = 30; 
 
-    public static final double kDefaultAngleDeg = 60; //TODO: set default hood angle 
-    public static final double kMinAngleDeg = 0.0; //TODO:tune
-    public static final double kMaxAngleDeg = 180.0;
     public static final int kMinPulseUs = 1650;  //this is the hardware limit of the Lin act //TODO:tune
     public static final int kCenterPulseUs = 1750;
     public static final int kMaxPulseUs = 2000;
     
     public static final double maxExtensionInches = 5.5; //as far as we go out
     public static final double minExtensionInches = 3; //as far as we retract //TODO: tune
+
+    public static final double kHoodToleranceUs = 10; //TODO: tune this tolerance for being at the setpoint
     
     //these are the constants for the cubic approximation to convert from angle to inches
     public static final double a0 = 8.15031546257;
