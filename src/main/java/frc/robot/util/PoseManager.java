@@ -12,75 +12,56 @@ import frc.robot.subsystems.SwerveSub;
 
 public final class PoseManager {
 
-    // Prevent instantiation
     private PoseManager() {}
 
-    // Static state (optional but preserved from original class)
-    private static double distMeters = 0;
-    private static Rotation2d heading = new Rotation2d();
-    private static double targetDeg = 0;
-    private static double errorDeg = 0;
-    private static boolean isInAllianceZone = false;
-
-    private static final Pose2d HubPose2d = new Pose2d(Pose2DConstants.xHubPose,
-        Pose2DConstants.yHubPose,new Rotation2d()
-    );
+    private static final Pose2d HUB_POSE =
+        new Pose2d(Pose2DConstants.xHubPose, Pose2DConstants.yHubPose, new Rotation2d());
 
     /** Returns the hub pose for the current alliance */
     public static Pose2d getAllianceHubPose2d() {
-    
-    return DriverStation.getAlliance()
-        .map(alliance -> alliance == DriverStation.Alliance.Red 
-            ? FlippingUtil.flipFieldPose(HubPose2d) 
-            : HubPose2d)
-        .orElse(HubPose2d);
+        return DriverStation.getAlliance()
+            .map(alliance -> alliance == DriverStation.Alliance.Red
+                ? FlippingUtil.flipFieldPose(HUB_POSE)
+                : HUB_POSE)
+            .orElse(HUB_POSE);
     }
 
-    public static boolean isInAllianceZone(SwerveSub swerveSub){
-
+    /** True if the robot is inside the alliance zone */
+    public static boolean isInAllianceZone(SwerveSub swerveSub) {
         Pose2d robotPose = swerveSub.getPose();
-        if(robotPose == null){return false;}
-        
+        if (robotPose == null) return false;
+
         Pose2d fieldPose = FlippingUtil.flipFieldPose(robotPose);
 
         double x = fieldPose.getX();
         double y = fieldPose.getY();
 
-        boolean inX = x >= Pose2DConstants.ALLIANCE_ZONE_X_MIN_BLUEin && 
-                            x <= Pose2DConstants.ALLIANCE_ZONE_X_MAX_BLUEin;
+        boolean inX = x >= Pose2DConstants.ALLIANCE_ZONE_X_MIN_BLUEin &&
+                      x <= Pose2DConstants.ALLIANCE_ZONE_X_MAX_BLUEin;
 
-        boolean inY = y >= Pose2DConstants.ALLIANCE_ZONE_Y_MIN_BLUEin && 
-                            y <= Pose2DConstants.ALLIANCE_ZONE_Y_MAX_BLUEin;
-
-        if(inX && inY){
-            isInAllianceZone = true;
-        } else{
-            isInAllianceZone = false;
-        }
+        boolean inY = y >= Pose2DConstants.ALLIANCE_ZONE_Y_MIN_BLUEin &&
+                      y <= Pose2DConstants.ALLIANCE_ZONE_Y_MAX_BLUEin;
 
         return inX && inY;
     }
 
-    /** Returns inches away from target */
+    /** Returns inches away from a target pose */
     public static double getDistanceToTargetInches(SwerveSub swerveSub, Pose2d targetPose) {
         Pose2d robotPose = swerveSub.getPose();
         if (robotPose == null || targetPose == null) return -1.0;
 
-        distMeters = robotPose.getTranslation().getDistance(targetPose.getTranslation());
+        double distMeters =
+            robotPose.getTranslation().getDistance(targetPose.getTranslation());
+
         return Units.metersToInches(distMeters);
     }
 
-    /** Returns inches away from hub */
+    /** Returns inches away from the hub */
     public static double getDistanceToHubInches(SwerveSub swerveSub) {
-        Pose2d targetPose = getAllianceHubPose2d();
-        Pose2d robotPose = swerveSub.getPose();
-        if (robotPose == null || targetPose == null) return -1.0;
-
-        distMeters = robotPose.getTranslation().getDistance(targetPose.getTranslation());
-        return Units.metersToInches(distMeters);
+        return getDistanceToTargetInches(swerveSub, getAllianceHubPose2d());
     }
 
-    /** Degrees to face target (0 = along X-axis, CCW positive) */
+    /** Returns the heading (degrees) from robot to target */
     public static double getHeadingToTargetDegrees(SwerveSub swerveSub, Pose2d targetPose) {
         Pose2d robotPose = swerveSub.getPose();
         if (robotPose == null || targetPose == null) return 0.0;
@@ -88,40 +69,38 @@ public final class PoseManager {
         Translation2d toTarget =
             targetPose.getTranslation().minus(robotPose.getTranslation());
 
-        heading = Rotation2d.fromRadians(Math.atan2(toTarget.getY(), toTarget.getX()));
-        return heading.getDegrees();
+        return Math.toDegrees(Math.atan2(toTarget.getY(), toTarget.getX()));
     }
 
-    /** Error from current heading to target (degrees, -180 to 180) */
+    /** Returns heading error (degrees, -180 to 180) from robot to target */
     public static double getHeadingErrorDegrees(SwerveSub swerveSub, Pose2d targetPose) {
         Pose2d robotPose = swerveSub.getPose();
         if (robotPose == null || targetPose == null) return 0.0;
 
-        targetDeg = getHeadingToTargetDegrees(swerveSub, targetPose);
-        errorDeg = MathUtil.angleModulus(robotPose.getRotation().getDegrees() - targetDeg);
+        double targetDeg = getHeadingToTargetDegrees(swerveSub, targetPose);
+        double robotDeg = robotPose.getRotation().getDegrees();
 
-        return errorDeg;
+        return MathUtil.angleModulus(robotDeg - targetDeg);
     }
 
-     public static double getHeadingErrorDegreesHub(SwerveSub swerveSub) {
-        Pose2d robotPose = swerveSub.getPose();
-        if (robotPose == null || getAllianceHubPose2d() == null) return 0.0;
-
-        targetDeg = getHeadingToTargetDegrees(swerveSub, getAllianceHubPose2d());
-        errorDeg = MathUtil.angleModulus(robotPose.getRotation().getDegrees() - targetDeg);
-
-        return errorDeg;
+    /** Returns heading error to the hub */
+    public static double getHeadingErrorDegreesHub(SwerveSub swerveSub) {
+        return getHeadingErrorDegrees(swerveSub, getAllianceHubPose2d());
     }
 
-    /** Debug string */
-    @Override
-    public String toString() {
-        String str = "";
-            str += "Pose Information:";
-            str += "\nInchesAwayFromTarget: " + Units.metersToInches(distMeters);
-            str += "\nHeadingErrorDegrees: " + errorDeg;
-            str += "\nRotation2DRobotHeading: " + heading;
-            str += "\nIsInAllianceZone: " + isInAllianceZone;
-            return str;
+    /** Debug string with live values */
+    public static String debugString(SwerveSub swerveSub) {
+        Pose2d pose = swerveSub.getPose();
+        if (pose == null) return "Pose unavailable";
+
+        double distInches = getDistanceToHubInches(swerveSub);
+        double headingError = getHeadingErrorDegreesHub(swerveSub);
+        boolean inZone = isInAllianceZone(swerveSub);
+
+        return "PoseManager Debug:" +
+               "\nPose: " + pose +
+               "\nDistanceToHub (in): " + distInches +
+               "\nHeadingErrorToHub (deg): " + headingError +
+               "\nInAllianceZone: " + inZone;
     }
 }

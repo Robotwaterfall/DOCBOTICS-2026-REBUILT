@@ -1,6 +1,5 @@
 package frc.robot.commands.commandgroups;
 
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
@@ -17,11 +16,4 @@ public class FlutterIntake extends SequentialCommandGroup{
             new MoveIntakePitcherCMD(intakePitcherSub, Constants.IntakePitcherConstants.kPitcherOut)
         );
     }
-
-
-    // Repeat CommandGroup until interrupted.
-    public static Command repeatedFlutter(IntakePitcherSub intakePitcherSub) {
-        return new FlutterIntake(intakePitcherSub).repeatedly();
-    }
-
 }
