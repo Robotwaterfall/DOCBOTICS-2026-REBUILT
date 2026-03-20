@@ -2,6 +2,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.HoodSub;
+import frc.robot.subsystems.ShooterSub;
 import frc.robot.subsystems.SwerveSub;
 import frc.robot.util.PoseManager;
 import frc.robot.util.ShooterLookup;
@@ -11,9 +12,30 @@ public class AdjustHoodCMD extends InstantCommand{
     HoodSub hoodSub;
     SwerveSub swerveSub;
 
-    public AdjustHoodCMD(HoodSub hoodSub, SwerveSub swerveSub){
+    private double desiredAngleDeg;
+
+    // 2‑param constructor
+    // → get distance to hub, then set desiredVelocity from lookup table
+    public AdjustHoodCMD(HoodSub hoodSub, SwerveSub swerveSub) {
         this.hoodSub = hoodSub;
-        this.swerveSub = swerveSub;
+        this.swerveSub  = swerveSub;
+
+        double targetDistanceInches = PoseManager.getDistanceToHubInches(swerveSub);
+        double distanceFeet         = targetDistanceInches / 12.0;
+
+        ShooterLookup.ShooterParams params = ShooterLookup.getInterpolated(distanceFeet);
+        this.desiredAngleDeg = params.angleDeg;
+
+        addRequirements(hoodSub);
+    }
+
+    // 3‑param constructor
+    // → desiredVelocity is passed explicitly
+    public AdjustHoodCMD(HoodSub hoodSub, SwerveSub swerveSub, double desiredVelocity) {
+        this.hoodSub    = hoodSub;
+        this.swerveSub     = swerveSub;
+        this.desiredAngleDeg = desiredVelocity;
+
         addRequirements(hoodSub);
     }
 
@@ -24,13 +46,7 @@ public class AdjustHoodCMD extends InstantCommand{
 
     @Override
     public void execute(){
-        double targetDistanceInches = PoseManager.getDistanceToHubInches(swerveSub);
-        if(targetDistanceInches <= 0){return;}
-
-        double targetDistanceFeet = targetDistanceInches / 12.0;
-        var hoodParams = ShooterLookup.getInterpolated(targetDistanceFeet);
-
-        hoodSub.setHoodAngle(hoodParams.angleDeg);
+        hoodSub.setHoodAngle(desiredAngleDeg);
     }
 
 }

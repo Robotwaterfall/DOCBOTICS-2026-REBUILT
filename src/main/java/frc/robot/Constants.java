@@ -191,7 +191,7 @@ public final class Constants {
 
     public static final double kIndexSpeed = 1; 
 
-    public static final double kWarmupVelocityFPS = 60; //TODO: find the warmup velocity in feet per second
+    public static final double kWarmupVelocityFPS = 35; //TODO: find the warmup velocity in feet per second
 
     public static final double kHeightOfHubInches = 72; //height of the hub where fuel can enter
 
@@ -215,6 +215,8 @@ public final class Constants {
     
     public static final double maxExtensionInches = 5.5; //as far as we go out
     public static final double minExtensionInches = 3; //as far as we retract //TODO: tune
+
+    public static final double kHoodWarmUpDeg = 75;
 
     public static final double kHoodToleranceUs = 10; //TODO: tune this tolerance for being at the setpoint
     
