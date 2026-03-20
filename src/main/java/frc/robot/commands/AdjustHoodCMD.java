@@ -1,12 +1,12 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.HoodSub;
 import frc.robot.subsystems.SwerveSub;
 import frc.robot.util.PoseManager;
 import frc.robot.util.ShooterLookup;
 
-public class AdjustHoodCMD extends Command{
+public class AdjustHoodCMD extends InstantCommand{
 
     HoodSub hoodSub;
     SwerveSub swerveSub;
@@ -31,12 +31,6 @@ public class AdjustHoodCMD extends Command{
         var hoodParams = ShooterLookup.getInterpolated(targetDistanceFeet);
 
         hoodSub.setHoodAngle(hoodParams.angleDeg);
-    }
-
-    @Override
-    public boolean isFinished(){
-        return hoodSub.isAtSetAngle();
-        
     }
 
 }
