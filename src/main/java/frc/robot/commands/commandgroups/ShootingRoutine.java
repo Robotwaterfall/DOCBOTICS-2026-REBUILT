@@ -1,6 +1,9 @@
 package frc.robot.commands.commandgroups;
 
+import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.PS5Controller;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.AlignToHubCMD;
 import frc.robot.subsystems.ConveyorSub;
@@ -18,7 +21,8 @@ public class ShootingRoutine extends SequentialCommandGroup{
         HoodSub hoodSub,
         IndexerSub indexerSub,
         ConveyorSub conveyorSub,
-        IntakePitcherSub intakePitcherSub
+        IntakePitcherSub intakePitcherSub,
+        PS5Controller driverJoystick
     ){
         //Make a instance of the align to hub command
         AlignToHubCMD alignToHubCMD = new AlignToHubCMD(swerveSub);
@@ -46,7 +50,7 @@ public class ShootingRoutine extends SequentialCommandGroup{
         */
 
         Command Fire = 
-            new FireShot(indexerSub, conveyorSub, intakePitcherSub)
+            new FireShot(indexerSub, conveyorSub, intakePitcherSub, driverJoystick)
                 .deadlineWith(
                     new PrepareShot(
                         shooterSub, 
@@ -54,6 +58,8 @@ public class ShootingRoutine extends SequentialCommandGroup{
                         swerveSub),
                         alignToHubCMD
                 );
+
+
         
         // Schedule the two phases sequentially
         addCommands(

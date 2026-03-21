@@ -5,6 +5,7 @@
 package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PS5Controller;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -14,11 +15,16 @@ import frc.robot.Constants.IntakePitcherConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.ResetHeadingCMD;
 import frc.robot.commands.SwerveJoystickCMD;
+import frc.robot.commands.commandgroups.Juggle;
+import frc.robot.commands.commandgroups.OuttakeFuel;
+import frc.robot.commands.commandgroups.PrepareShot;
+import frc.robot.commands.commandgroups.ShootingRoutine;
 import frc.robot.subsystems.IntakeRollersSub;
 import frc.robot.subsystems.ShooterSub;
 import frc.robot.commands.MoveIntakePitcherCMD;
 import frc.robot.subsystems.ConveyorSub;
 import frc.robot.subsystems.HoodSub;
+import frc.robot.subsystems.IndexerSub;
 import frc.robot.subsystems.IntakePitcherSub;
 import frc.robot.subsystems.SwerveSub;
 import frc.robot.util.PoseManager;
@@ -38,6 +44,7 @@ public class RobotContainer {
   public final ShooterSub shooterSub = new ShooterSub();
   public final IntakePitcherSub intakePitcherSub = new IntakePitcherSub();
   public final ConveyorSub conveyorSub = new ConveyorSub();
+  public final IndexerSub indexerSub = new IndexerSub();
 
   private final PS5Controller driverJoyStick = new PS5Controller(OIConstants.kDriverControllerPort);
 
@@ -85,8 +92,29 @@ public class RobotContainer {
 
   private void configureBindings() {
 
+    // RESET HEADING
     new JoystickButton(driverJoyStick, OIConstants.kDriveGyroResetButtonIdx).whileTrue(
       new ResetHeadingCMD(swerveSub)
+    );
+
+    // SHOOTING ROUTINE
+    new JoystickButton(driverJoyStick, OIConstants.kShootingRoutineButton).whileTrue(
+      new ShootingRoutine(swerveSub, shooterSub, hoodSub, indexerSub, conveyorSub, intakePitcherSub, driverJoyStick)
+    );
+
+    // PREPARE SHOT
+    new JoystickButton(driverJoyStick, OIConstants.kPrepareShotButton).whileTrue(
+      new PrepareShot(shooterSub, hoodSub, swerveSub)
+    );
+
+    // JUGGLE WHILE INTAKING
+    new JoystickButton(driverJoyStick, OIConstants.kJuggleButton).whileTrue(
+      new Juggle(shooterSub, indexerSub, swerveSub, intakeSub, conveyorSub)
+    );
+
+    // OUTTAKE
+    new JoystickButton(driverJoyStick, OIConstants.kOuttakeButton).whileTrue(
+      new OuttakeFuel(intakeSub, conveyorSub, indexerSub)
     );
 
    

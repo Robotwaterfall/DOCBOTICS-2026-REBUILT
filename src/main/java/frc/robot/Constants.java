@@ -103,6 +103,8 @@ public final class Constants {
     public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 2;
 
     public static final int kImuIdPort = 21;
+
+    public static final double kSlowModeFactor = 0.35;
     
 
     public static class autoTargetConstants {
@@ -137,6 +139,14 @@ public final class Constants {
       public static final int kDriverFieldOrientedButtonIdx = 9;
 
       public static final int kLockWheelsButton = 12;
+
+      public static final int kShootingRoutineButton = 8;
+      public static final int kPrepareShotButton = 7;
+
+      public static final int kJuggleButton = 6;
+      public static final int kOuttakeButton = 5;
+
+      public static final double kRumblePwr = 0.8;
 
 
 
