@@ -21,6 +21,7 @@ import frc.robot.subsystems.ConveyorSub;
 import frc.robot.subsystems.HoodSub;
 import frc.robot.subsystems.IntakePitcherSub;
 import frc.robot.subsystems.SwerveSub;
+import frc.robot.util.PoseManager;
 import frc.robot.util.TelemetryManager;
 
 /**
@@ -75,7 +76,7 @@ public class RobotContainer {
             driverJoyStick.getRawButton(OIConstants.kDriverFieldOrientedButtonIdx), 
             () -> driverJoyStick.getRawButton(OIConstants.kLockWheelsButton))); 
 
-    //Intake pitcher should be idle by default
+    //Intake pitcher should be idle(OUT) by default
     intakePitcherSub.setDefaultCommand(new MoveIntakePitcherCMD(intakePitcherSub, 
       IntakePitcherConstants.kPitcherOut)); 
     
@@ -99,6 +100,7 @@ public class RobotContainer {
     teleManager.registerSubsystem("IntakePitcher: ", intakePitcherSub);
     teleManager.registerSubsystem("Intake: ", intakeSub);
     teleManager.registerSubsystem("Shooter: ", shooterSub);
+    teleManager.registerSubsystem("PoseManager: ", PoseManager.debugString(swerveSub));
 
   }
 

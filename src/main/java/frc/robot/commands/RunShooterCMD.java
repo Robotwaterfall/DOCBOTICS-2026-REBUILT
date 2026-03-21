@@ -39,11 +39,6 @@ public class RunShooterCMD extends Command {
     }
 
     @Override
-    public void initialize() {
-        shooterSub.setShooterVelocityFPS(0);
-    }
-
-    @Override
     public void execute() {
         shooterSub.setShooterVelocityFPS(desiredVelocity);
     }

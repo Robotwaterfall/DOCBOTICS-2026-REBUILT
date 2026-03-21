@@ -145,8 +145,8 @@ public final class Constants {
   }
   public static final class IntakeRollerConstants{
     public static final int kIntakeMotorPort = 3; 
-    public static final double kIntakeMotorPower = -1.0; //reverse power to intake, positive power to outtake
-    public static final double kOutakeMotorPower = 1.0; 
+    public static final double kIntakeMotorPower = 1.0;
+    public static final double kOutakeMotorPower = -1.0; 
 
   }
 
@@ -189,9 +189,12 @@ public final class Constants {
     public static final double kShooterKs = 0.1; //TODO
     public static final double kShooterKv = 0.1; //TODO
 
-    public static final double kIndexSpeed = 1; 
+    public static final double kIndexSpeed = 1;
+    public static final double kReverseIndexSpeed = -1; 
 
     public static final double kWarmupVelocityFPS = 35; //TODO: find the warmup velocity in feet per second
+
+    public static final double kJuggleVelocityFPS = 10; //TODO
 
     public static final double kHeightOfHubInches = 72; //height of the hub where fuel can enter
 
@@ -202,6 +205,7 @@ public final class Constants {
     public static final class ConveyorConstant {
     public static final int kConveyorMotorPort = 7;
     public static final double conveyorPower = 0.8; //TODO
+    public static final double reverseConveyorPower = -0.8; //TODO
  
 
   }
