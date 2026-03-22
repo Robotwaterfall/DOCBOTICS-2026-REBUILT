@@ -24,6 +24,7 @@ import frc.robot.commands.commandgroups.PrepareShot;
 import frc.robot.commands.commandgroups.ShootingRoutine;
 import frc.robot.subsystems.IntakeRollersSub;
 import frc.robot.subsystems.ShooterSub;
+import frc.robot.commands.DecrementHoodCMD;
 import frc.robot.commands.DecrementShooterCMD;
 import frc.robot.commands.IncrementHoodCMD;
 import frc.robot.commands.IncrementShooterCMD;
@@ -137,7 +138,7 @@ public class RobotContainer {
 
     // DECREMENT HOOD MANUALLY
     POVButton decHoodButton = new POVButton(driverJoyStick, OIConstants.kDpadDOWN);
-    decHoodButton.onTrue(new DecrementShooterCMD(shooterSub, HoodConstants.hoodAnglePlusPerPress));
+    decHoodButton.onTrue(new DecrementHoodCMD(hoodSub, HoodConstants.hoodAnglePlusPerPress));
 
    
     
