@@ -5,7 +5,9 @@
   "pathFolders": [
     "RightBoomerangSweepPaths"
   ],
-  "autoFolders": [],
+  "autoFolders": [
+    "Right Side AUTO's"
+  ],
   "defaultMaxVel": 5.0,
   "defaultMaxAccel": 3.0,
   "defaultMaxAngVel": 540.0,
