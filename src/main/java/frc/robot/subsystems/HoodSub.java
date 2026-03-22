@@ -20,6 +20,8 @@ public class HoodSub extends SubsystemBase{
     private double hoodAngle;
     private double distanceFromLimelightToGoalInches;
 
+    private double tunableHoodAngle = 0.0;
+
     public HoodSub(){
         servoHub = new ServoHub(HoodConstants.kHoodId);
 
@@ -110,14 +112,27 @@ public class HoodSub extends SubsystemBase{
             Math.abs(currentRightPulseWidth - desiredPulseWidth) <= Constants.HoodConstants.kHoodToleranceUs;
    }
 
+   public void incrementAngle(double deltaDegrees) {
+        tunableHoodAngle += deltaDegrees;
+        tunableHoodAngle = MathUtil.clamp(tunableHoodAngle, 
+        HoodConstants.kMinDegrees, HoodConstants.kMaxDegrees);  // Add consts
+        setHoodAngle(tunableHoodAngle);  // Applies via your pulse logic
+    }
+
+    public void decrementAngle(double deltaDegrees) {
+        tunableHoodAngle = Math.max(HoodConstants.kMinDegrees, tunableHoodAngle - deltaDegrees);
+        setHoodAngle(tunableHoodAngle);
+    }
+
     @Override
     public String toString(){
         String str = "";
         str += "Hood Subsystem: ";
-        str += "\nDesiredHoodAngle" + getHoodAngle(); // To show desired hood angle
-        str += "\nCurrentLeftPulseWidth" + hoodLinActLeftChannel.getPulseWidth();
-        str += "\nCurrentRightPulseWidth" + hoodLinActRightChannel.getPulseWidth();
-        str += "\nisAtSetAngle" + isAtSetAngle();
+        str += "\nDesiredHoodAngle: " + getHoodAngle(); // To show desired hood angle
+        str += "\nTunableHoodAngle: " + tunableHoodAngle;
+        str += "\nCurrentLeftPulseWidth: " + hoodLinActLeftChannel.getPulseWidth();
+        str += "\nCurrentRightPulseWidth: " + hoodLinActRightChannel.getPulseWidth();
+        str += "\nisAtSetAngle: " + isAtSetAngle();
         return str;
 
     }

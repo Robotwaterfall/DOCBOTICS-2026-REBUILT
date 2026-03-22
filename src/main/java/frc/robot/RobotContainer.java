@@ -11,8 +11,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
+import frc.robot.Constants.HoodConstants;
 import frc.robot.Constants.IntakePitcherConstants;
 import frc.robot.Constants.OIConstants;
+import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.ResetHeadingCMD;
 import frc.robot.commands.SwerveJoystickCMD;
 import frc.robot.commands.commandgroups.Juggle;
@@ -21,6 +24,9 @@ import frc.robot.commands.commandgroups.PrepareShot;
 import frc.robot.commands.commandgroups.ShootingRoutine;
 import frc.robot.subsystems.IntakeRollersSub;
 import frc.robot.subsystems.ShooterSub;
+import frc.robot.commands.DecrementShooterCMD;
+import frc.robot.commands.IncrementHoodCMD;
+import frc.robot.commands.IncrementShooterCMD;
 import frc.robot.commands.MoveIntakePitcherCMD;
 import frc.robot.subsystems.ConveyorSub;
 import frc.robot.subsystems.HoodSub;
@@ -116,6 +122,22 @@ public class RobotContainer {
     new JoystickButton(driverJoyStick, OIConstants.kOuttakeButton).whileTrue(
       new OuttakeFuel(intakeSub, conveyorSub, indexerSub)
     );
+
+    // INCREMENT SHOOTER MANUALLY
+    POVButton incShooterButton = new POVButton(driverJoyStick, OIConstants.kDpadRIGHT);
+    incShooterButton.onTrue(new IncrementShooterCMD(shooterSub, ShooterConstants.shooterVelocityPlusPerPress));
+    
+    // DECREMENT SHOOTER MANUALLY
+    POVButton decShooterButton = new POVButton(driverJoyStick, OIConstants.kDpadLEFT);
+    decShooterButton.onTrue(new DecrementShooterCMD(shooterSub, ShooterConstants.shooterVelocityPlusPerPress));
+
+    // INCREMENT HOOD MANUALLY
+    POVButton incHoodButton = new POVButton(driverJoyStick, OIConstants.kDpadUP);
+    incHoodButton.onTrue(new IncrementHoodCMD(hoodSub, HoodConstants.hoodAnglePlusPerPress));
+
+    // DECREMENT HOOD MANUALLY
+    POVButton decHoodButton = new POVButton(driverJoyStick, OIConstants.kDpadDOWN);
+    decHoodButton.onTrue(new DecrementShooterCMD(shooterSub, HoodConstants.hoodAnglePlusPerPress));
 
    
     

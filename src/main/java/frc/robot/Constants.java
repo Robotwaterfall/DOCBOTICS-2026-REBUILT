@@ -148,6 +148,11 @@ public final class Constants {
 
       public static final double kRumblePwr = 0.8;
 
+      public static final int kDpadUP = 0;
+      public static final int kDpadDOWN = 180;
+      public static final int kDpadRIGHT = 90;
+      public static final int kDpadLEFT = 270;
+
 
 
       public static final double kDeadband = 0.5;
@@ -194,10 +199,10 @@ public final class Constants {
     public static final double kGearRatio = 1.0;
 
     public static final double kShooterKP = 0.1; //TODO
-    public static final double kShooterKi = 0.1; //TODO
-    public static final double kShooterKd = 0.1; //TODO
-    public static final double kShooterKs = 0.1; //TODO
-    public static final double kShooterKv = 0.1; //TODO
+    public static final double kShooterKi = 0; //TODO
+    public static final double kShooterKd = 0; //TODO
+    public static final double kShooterKs = 0; //TODO
+    public static final double kShooterKv = 0; //TODO
 
     public static final double kIndexSpeed = 1;
     public static final double kReverseIndexSpeed = -1; 
@@ -209,6 +214,10 @@ public final class Constants {
     public static final double kHeightOfHubInches = 72; //height of the hub where fuel can enter
 
     public static final double shooterTolerance = 2.0; //TODO
+
+    public static final double defaultShooterVelocityPlusPerPress = 2.0; //TODO
+
+    public static final double shooterVelocityPlusPerPress = 1.5; //TODO
   
     
   }
@@ -226,13 +235,19 @@ public final class Constants {
     public static final int kMinPulseUs = 1650;  //this is the hardware limit of the Lin act //TODO:tune
     public static final int kCenterPulseUs = 1750;
     public static final int kMaxPulseUs = 2000;
+
+    public static final int kMaxDegrees = 45; //TODO
+    public static final int kMinDegrees = 0;  //TODO
     
     public static final double maxExtensionInches = 5.5; //as far as we go out
     public static final double minExtensionInches = 3; //as far as we retract //TODO: tune
 
-    public static final double kHoodWarmUpDeg = 75;
+    public static final double kHoodWarmUpDeg = 30; //TODO
 
     public static final double kHoodToleranceUs = 10; //TODO: tune this tolerance for being at the setpoint
+
+    public static final double defaultHoodAnglePlusPerPress = 10; //TODO
+    public static final double hoodAnglePlusPerPress = 2; //TODO
     
     //these are the constants for the cubic approximation to convert from angle to inches
     public static final double a0 = 8.15031546257;

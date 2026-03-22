@@ -18,6 +18,8 @@ public class ShooterSub extends SubsystemBase {
 
     public static double desiredVelocityFPS;
 
+    private double tunableVelocityFps = 0.0;  // Start at 0, tune via buttons
+
     public ShooterSub() {
 
         TalonFXConfiguration cfg = new TalonFXConfiguration();
@@ -108,6 +110,20 @@ public class ShooterSub extends SubsystemBase {
         shooterFollowerRight.stopMotor();
         shooterFollowerLeft.stopMotor();
     }
+
+        // Expose getter/setter for tuning commands
+    public void incrementVelocity(double deltaFps) {
+        tunableVelocityFps += deltaFps;
+        setShooterVelocityFPS(tunableVelocityFps);  // Apply immediately
+    }
+
+    public void decrementVelocity(double deltaFps) {
+        tunableVelocityFps -= deltaFps;
+        if (tunableVelocityFps < 0) tunableVelocityFps = 0;
+        setShooterVelocityFPS(tunableVelocityFps);
+    }
+
+    public double getTunableVelocityFps() { return tunableVelocityFps; }
 
     @Override
     public String toString() {
