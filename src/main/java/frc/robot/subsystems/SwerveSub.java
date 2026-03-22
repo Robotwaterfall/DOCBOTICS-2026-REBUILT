@@ -139,6 +139,8 @@ public class SwerveSub extends SubsystemBase {
             }
         }
 
+        m_Field.setRobotPose(poseEstimator.getEstimatedPosition());
+
         // Logging and Telemetry
         Logger.recordOutput("RobotPose", poseEstimator.getEstimatedPosition());
         Logger.recordOutput("heading", getHeading());
