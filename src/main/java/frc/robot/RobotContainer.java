@@ -151,6 +151,8 @@ public class RobotContainer {
   private void registerCommands(){
 
     NamedCommands.registerCommand("ShootingRoutine", new ShootingRoutine(swerveSub, shooterSub, hoodSub, indexerSub, conveyorSub, intakePitcherSub, driverJoyStick));
+    NamedCommands.registerCommand("JuggleIn", new Juggle(shooterSub, indexerSub, swerveSub, intakeSub, conveyorSub));
+    NamedCommands.registerCommand("PrepareShot", new PrepareShot(shooterSub, hoodSub, swerveSub));
 
   }
 

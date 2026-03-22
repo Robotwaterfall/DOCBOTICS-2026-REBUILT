@@ -3,53 +3,32 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.6121555555555567,
-        "y": 2.3784444444444444
+        "x": 7.778,
+        "y": 0.8485666666666658
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.612155555555551,
-        "y": 2.3784444444444444
+        "x": 7.778,
+        "y": 1.8485666666666658
       },
       "isLocked": false,
-      "linkedName": "RightBumpStart"
-    },
-    {
-      "anchor": {
-        "x": 6.0092888888888885,
-        "y": 2.2517666666666663
-      },
-      "prevControl": {
-        "x": 5.707466288410077,
-        "y": 2.8338531104472353
-      },
-      "nextControl": {
-        "x": 6.282133333333332,
-        "y": 1.7255666666666651
-      },
-      "isLocked": false,
-      "linkedName": null
+      "linkedName": "StealFarRightNeutralZoneStartCollect"
     },
     {
       "anchor": {
         "x": 7.778,
-        "y": 0.8485666666666658
+        "y": 3.193566265060241
       },
       "prevControl": {
-        "x": 6.778,
-        "y": 0.8485666666666659
+        "x": 7.778,
+        "y": 2.193566265060241
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "StealFarRightNeutralZoneStartCollect"
+      "linkedName": "DriveInNeutralZoneRightSteal"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.9209964412811329,
-      "rotationDegrees": 55.0
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -69,7 +48,7 @@
   "folder": "RightBoomerangSweepPaths",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 90.0
   },
   "useDefaultConstraints": true
 }
