@@ -1,0 +1,63 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "RightBumpToStealFarRightNeutralZone"
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "RightStealDriveIntoNeutralZone"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "JuggleIn"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "RightNeutralZoneDriveInStealToShootRight"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "PrepareShot"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShootingRoutine"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": false,
+  "folder": "Right Side AUTO's",
+  "choreoAuto": false
+}
