@@ -152,6 +152,7 @@ public final class Constants {
       public static final int kDpadDOWN = 180;
       public static final int kDpadRIGHT = 90;
       public static final int kDpadLEFT = 270;
+      public static final int kDpadRIGHTDOWN = 135;
 
 
 

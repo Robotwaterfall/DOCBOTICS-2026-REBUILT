@@ -18,6 +18,7 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.ResetHeadingCMD;
 import frc.robot.commands.SwerveJoystickCMD;
+import frc.robot.commands.commandgroups.FireShot;
 import frc.robot.commands.commandgroups.Juggle;
 import frc.robot.commands.commandgroups.OuttakeFuel;
 import frc.robot.commands.commandgroups.PrepareShot;
@@ -139,6 +140,10 @@ public class RobotContainer {
     // DECREMENT HOOD MANUALLY
     POVButton decHoodButton = new POVButton(driverJoyStick, OIConstants.kDpadDOWN);
     decHoodButton.onTrue(new DecrementHoodCMD(hoodSub, HoodConstants.hoodAnglePlusPerPress));
+
+    // MANUAL FIRE SHOT
+    POVButton fireManualShot = new POVButton(driverJoyStick, OIConstants.kDpadRIGHTDOWN);
+    fireManualShot.onTrue(new FireShot(indexerSub, conveyorSub, intakePitcherSub, driverJoyStick));
 
    
     
