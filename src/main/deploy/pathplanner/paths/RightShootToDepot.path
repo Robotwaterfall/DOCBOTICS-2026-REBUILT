@@ -60,14 +60,20 @@
       "linkedName": "LeftLineUpDepot"
     }
   ],
-  "rotationTargets": [
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [
     {
-      "waypointRelativePos": 0.9032028469750883,
-      "rotationDegrees": -145.0
+      "fieldPosition": {
+        "x": 0.5,
+        "y": 3.75
+      },
+      "rotationOffset": 0.0,
+      "minWaypointRelativePos": 0.09192546583849655,
+      "maxWaypointRelativePos": 2.4422360248446995,
+      "name": "Point Towards Zone"
     }
   ],
-  "constraintZones": [],
-  "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 5.0,
