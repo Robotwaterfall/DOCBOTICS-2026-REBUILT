@@ -103,10 +103,10 @@ public class RobotContainer {
 
   private void configureBindings() {
 
-    // // RESET HEADING
-    // new JoystickButton(driverJoyStick, OIConstants.kDriveGyroResetButtonIdx).whileTrue(
-    //   new ResetHeadingCMD(swerveSub)
-    // );
+    // RESET HEADING
+    new JoystickButton(driverJoyStick, OIConstants.kDriveGyroResetButtonIdx).whileTrue(
+      new ResetHeadingCMD(swerveSub)
+    );
 
     // // // SHOOTING ROUTINE
     // new JoystickButton(driverJoyStick, OIConstants.kShootingRoutineButton).whileTrue(
