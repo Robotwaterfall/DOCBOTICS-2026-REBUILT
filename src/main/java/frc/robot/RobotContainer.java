@@ -5,7 +5,6 @@
 package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PS5Controller;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -17,6 +16,7 @@ import frc.robot.Constants.IntakePitcherConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.ResetHeadingCMD;
+import frc.robot.commands.ResetPoseCMD;
 import frc.robot.commands.SwerveJoystickCMD;
 import frc.robot.commands.commandgroups.Juggle;
 import frc.robot.commands.commandgroups.OuttakeFuel;
@@ -24,6 +24,7 @@ import frc.robot.commands.commandgroups.PrepareShot;
 import frc.robot.commands.commandgroups.ShootingRoutine;
 import frc.robot.subsystems.IntakeRollersSub;
 import frc.robot.subsystems.ShooterSub;
+import frc.robot.commands.AlignToHubCMD;
 import frc.robot.commands.DecrementHoodCMD;
 import frc.robot.commands.DecrementShooterCMD;
 import frc.robot.commands.IncrementHoodCMD;
@@ -74,6 +75,7 @@ public class RobotContainer {
     autoChooser = AutoBuilder.buildAutoChooser(); //Default auto will be 'Commands.none()'
     SmartDashboard.putData("AutoMode: ", autoChooser);
     SmartDashboard.putData("Reset Gyro Heading: ", new ResetHeadingCMD(swerveSub));
+    SmartDashboard.putData("Reset Pose: ", new ResetPoseCMD(swerveSub));;
 
     //  DEFAULT COMMANDS
 
@@ -94,6 +96,7 @@ public class RobotContainer {
     intakePitcherSub.setDefaultCommand(new MoveIntakePitcherCMD(intakePitcherSub, 
       IntakePitcherConstants.kPitcherOut)); 
     
+    
   }
 
 
@@ -104,24 +107,28 @@ public class RobotContainer {
       new ResetHeadingCMD(swerveSub)
     );
 
-    // SHOOTING ROUTINE
+    // // SHOOTING ROUTINE
     new JoystickButton(driverJoyStick, OIConstants.kShootingRoutineButton).whileTrue(
       new ShootingRoutine(swerveSub, shooterSub, hoodSub, indexerSub, conveyorSub, intakePitcherSub, driverJoyStick)
     );
 
-    // PREPARE SHOT
+    // // PREPARE SHOT
     new JoystickButton(driverJoyStick, OIConstants.kPrepareShotButton).whileTrue(
       new PrepareShot(shooterSub, hoodSub, swerveSub)
     );
 
-    // JUGGLE WHILE INTAKING
+    // // JUGGLE WHILE INTAKING
     new JoystickButton(driverJoyStick, OIConstants.kJuggleButton).whileTrue(
       new Juggle(shooterSub, indexerSub, swerveSub, intakeSub, conveyorSub)
     );
 
-    // OUTTAKE
+    // // OUTTAKE
     new JoystickButton(driverJoyStick, OIConstants.kOuttakeButton).whileTrue(
       new OuttakeFuel(intakeSub, conveyorSub, indexerSub)
+    );
+
+    new JoystickButton(driverJoyStick, OIConstants.kShootingRoutineButton).whileTrue(
+      new AlignToHubCMD(swerveSub)
     );
 
     // INCREMENT SHOOTER MANUALLY
@@ -151,6 +158,7 @@ public class RobotContainer {
     teleManager.registerSubsystem("IntakePitcher: ", intakePitcherSub);
     teleManager.registerSubsystem("Intake: ", intakeSub);
     teleManager.registerSubsystem("Shooter: ", shooterSub);
+    teleManager.registerSubsystem("LocationAndHeading: ", swerveSub);
     teleManager.registerSubsystem("PoseManager: ", PoseManager.debugString(swerveSub));
 
   }

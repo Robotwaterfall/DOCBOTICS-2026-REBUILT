@@ -11,6 +11,7 @@ public class RunIndexerCMD extends Command{
     public RunIndexerCMD(IndexerSub indexerSub, double indexPower){
         this.indexerSub = indexerSub;
         this.indexPower = indexPower;
+        addRequirements(indexerSub);
     }
 
     @Override

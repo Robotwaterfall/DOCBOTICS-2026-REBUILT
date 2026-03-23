@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.math.estimator.PoseEstimator;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -118,35 +119,44 @@ public class SwerveSub extends SubsystemBase {
         // Gyro Reset Thread
         new Thread(() -> {
             try {
-                Thread.sleep(1000);
+                Thread.sleep(10900);
                 zeroHeading();
             } catch (Exception e) {}
         }).start();
 
         SmartDashboard.putData("Field", m_Field);
+
+        poseEstimator.resetPose(getPose());
+        LimelightHelpers.setPipelineIndex(LimelightConstants.Limelight2, 0);
     }
 
     @Override
     public void periodic() {
         poseEstimator.update(getRotation2d(), getModulePositionsAuto());
 
+
         // Vision Updates
-        boolean doRejectUpdate = LimelightHelpers.getTV(LimelightConstants.Limelight3);
+    boolean doRejectUpdate = LimelightHelpers.getTV(LimelightConstants.Limelight2);
+
         if (doRejectUpdate) {
-            LimelightHelpers.PoseEstimate mt1 = LimelightHelpers.getBotPoseEstimate_wpiBlue(LimelightConstants.Limelight3);
+            LimelightHelpers.PoseEstimate mt1;
+            var alliance = DriverStation.getAlliance();
+            if (alliance.isPresent() && alliance.get() == DriverStation.Alliance.Red) {
+                mt1 = LimelightHelpers.getBotPoseEstimate_wpiRed(LimelightConstants.Limelight2);
+            } else {
+                mt1 = LimelightHelpers.getBotPoseEstimate_wpiBlue(LimelightConstants.Limelight2);
+            }
             if (mt1.tagCount > 0) {
                 poseEstimator.addVisionMeasurement(mt1.pose, mt1.timestampSeconds);
             }
         }
+
 
         m_Field.setRobotPose(poseEstimator.getEstimatedPosition());
 
         // Logging and Telemetry
         Logger.recordOutput("RobotPose", poseEstimator.getEstimatedPosition());
         Logger.recordOutput("heading", getHeading());
-        
-        SmartDashboard.putNumber("robot Heading", getHeading());
-        SmartDashboard.putString("robot location", getPose().getTranslation().toString());
 
         SwerveModulePosition[] debugModulePosition = getModulePositionsAuto();
         for (int i = 0; i < debugModulePosition.length; i++) {
@@ -162,6 +172,10 @@ public class SwerveSub extends SubsystemBase {
 
     public Pose2d getPose() {
         return poseEstimator.getEstimatedPosition();
+    }
+
+    public void resetPose(){
+        poseEstimator.resetPose(getPose()); 
     }
 
     public void resetPose(Pose2d pose) {
@@ -224,5 +238,14 @@ public class SwerveSub extends SubsystemBase {
         for (SwerveModule module : swerveModules) {
             module.stop();
         }
+    }
+
+    @Override
+    public String toString(){
+        String str = "";
+        str = "LocationAndHeading: ";
+        str += "\nrobotHeading: " + getHeading();
+        str += "\nrobotLocation: " + getPose().getTranslation().toString();
+        return str;
     }
 }

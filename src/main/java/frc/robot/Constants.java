@@ -41,9 +41,9 @@ public final class Constants {
 
   public static final class LockOnPoseConstants {
 
-    public static final double kMax_Rotational_Speed = 0.5;//TODO:find max lock on speed
+    public static final double kMax_Rotational_Speed = 0.8;//TODO:find max lock on speed
     public static final double headingToleranceDeg = 2.0; //TODO:find tolerance 
-    public static final double kTurning = 0.3; //TODO
+    public static final double kTurning = 0.6; //TODO
 
   } 
 
@@ -130,7 +130,7 @@ public final class Constants {
 
       public static final int kDriverXAxis = 0;
       public static final int kDriverYAxis = 1;
-      public static final int kDriverRotAxis = 4;
+      public static final int kDriverRotAxis = 2;
 
       public static final int kDriveGyroResetButtonIdx = 10;
     
@@ -152,6 +152,7 @@ public final class Constants {
       public static final int kDpadDOWN = 180;
       public static final int kDpadRIGHT = 90;
       public static final int kDpadLEFT = 270;
+      public static final int kDpadRIGHTDOWN = 135;
 
 
 
@@ -198,11 +199,11 @@ public final class Constants {
     public static final double kWheelDiameterInches = 4.0; // 4" wheel
     public static final double kGearRatio = 1.0;
 
-    public static final double kShooterKP = 0.1; //TODO
+    public static final double kShooterKP = 0.05; //TODO
     public static final double kShooterKi = 0; //TODO
     public static final double kShooterKd = 0; //TODO
-    public static final double kShooterKs = 0; //TODO
-    public static final double kShooterKv = 0; //TODO
+    public static final double kShooterKs = 0.1; //TODO
+    public static final double kShooterKv = 0.1; //TODO
 
     public static final double kIndexSpeed = 1;
     public static final double kReverseIndexSpeed = -1; 
@@ -256,11 +257,6 @@ public final class Constants {
     public static final double a3 = 1.49396327886e-05;
   }
 
-  public static final class autoConstants{
-
-    public static final double timeElapsedShootingSecounds = 8; //TODO
-    public static final double timeBetweenPitcherInAndOut = 1; //TODO
-  }
 
   public static final class Pose2DConstants{
     

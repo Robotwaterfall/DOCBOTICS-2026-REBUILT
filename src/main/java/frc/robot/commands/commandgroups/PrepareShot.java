@@ -38,7 +38,7 @@ public class PrepareShot extends Command {
             () -> PoseManager.isInAllianceZone(swerveSub)
         );
 
-        addRequirements(shooterSub, hoodSub, swerveSub);
+        
     }
 
     @Override
