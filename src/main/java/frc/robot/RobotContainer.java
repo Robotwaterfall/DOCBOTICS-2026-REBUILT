@@ -90,8 +90,7 @@ public class RobotContainer {
             () -> driverJoyStick.getRawButtonPressed(OIConstants.kSlowModeIdx),
              /// By default will be on field oriented.
             () -> !
-            driverJoyStick.getRawButton(OIConstants.kDriverFieldOrientedButtonIdx), 
-            () -> driverJoyStick.getRawButton(OIConstants.kLockWheelsButton))); 
+            driverJoyStick.getRawButton(OIConstants.kDriverFieldOrientedButtonIdx))); 
 
     //Intake pitcher should be idle(OUT) by default
     intakePitcherSub.setDefaultCommand(new MoveIntakePitcherCMD(intakePitcherSub, 
@@ -103,30 +102,30 @@ public class RobotContainer {
 
   private void configureBindings() {
 
-    // RESET HEADING
-    new JoystickButton(driverJoyStick, OIConstants.kDriveGyroResetButtonIdx).whileTrue(
-      new ResetHeadingCMD(swerveSub)
-    );
+    // // RESET HEADING
+    // new JoystickButton(driverJoyStick, OIConstants.kDriveGyroResetButtonIdx).whileTrue(
+    //   new ResetHeadingCMD(swerveSub)
+    // );
 
-    // // SHOOTING ROUTINE
-    new JoystickButton(driverJoyStick, OIConstants.kShootingRoutineButton).whileTrue(
-      new ShootingRoutine(swerveSub, shooterSub, hoodSub, indexerSub, conveyorSub, intakePitcherSub, driverJoyStick)
-    );
+    // // // SHOOTING ROUTINE
+    // new JoystickButton(driverJoyStick, OIConstants.kShootingRoutineButton).whileTrue(
+    //   new ShootingRoutine(swerveSub, shooterSub, hoodSub, indexerSub, conveyorSub, intakePitcherSub, driverJoyStick)
+    // );
 
-    // // PREPARE SHOT
-    new JoystickButton(driverJoyStick, OIConstants.kPrepareShotButton).whileTrue(
-      new PrepareShot(shooterSub, hoodSub, swerveSub)
-    );
+    // // // PREPARE SHOT
+    // new JoystickButton(driverJoyStick, OIConstants.kPrepareShotButton).whileTrue(
+    //   new PrepareShot(shooterSub, hoodSub, swerveSub)
+    // );
 
-    // // JUGGLE WHILE INTAKING
-    new JoystickButton(driverJoyStick, OIConstants.kJuggleButton).whileTrue(
-      new Juggle(shooterSub, indexerSub, swerveSub, intakeSub, conveyorSub)
-    );
+    // // // JUGGLE WHILE INTAKING
+    // new JoystickButton(driverJoyStick, OIConstants.kJuggleButton).whileTrue(
+    //   new Juggle(shooterSub, indexerSub, swerveSub, intakeSub, conveyorSub)
+    // );
 
-    // // OUTTAKE
-    new JoystickButton(driverJoyStick, OIConstants.kOuttakeButton).whileTrue(
-      new OuttakeFuel(intakeSub, conveyorSub, indexerSub)
-    );
+    // // // OUTTAKE
+    // new JoystickButton(driverJoyStick, OIConstants.kOuttakeButton).whileTrue(
+    //   new OuttakeFuel(intakeSub, conveyorSub, indexerSub)
+    // );
 
     new JoystickButton(driverJoyStick, OIConstants.kShootingRoutineButton).whileTrue(
       new AlignToHubCMD(swerveSub)

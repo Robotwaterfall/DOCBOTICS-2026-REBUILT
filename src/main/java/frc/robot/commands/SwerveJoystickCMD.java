@@ -28,7 +28,6 @@ public class SwerveJoystickCMD extends Command {
       public final Supplier<Double> turningSpdFunction;
       public final Supplier<Boolean> fieldOrientedFunction;
       private final Supplier<Boolean> slowModeFunction;
-      public final Supplier<Boolean> lockWheelsFunction;
       private final SlewRateLimiter xLimiter, yLimiter, turningLimiter; // slew rate limiter cap the the amount of change of a value
 
       private boolean isSlowMode;
@@ -53,8 +52,7 @@ public class SwerveJoystickCMD extends Command {
            Supplier<Double> ySpdFunction, 
            Supplier<Double> turningSpdFunction,
            Supplier<Boolean> slowModeFunction,
-          Supplier<Boolean> fieldOrientedFunction,
-          Supplier<Boolean> lockWheelsFunction) { // Supplier<Boolean> limeTargetAccessed//
+          Supplier<Boolean> fieldOrientedFunction) { // Supplier<Boolean> limeTargetAccessed//
         
         this.swerveSubsystem = swerveSubsystem;
         this.xSpdFunction = xSpdFunction;
@@ -62,7 +60,6 @@ public class SwerveJoystickCMD extends Command {
         this.slowModeFunction = slowModeFunction;
         this.turningSpdFunction = turningSpdFunction;
         this.fieldOrientedFunction = fieldOrientedFunction;
-        this.lockWheelsFunction = lockWheelsFunction;
 
 
         this.xLimiter = new SlewRateLimiter(DriveConstants.kTeleDriveMaxAccelerationUnitsPerSecond);
@@ -80,11 +77,6 @@ public class SwerveJoystickCMD extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(lockWheelsFunction.get())
-    {
-
-      return;
-    }
     // gett latest values from joystick
     //swerveSubsystem.orientToTarget();
     double xspeed = xSpdFunction.get();
@@ -118,8 +110,6 @@ public class SwerveJoystickCMD extends Command {
         chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
           xspeed, -yspeed, -turningSpeed, swerveSubsystem.getRotation2d());
 
-
-    SmartDashboard.putBoolean("targetOn", lockWheelsFunction.get());
     
     CurrentXSpeed = xspeed;
     CurrentYSpeed = yspeed;

@@ -138,8 +138,6 @@ public final class Constants {
 
       public static final int kDriverFieldOrientedButtonIdx = 9;
 
-      public static final int kLockWheelsButton = 12;
-
       public static final int kShootingRoutineButton = 8;
       public static final int kPrepareShotButton = 7;
 
