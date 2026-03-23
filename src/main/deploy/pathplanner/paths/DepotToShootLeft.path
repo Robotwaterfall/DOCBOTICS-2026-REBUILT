@@ -3,32 +3,37 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.4,
-        "y": 2.378
+        "x": 0.4709935207095135,
+        "y": 5.257484848476686
       },
       "prevControl": null,
       "nextControl": {
-        "x": 8.326834902445638,
-        "y": 2.362433793872565
+        "x": 1.4937330415246572,
+        "y": 5.2670752494649715
       },
       "isLocked": false,
-      "linkedName": "RightCollectNeutralZoneSweep"
+      "linkedName": "DriveInDepot"
     },
     {
       "anchor": {
-        "x": 2.628744650499286,
-        "y": 2.4888302425106996
+        "x": 2.8813222222222223,
+        "y": 5.379733333333333
       },
       "prevControl": {
-        "x": 2.3146810793044374,
-        "y": 2.4867184748248476
+        "x": 2.036017237761877,
+        "y": 6.074213563011006
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "RightShoot"
+      "linkedName": "LeftSideShoot"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.5103202846975067,
+      "rotationDegrees": 180.0
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -42,13 +47,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 45.0
+    "rotation": -45.0
   },
   "reversed": false,
-  "folder": "RightBoomerangSweepPaths",
+  "folder": "LeftBoomerangSweepPaths",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": -90.0
   },
   "useDefaultConstraints": true
 }

@@ -95,10 +95,6 @@ public class RobotContainer {
             driverJoyStick.getRawButton(OIConstants.kDriverFieldOrientedButtonIdx), 
             () -> driverJoyStick.getRawButton(OIConstants.kLockWheelsButton))); 
 
-    //Intake pitcher should be idle(OUT) by default
-    intakePitcherSub.setDefaultCommand(new MoveIntakePitcherCMD(intakePitcherSub, 
-      IntakePitcherConstants.kPitcherOut)); 
-    
   }
 
 
@@ -158,6 +154,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("ShootingRoutine", new ShootingRoutine(swerveSub, shooterSub, hoodSub, indexerSub, conveyorSub, intakePitcherSub, driverJoyStick));
     NamedCommands.registerCommand("JuggleIn", new Juggle(shooterSub, indexerSub, swerveSub, intakeSub, conveyorSub));
     NamedCommands.registerCommand("PrepareShot", new PrepareShot(shooterSub, hoodSub, swerveSub));
+    NamedCommands.registerCommand("PitcherOut", new MoveIntakePitcherCMD(intakePitcherSub, IntakePitcherConstants.kPitcherOut));
 
   }
 
