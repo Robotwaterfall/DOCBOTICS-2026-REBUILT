@@ -1,0 +1,102 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.6038674698795132,
+        "y": 2.0352289156603947
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 4.49993975903614,
+        "y": 2.3849156626483454
+      },
+      "isLocked": false,
+      "linkedName": "RightBumpStart"
+    },
+    {
+      "anchor": {
+        "x": 4.915192771084333,
+        "y": 2.505120481925454
+      },
+      "prevControl": {
+        "x": 4.278356908078521,
+        "y": 2.48389261982526
+      },
+      "nextControl": {
+        "x": 5.570855421686742,
+        "y": 2.5269759036122013
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 6.816614457831321,
+        "y": 2.505120481925454
+      },
+      "prevControl": {
+        "x": 5.997036144578309,
+        "y": 2.5488313252989485
+      },
+      "nextControl": {
+        "x": 7.304256836055363,
+        "y": 2.4791128884201714
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 7.7563975903614395,
+        "y": 1.5106987951784676
+      },
+      "prevControl": {
+        "x": 6.281156626506019,
+        "y": 1.226578313250756
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "RightCollectNeutralZoneSweep"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1.0497637795275803,
+      "rotationDegrees": 90.0
+    },
+    {
+      "waypointRelativePos": 2.1722834645669233,
+      "rotationDegrees": 0.0
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [
+    {
+      "name": "PitcherOut",
+      "waypointRelativePos": 1.4449640287769707,
+      "endWaypointRelativePos": null,
+      "command": null
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 5.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0.0,
+    "rotation": 90.0
+  },
+  "reversed": false,
+  "folder": "RightBoomerangSweepPaths",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "useDefaultConstraints": true
+}

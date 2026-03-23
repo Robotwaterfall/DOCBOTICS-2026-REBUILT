@@ -1,0 +1,31 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "CenterReverse"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "PitcherOut"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShootingRoutine"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "Center AUTO's",
+  "choreoAuto": false
+}

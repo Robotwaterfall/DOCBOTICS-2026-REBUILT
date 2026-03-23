@@ -3,11 +3,13 @@
   "robotLength": 0.884174,
   "holonomicMode": true,
   "pathFolders": [
+    "CenterPaths",
     "LeftBoomerangSweepPaths",
     "RightBoomerangSweepPaths"
   ],
   "autoFolders": [
     "Left Side AUTO's",
+    "Center AUTO's",
     "Right Side AUTO's"
   ],
   "defaultMaxVel": 5.0,

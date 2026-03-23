@@ -3,47 +3,35 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.6121555555555567,
-        "y": 2.378
+        "x": 0.4709935207095135,
+        "y": 5.257484848476686
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.608353256704397,
-        "y": 2.3125859600321244
+        "x": 2.920993520709514,
+        "y": 5.257484848476686
       },
       "isLocked": false,
-      "linkedName": "RightBumpStart"
+      "linkedName": "DriveInDepot"
     },
     {
       "anchor": {
-        "x": 7.4,
-        "y": 2.378
+        "x": 2.3581084337349396,
+        "y": 4.035
       },
       "prevControl": {
-        "x": 6.3261239882339,
-        "y": 2.233319514535088
+        "x": 2.3581084337349396,
+        "y": 5.035
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "RightCollectNeutralZoneSweep"
+      "linkedName": "MiddleAllianceZone"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.6308661417322755,
-      "rotationDegrees": 0.0
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [
-    {
-      "name": "JuggleIn",
-      "waypointRelativePos": 0.8312949640287774,
-      "endWaypointRelativePos": null,
-      "command": null
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 5.0,
     "maxAcceleration": 3.0,
@@ -53,14 +41,14 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0.0,
+    "velocity": 0,
     "rotation": 0.0
   },
   "reversed": false,
-  "folder": "RightBoomerangSweepPaths",
+  "folder": "CenterPaths",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": -90.0
   },
   "useDefaultConstraints": true
 }

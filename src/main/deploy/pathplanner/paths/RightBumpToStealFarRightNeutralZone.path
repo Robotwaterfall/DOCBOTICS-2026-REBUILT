@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.6121555555555567,
-        "y": 2.3784444444444444
+        "x": 3.6038674698795132,
+        "y": 2.0352289156603947
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.612155555555551,
-        "y": 2.3784444444444444
+        "x": 4.603867469879508,
+        "y": 2.0352289156603947
       },
       "isLocked": false,
       "linkedName": "RightBumpStart"
@@ -69,7 +69,7 @@
   "folder": "RightBoomerangSweepPaths",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 0.0
   },
   "useDefaultConstraints": true
 }

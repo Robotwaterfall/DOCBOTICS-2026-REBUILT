@@ -36,9 +36,34 @@
           }
         },
         {
-          "type": "named",
+          "type": "deadline",
           "data": {
-            "name": "ShootingRoutine"
+            "commands": [
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 3.5
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "ShootingRoutine"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "RightShootToNeutral"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "RightDriveIntoNeutralZone"
           }
         }
       ]

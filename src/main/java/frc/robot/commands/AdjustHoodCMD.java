@@ -2,7 +2,6 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.HoodSub;
-import frc.robot.subsystems.ShooterSub;
 import frc.robot.subsystems.SwerveSub;
 import frc.robot.util.PoseManager;
 import frc.robot.util.ShooterLookup;
