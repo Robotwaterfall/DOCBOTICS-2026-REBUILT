@@ -5,6 +5,8 @@
 package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PS5Controller;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -66,6 +68,9 @@ public class RobotContainer {
     //  Configure the trigger bindings
     configureBindings();
 
+    //  register commands for auto builder
+    registerCommands();
+
     //  register telemetry from different subsystems
     registerSubsystems();
 
@@ -92,10 +97,6 @@ public class RobotContainer {
             () -> !
             driverJoyStick.getRawButton(OIConstants.kDriverFieldOrientedButtonIdx))); 
 
-    //Intake pitcher should be idle(OUT) by default
-    intakePitcherSub.setDefaultCommand(new MoveIntakePitcherCMD(intakePitcherSub, 
-      IntakePitcherConstants.kPitcherOut)); 
-    
     
   }
 
@@ -153,6 +154,15 @@ public class RobotContainer {
 
    
     
+  }
+
+  private void registerCommands(){
+
+    NamedCommands.registerCommand("ShootingRoutine", new ShootingRoutine(swerveSub, shooterSub, hoodSub, indexerSub, conveyorSub, intakePitcherSub, driverJoyStick));
+    NamedCommands.registerCommand("JuggleIn", new Juggle(shooterSub, indexerSub, swerveSub, intakeSub, conveyorSub));
+    NamedCommands.registerCommand("PrepareShot", new PrepareShot(shooterSub, hoodSub, swerveSub));
+    NamedCommands.registerCommand("PitcherOut", new MoveIntakePitcherCMD(intakePitcherSub, IntakePitcherConstants.kPitcherOut));
+
   }
 
   private void registerSubsystems(){

@@ -1,0 +1,65 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 2.8813222222222223,
+        "y": 5.379733333333333
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.8839174430330194,
+        "y": 7.224009832533754
+      },
+      "isLocked": false,
+      "linkedName": "LeftSideShoot"
+    },
+    {
+      "anchor": {
+        "x": 0.4709935207095135,
+        "y": 7.34132210262423
+      },
+      "prevControl": {
+        "x": 2.105032860060547,
+        "y": 7.401977967594902
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "LeftLineUpDepot"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [
+    {
+      "fieldPosition": {
+        "x": 4.6,
+        "y": 4.0
+      },
+      "rotationOffset": 0.0,
+      "minWaypointRelativePos": 0.0,
+      "maxWaypointRelativePos": 0.7031055900621063,
+      "name": "Point Towards Zone"
+    }
+  ],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 5.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -90.0
+  },
+  "reversed": false,
+  "folder": "LeftBoomerangSweepPaths",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -45.0
+  },
+  "useDefaultConstraints": true
+}

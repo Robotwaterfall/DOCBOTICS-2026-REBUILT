@@ -1,0 +1,66 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 0.4709935207095135,
+        "y": 5.257484848476686
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.4937330415246572,
+        "y": 5.2670752494649715
+      },
+      "isLocked": false,
+      "linkedName": "DriveInDepot"
+    },
+    {
+      "anchor": {
+        "x": 2.8813222222222223,
+        "y": 5.379733333333333
+      },
+      "prevControl": {
+        "x": 2.036017237761877,
+        "y": 6.074213563011006
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "LeftSideShoot"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.5103202846975067,
+      "rotationDegrees": 180.0
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [
+    {
+      "name": "PrepareShot",
+      "waypointRelativePos": 0.09026915113871431,
+      "endWaypointRelativePos": null,
+      "command": null
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 5.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -45.0
+  },
+  "reversed": false,
+  "folder": "LeftBoomerangSweepPaths",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -90.0
+  },
+  "useDefaultConstraints": true
+}

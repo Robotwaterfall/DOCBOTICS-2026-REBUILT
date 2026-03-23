@@ -1,0 +1,75 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "RightStartToNeutralZonePrepareCollect"
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "RightDriveIntoNeutralZone"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "JuggleIn"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "RightNeutralZoneToShootRight"
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 3.5
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "ShootingRoutine"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "RightShootToNeutral"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "RightDriveIntoNeutralZone"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": false,
+  "folder": "Right Side AUTO's",
+  "choreoAuto": false
+}

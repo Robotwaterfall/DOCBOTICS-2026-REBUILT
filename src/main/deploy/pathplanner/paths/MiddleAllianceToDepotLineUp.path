@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 2.3581084337349396,
+        "y": 4.035
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.8991445783132535,
+        "y": 5.586734939759037
+      },
+      "isLocked": false,
+      "linkedName": "MiddleAllianceZone"
+    },
+    {
+      "anchor": {
+        "x": 0.4709935207095135,
+        "y": 7.34132210262423
+      },
+      "prevControl": {
+        "x": 1.7276802676974652,
+        "y": 7.40688836768447
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "LeftLineUpDepot"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 5.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -90.0
+  },
+  "reversed": false,
+  "folder": "CenterPaths",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "useDefaultConstraints": true
+}

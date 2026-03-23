@@ -1,0 +1,61 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 0.4709935207095135,
+        "y": 5.257484848476686
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.920993520709514,
+        "y": 5.257484848476686
+      },
+      "isLocked": false,
+      "linkedName": "DriveInDepot"
+    },
+    {
+      "anchor": {
+        "x": 2.3581084337349396,
+        "y": 4.035
+      },
+      "prevControl": {
+        "x": 2.3581084337349396,
+        "y": 5.035
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "MiddleAllianceZone"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [
+    {
+      "name": "PrepareShot",
+      "waypointRelativePos": 0.06542443064182177,
+      "endWaypointRelativePos": null,
+      "command": null
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 5.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "reversed": false,
+  "folder": "CenterPaths",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -90.0
+  },
+  "useDefaultConstraints": true
+}

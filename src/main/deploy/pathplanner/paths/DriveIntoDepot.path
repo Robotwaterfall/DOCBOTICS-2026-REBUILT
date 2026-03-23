@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 0.4709935207095135,
+        "y": 7.34132210262423
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 0.4709935207095136,
+        "y": 5.965769567591257
+      },
+      "isLocked": false,
+      "linkedName": "LeftLineUpDepot"
+    },
+    {
+      "anchor": {
+        "x": 0.4709935207095135,
+        "y": 5.257484848476686
+      },
+      "prevControl": {
+        "x": 0.4709935207095134,
+        "y": 6.762095155306131
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "DriveInDepot"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 5.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -90.0
+  },
+  "reversed": false,
+  "folder": "LeftBoomerangSweepPaths",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -90.0
+  },
+  "useDefaultConstraints": true
+}

@@ -1,0 +1,50 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LeftStartToNeutralZoneIntake"
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "LeftSideDriveInNeutralZoneCollect"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "JuggleIn"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LeftSideNeutralToShoot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShootingRoutine"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "Left Side AUTO's",
+  "choreoAuto": false
+}
