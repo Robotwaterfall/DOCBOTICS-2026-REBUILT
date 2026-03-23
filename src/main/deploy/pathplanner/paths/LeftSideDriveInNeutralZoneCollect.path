@@ -28,7 +28,12 @@
       "linkedName": "DrivedInLeftSideCollectNeutral"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.9587188612099645,
+      "rotationDegrees": -90.0
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -42,7 +47,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -90.0
+    "rotation": -155.0
   },
   "reversed": false,
   "folder": "LeftBoomerangSweepPaths",

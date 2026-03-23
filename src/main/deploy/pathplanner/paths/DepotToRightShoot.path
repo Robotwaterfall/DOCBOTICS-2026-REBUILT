@@ -3,56 +3,67 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.6038674698795132,
-        "y": 2.0352289156603947
+        "x": 0.4709935207095135,
+        "y": 5.257484848476686
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.603867469879508,
-        "y": 2.0352289156603947
+        "x": 1.4709935207095135,
+        "y": 5.257484848476686
       },
       "isLocked": false,
-      "linkedName": "RightBumpStart"
+      "linkedName": "DriveInDepot"
     },
     {
       "anchor": {
-        "x": 6.0092888888888885,
-        "y": 2.2517666666666663
+        "x": 1.819177777777778,
+        "y": 3.8303666666666665
       },
       "prevControl": {
-        "x": 5.707466288410077,
-        "y": 2.8338531104472353
+        "x": 1.8546198032844892,
+        "y": 5.229753565617419
       },
       "nextControl": {
-        "x": 6.282133333333332,
-        "y": 1.7255666666666651
+        "x": 1.8016246672047254,
+        "y": 3.1373026382828337
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 7.778,
-        "y": 0.8485666666666658
+        "x": 2.628744650499286,
+        "y": 2.4888302425106996
       },
       "prevControl": {
-        "x": 6.778,
-        "y": 0.8485666666666659
+        "x": 1.6145444444444443,
+        "y": 2.485633333333333
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "StealFarRightNeutralZoneStartCollect"
+      "linkedName": "RightShoot"
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.9209964412811329,
-      "rotationDegrees": 55.0
+      "waypointRelativePos": 0.5110320284697583,
+      "rotationDegrees": 0.0
+    },
+    {
+      "waypointRelativePos": 1.387900355871882,
+      "rotationDegrees": 20.0
     }
   ],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "PrepareShot",
+      "waypointRelativePos": 0.4,
+      "endWaypointRelativePos": null,
+      "command": null
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 5.0,
     "maxAcceleration": 3.0,
@@ -63,13 +74,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 90.0
+    "rotation": 45.0
   },
   "reversed": false,
   "folder": "RightBoomerangSweepPaths",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": -90.0
   },
   "useDefaultConstraints": true
 }
