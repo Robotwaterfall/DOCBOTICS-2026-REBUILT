@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.estimator.PoseEstimator;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -127,31 +128,18 @@ public class SwerveSub extends SubsystemBase {
         SmartDashboard.putData("Field", m_Field);
 
         poseEstimator.resetPose(getPose());
-        LimelightHelpers.setPipelineIndex(LimelightConstants.Limelight2, 0);
-        
+        LimelightHelpers.setPipelineIndex(LimelightConstants.LimelightFront, 0);
+        LimelightHelpers.setPipelineIndex(LimelightConstants.LimelightBackLeft, 0);
+        LimelightHelpers.setPipelineIndex(LimelightConstants.LimelightBackRight, 0);
     }
 
     @Override
     public void periodic() {
         poseEstimator.update(getRotation2d(), getModulePositionsAuto());
 
-
-        // Vision Updates
-        boolean doRejectUpdate = LimelightHelpers.getTV(LimelightConstants.Limelight2);
-
-        if (doRejectUpdate) {
-            LimelightHelpers.PoseEstimate mt1;
-            var alliance = DriverStation.getAlliance();
-            if (alliance.isPresent() && alliance.get() == DriverStation.Alliance.Red) {
-                mt1 = LimelightHelpers.getBotPoseEstimate_wpiRed(LimelightConstants.Limelight2);
-            } else {
-                mt1 = LimelightHelpers.getBotPoseEstimate_wpiBlue(LimelightConstants.Limelight2);
-            }
-            if (mt1.tagCount > 0) {
-                poseEstimator.addVisionMeasurement(mt1.pose, mt1.timestampSeconds);
-            }
-        }
-
+        fuseLimelight(LimelightConstants.LimelightFront);
+        fuseLimelight(LimelightConstants.LimelightBackLeft);
+        fuseLimelight(LimelightConstants.LimelightBackRight);
 
         m_Field.setRobotPose(poseEstimator.getEstimatedPosition());
 
@@ -173,6 +161,36 @@ public class SwerveSub extends SubsystemBase {
         SmartDashboard.putNumber("RobotHeading: ", getHeading());
         SmartDashboard.putString("RobotLocation: ", getPose().getTranslation().toString());
     }
+
+    private void fuseLimelight(String limelightName) {
+    if (!LimelightHelpers.getTV(limelightName)) return;
+
+    LimelightHelpers.PoseEstimate poseEst;
+    var alliance = DriverStation.getAlliance();
+    if (alliance.isPresent() && alliance.get() == DriverStation.Alliance.Red) {
+        poseEst = LimelightHelpers.getBotPoseEstimate_wpiRed(limelightName);
+    } else {
+        poseEst = LimelightHelpers.getBotPoseEstimate_wpiBlue(limelightName);
+    }
+
+    // Smart filtering
+    if (poseEst.tagCount >= 1 && 
+        poseEst.rawFiducials != null && poseEst.rawFiducials.length > 0 &&
+        poseEst.rawFiducials[0].ambiguity < 0.7 &&
+        poseEst.latency > 0.01) {
+
+        double xyStdDev = limelightName.contains("Back") ? 1.0 : 0.5;
+        poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(xyStdDev, xyStdDev, 1000));
+        
+        // CRITICAL: Actually add the measurement!
+        poseEstimator.addVisionMeasurement(poseEst.pose, poseEst.timestampSeconds);
+        
+        // Debug
+        SmartDashboard.putNumber(limelightName + "_tagCount", poseEst.tagCount);
+        SmartDashboard.putNumber(limelightName + "_ambiguity", poseEst.rawFiducials[0].ambiguity);
+    }
+}
+
 
     public Pose2d getPose() {
         return poseEstimator.getEstimatedPosition();

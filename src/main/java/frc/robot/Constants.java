@@ -117,11 +117,10 @@ public final class Constants {
 
   public static final class LimelightConstants {
 
-    public static final String Limelight2 = "limelight-track";
-    public static final String Limelight3 = "limelight3"; //TODO
+    public static final String LimelightFront = "limelight-track";
+    public static final String LimelightBackLeft = "limelightbackleft"; //TODO
+    public static final String LimelightBackRight = "limelightbackright"; //TODO
 
-    public static final double limelightMountAngleDegrees = 28.1; //TODO
-    public static final double limelightLensHeightInches = 26.0; //TODO
   }
 
     public static final class OIConstants {
@@ -151,8 +150,6 @@ public final class Constants {
       public static final int kDpadRIGHT = 90;
       public static final int kDpadLEFT = 270;
       public static final int kDpadRIGHTDOWN = 135;
-
-
 
       public static final double kDeadband = 0.5;
 
