@@ -6,6 +6,7 @@ import com.revrobotics.servohub.ServoChannel.ChannelId;
 import com.revrobotics.servohub.ServoHub.ResetMode;
 import com.revrobotics.servohub.config.ServoHubConfig;
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.HoodConstants;
@@ -125,15 +126,11 @@ public class HoodSub extends SubsystemBase{
     }
 
     @Override
-    public String toString(){
-        String str = "";
-        str += "Hood Subsystem: ";
-        str += "\nDesiredHoodAngle: " + getHoodAngle(); // To show desired hood angle
-        str += "\nTunableHoodAngle: " + tunableHoodAngle;
-        str += "\nCurrentLeftPulseWidth: " + hoodLinActLeftChannel.getPulseWidth();
-        str += "\nCurrentRightPulseWidth: " + hoodLinActRightChannel.getPulseWidth();
-        str += "\nisAtSetAngle: " + isAtSetAngle();
-        return str;
-
+    public void periodic(){
+        SmartDashboard.putNumber("DesiredHoodAngle", getHoodAngle());
+        SmartDashboard.putNumber("TunableHoodAngle", tunableHoodAngle);
+        SmartDashboard.putNumber("CurrentLeftPulseWidth", hoodLinActLeftChannel.getPulseWidth());
+        SmartDashboard.putNumber("CurrentRightPulseWidth", hoodLinActRightChannel.getPulseWidth());
+        SmartDashboard.putBoolean("isAtSetAngle", isAtSetAngle());
     }
 }

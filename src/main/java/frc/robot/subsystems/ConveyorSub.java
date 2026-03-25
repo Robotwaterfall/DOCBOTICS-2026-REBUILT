@@ -1,9 +1,9 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.spark.SparkMax;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ConveyorConstant;
-import frc.robot.Constants.IntakeRollerConstants;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 public class ConveyorSub extends SubsystemBase {
@@ -25,13 +25,12 @@ public class ConveyorSub extends SubsystemBase {
     }
 
     public boolean isConveyorOn(){
-        return conveyorPower > 0 || conveyorPower < 0;
+        return conveyorMotor.get() != 0;
     }
 
-    @Override
-    public String toString(){
-        String str = "";
-        str += "isConveyorOn: " + isConveyorOn(); //To check if conveyor is on
-        return str;
-    }
+     @Override
+     public void periodic() {
+        SmartDashboard.putBoolean("isConveyorOn", isConveyorOn());
+    
+     }
 }

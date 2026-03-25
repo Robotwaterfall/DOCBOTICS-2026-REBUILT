@@ -87,20 +87,5 @@ public final class PoseManager {
     public static double getHeadingErrorDegreesHub(SwerveSub swerveSub) {
         return getHeadingErrorDegrees(swerveSub, getAllianceHubPose2d());
     }
-
-    /** Debug string with live values */
-    public static String debugString(SwerveSub swerveSub) {
-        Pose2d pose = swerveSub.getPose();
-        if (pose == null) return "Pose unavailable";
-
-        double distInches = getDistanceToHubInches(swerveSub);
-        double headingError = getHeadingErrorDegreesHub(swerveSub);
-        boolean inZone = isInAllianceZone(swerveSub);
-
-        return "PoseManager Debug:" +
-               "\nPose: " + pose +
-               "\nDistanceToHub (in): " + distInches +
-               "\nHeadingErrorToHub (deg): " + headingError +
-               "\nInAllianceZone: " + inZone;
-    }
+    
 }

@@ -14,58 +14,32 @@ import frc.robot.subsystems.SwerveSub;
 public class ShootingRoutine extends SequentialCommandGroup{
 
     public ShootingRoutine(
-        SwerveSub swerveSub,
-        ShooterSub shooterSub,
-        HoodSub hoodSub,
-        IndexerSub indexerSub,
-        ConveyorSub conveyorSub,
-        IntakePitcherSub intakePitcherSub,
-        PS5Controller driverJoystick
-    ){
-        //Make a instance of the align to hub command
-        AlignToHubCMD alignToHubCMD = new AlignToHubCMD(swerveSub);
+    SwerveSub swerveSub,
+    ShooterSub shooterSub,
+    HoodSub hoodSub,
+    IndexerSub indexerSub,
+    ConveyorSub conveyorSub,
+    IntakePitcherSub intakePitcherSub,
+    PS5Controller driverJoystick
+) {
+    // Phase 1: Fresh instances for each group
+    Command WaitForReady = 
+        new WaitForShooterReady(shooterSub, new AlignToHubCMD(swerveSub))  // Fresh here
+            .deadlineWith(
+                new PrepareShot(shooterSub, hoodSub, swerveSub),
+                new AlignToHubCMD(swerveSub)  // Fresh instance
+            );
+    
+    // Phase 2: Fresh instances again
+    Command Fire = 
+        new FireShot(indexerSub, conveyorSub, intakePitcherSub, driverJoystick)
+            .deadlineWith(
+                new PrepareShot(shooterSub, hoodSub, swerveSub),
+                new AlignToHubCMD(swerveSub)  // Fresh instance (not reused)
+            );
 
-        /**  Phase 1: Run PrepareShot + AlignToHub in parallel while waiting for the shooter
-             to reach its target speed AND the robot to be aligned. The WaitForShooterReady
-             command is the *deadline*, meaning this whole group ends only when the shooter
-             is ready. Until then, PrepareShot continuously updates shooter RPM/hood angle,
-             and AlignToHubCMD keeps rotating the robot toward the target.
-        */  
-        Command WaitForReady = 
-            new WaitForShooterReady(shooterSub, alignToHubCMD)
-                .deadlineWith(
-                    new PrepareShot(
-                        shooterSub, 
-                        hoodSub, 
-                        swerveSub),
-                        alignToHubCMD
-                );
-        /**  Phase 2: Begin feeding game pieces into the shooter. FireShot is the *deadline*
-             command, meaning this parallel group continues running only while FireShot is
-             active (typically as long as the driver holds the shoot button). Meanwhile,
-             PrepareShot keeps updating shooter RPM and hood angle, and AlignToHubCMD keeps
-             the robot aimed at the target throughout the entire firing sequence.
-        */
+    addCommands(WaitForReady, Fire);
+}
 
-        Command Fire = 
-            new FireShot(indexerSub, conveyorSub, intakePitcherSub, driverJoystick)
-                .deadlineWith(
-                    new PrepareShot(
-                        shooterSub, 
-                        hoodSub, 
-                        swerveSub),
-                        alignToHubCMD
-                );
-
-
-        
-        // Schedule the two phases sequentially
-        addCommands(
-            WaitForReady,
-            Fire
-        );
-                    
-
-    }
 
 }

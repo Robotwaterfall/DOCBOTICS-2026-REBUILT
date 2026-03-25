@@ -1,7 +1,7 @@
 package frc.robot.commands.commandgroups;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import frc.robot.Constants;
+import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.RunIndexerCMD;
 import frc.robot.commands.RunShooterCMD;
 import frc.robot.subsystems.ConveyorSub;
@@ -17,8 +17,9 @@ public class Juggle extends ParallelCommandGroup{
 
         addCommands(
             new IntakeFuel(intakeRollersSub, conveyorSub),
-            new RunShooterCMD(shooterSub, swerveSub , Constants.ShooterConstants.kJuggleVelocityFPS),
-            new RunIndexerCMD(indexerSub, Constants.ShooterConstants.kIndexSpeed)    
+            new RunIndexerCMD(indexerSub, ShooterConstants.kIndexSpeed),
+            new RunShooterCMD(shooterSub, swerveSub, ShooterConstants.kJuggleVelocityFPS)
+              
         );
 
     }

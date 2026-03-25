@@ -4,7 +4,7 @@ import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
-
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterConstants;
 
@@ -12,7 +12,7 @@ public class ShooterSub extends SubsystemBase {
 
     public TalonFX shooterLead = new TalonFX(ShooterConstants.kShooterLeadMotorId);
     public TalonFX shooterFollowerRight = new TalonFX(ShooterConstants.kShooterFollowerRightId);
-    public TalonFX shooterFollowerLeft = new TalonFX(ShooterConstants.kShooterFollowerLeftId);
+    // public TalonFX shooterFollowerLeft = new TalonFX(ShooterConstants.kShooterFollowerLeftId);
 
     private final VelocityVoltage velocityRequest = new VelocityVoltage(0);
 
@@ -34,7 +34,7 @@ public class ShooterSub extends SubsystemBase {
 
         shooterLead.getConfigurator().apply(cfg);
         shooterFollowerRight.getConfigurator().apply(cfg);
-        shooterFollowerLeft.getConfigurator().apply(cfg);
+        // shooterFollowerLeft.getConfigurator().apply(cfg);
     }
 
     public void setShooterVelocityFPS(double wheelVelocityFeetPerSecond) {
@@ -126,17 +126,12 @@ public class ShooterSub extends SubsystemBase {
     public double getTunableVelocityFps() { return tunableVelocityFps; }
 
     @Override
-    public String toString() {
-
-        String str = "";
-
-        str += "Shooter Subsystem Information";
-        str += "\ncurrentDesiredVelocityFPS: " + getDesiredVelocityFPS();
-        // str += "\naverageMotorVelocityRPS: " + getAverageMotorVelocityFPS();
-        str += "\nshooterLeadVelocityFPS: " + getShooterLeadVelocityFPS();
-        str += "\nshooterFollowerRightVelocityFPS: " + getShooterFollowerRightVelocityFPS();
-        str += "\natDesiredVelocityFPS: " + isAtSetVelocityFPS();
-
-        return str;
+    public void periodic() {
+        
+        SmartDashboard.putNumber("currentDesiredVelocityFPS", desiredVelocityFPS);
+        SmartDashboard.putNumber("shooterLeadVelocityFPS", getShooterLeadVelocityFPS());
+        SmartDashboard.putNumber("shooterFollowerRightVelocityFPS", getShooterFollowerRightVelocityFPS());
+        SmartDashboard.putBoolean("atDesiredVelocityFPS", isAtSetVelocityFPS());
     }
+
 }
