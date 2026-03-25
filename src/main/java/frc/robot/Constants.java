@@ -168,23 +168,25 @@ public final class Constants {
     public static final int kIntakePitcherMotorPort = 2; 
     public static final double kDegreesPerMotorRotation = 360 / (9 * 48/20 * 48/20 * 24/12); // Degrees / gear ratio gives degrees to motor revolutions
 
-    public static final double kMinPitchDegrees = 0; //TODO: set min and max pitch degrees based on physical limits of the mechanism
-    public static final double kMaxPitchDegrees = 100; //TODO
+    public static final double kMinPitchDegrees = 0; 
+    public static final double kMaxPitchDegrees = 105; 
 
-    public static final double kPitcherIn = 0; // Setpoint positions
-    public static final double kPitcherOut = 90; //TODO
+    public static final double kPitcherInDegrees = 0; // Setpoint positions
+    public static final double kPitcherOutDegrees = 104; 
 
-    public static double intakePitcher_kP = 0; //TODO
+    public static double intakePitcher_kP = 0.1; //TODO
     public static double intakePitcher_kI = 0; //TODO
     public static double intakePitcher_kD = 0; //TODO
 
-    public static double intakePitcherToleranceDegrees = 2; //TODO
+    public static double intakePitcherToleranceDegrees = 1;
 
-    public static double intakePitcherWaitTimeSec = 0.8; //TODO
+    public static double intakePitcherWaitTimeSec = 1; //TODO
 
-    public static final IdleMode pitcherIdleMode = IdleMode.kBrake;
+    public static double intakePitcherFlutterDegrees = 90;
 
-    public static final double pitcherMaxSpeed = 0.5; //Has to be in between -1 and 1 //TODO
+    public static final IdleMode pitcherIdleMode = IdleMode.kCoast;
+
+    public static final double pitcherMaxSpeed = 0.25;
   }
 
   public static final class ShooterConstants {
@@ -192,27 +194,29 @@ public final class Constants {
     public static final int kShooterFollowerRightId = 23;
     public static final int kShooterFollowerLeftId = 22; 
 
+    public static final int kShooterVelocityFps = 130; //TODO: GET RID FOR TESTING
+
     public static final int kIndexMotorId = 25; 
 
     public static final double kWheelDiameterInches = 4.0; // 4" wheel
     public static final double kGearRatio = 1.0;
 
-    public static final double kShooterKP = 0.05; //TODO
+    public static final double kShooterKP = 0.09; //TODO
     public static final double kShooterKi = 0; //TODO
     public static final double kShooterKd = 0; //TODO
-    public static final double kShooterKs = 0.1; //TODO
-    public static final double kShooterKv = 0.1; //TODO
+    public static final double kShooterKs = 0.001; //TODO
+    public static final double kShooterKv = 0; //TODO
 
     public static final double kIndexSpeed = 1;
     public static final double kReverseIndexSpeed = -1; 
 
-    public static final double kWarmupVelocityFPS = 35; //TODO: find the warmup velocity in feet per second
+    public static final double kWarmupVelocityFPS = 100;
 
-    public static final double kJuggleVelocityFPS = 10; //TODO
+    public static final double kJuggleVelocityFPS = 60;
 
     public static final double kHeightOfHubInches = 72; //height of the hub where fuel can enter
 
-    public static final double shooterTolerance = 2.0; //TODO
+    public static final double shooterTolerance = 5.0; //TODO
 
     public static final double defaultShooterVelocityPlusPerPress = 2.0; //TODO
 
@@ -222,8 +226,8 @@ public final class Constants {
   }
     public static final class ConveyorConstant {
     public static final int kConveyorMotorPort = 7;
-    public static final double conveyorPower = 0.8; //TODO
-    public static final double reverseConveyorPower = -0.8; //TODO
+    public static final double conveyorPower = 0.8; 
+    public static final double reverseConveyorPower = -0.8; 
  
 
   }

@@ -6,6 +6,7 @@ import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IntakeRollerConstants;;
 
@@ -43,22 +44,18 @@ public class IntakeRollersSub extends SubsystemBase {
     }
 
 
-    @Override
-    public String toString() {
-        String str = "";
-        double power = this.intakeRollerMotor.getAppliedOutput();
-
-        str += "Intake Roller Information";
-        str += "\nMotor Power: " + power;
-        if (power != 0)
-            str += "\nCurrently: " + (power > 0 ? "INTAKING" : "OUTAKING");
-
-        return str;
-    }
-
     // Getter for debugging 
     public SparkMax getIntakeRollerMotor() {
         return intakeRollerMotor;
+    }
+
+    public boolean isIntakeRollersRunning() {
+        return intakeRollerMotor.get() != 0;
+    }
+
+    @Override
+    public void periodic() {
+        SmartDashboard.putBoolean("isIntakeRollersRunning", isIntakeRollersRunning());
     }
 
 }

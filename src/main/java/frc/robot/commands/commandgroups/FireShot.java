@@ -16,7 +16,7 @@ public class FireShot extends ParallelCommandGroup{
         addCommands(
             new RunIndexerCMD(indexerSub, Constants.ShooterConstants.kIndexSpeed),
             new RunConveyorCMD(conveyorSub, Constants.ConveyorConstant.conveyorPower),
-            new FlutterIntake(intakePitcherSub).repeatedly(),
+            new FlutterIntake(intakePitcherSub),
             new RumbleControllerCMD(driverJoystick)
         );
       

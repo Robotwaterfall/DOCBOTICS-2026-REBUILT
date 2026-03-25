@@ -128,6 +128,7 @@ public class SwerveSub extends SubsystemBase {
 
         poseEstimator.resetPose(getPose());
         LimelightHelpers.setPipelineIndex(LimelightConstants.Limelight2, 0);
+        
     }
 
     @Override
@@ -136,7 +137,7 @@ public class SwerveSub extends SubsystemBase {
 
 
         // Vision Updates
-    boolean doRejectUpdate = LimelightHelpers.getTV(LimelightConstants.Limelight2);
+        boolean doRejectUpdate = LimelightHelpers.getTV(LimelightConstants.Limelight2);
 
         if (doRejectUpdate) {
             LimelightHelpers.PoseEstimate mt1;
@@ -168,6 +169,9 @@ public class SwerveSub extends SubsystemBase {
         frontRight.sendToDashboard();
         backLeft.sendToDashboard();
         backRight.sendToDashboard();
+
+        SmartDashboard.putNumber("RobotHeading: ", getHeading());
+        SmartDashboard.putString("RobotLocation: ", getPose().getTranslation().toString());
     }
 
     public Pose2d getPose() {
@@ -238,14 +242,5 @@ public class SwerveSub extends SubsystemBase {
         for (SwerveModule module : swerveModules) {
             module.stop();
         }
-    }
-
-    @Override
-    public String toString(){
-        String str = "";
-        str = "LocationAndHeading: ";
-        str += "\nrobotHeading: " + getHeading();
-        str += "\nrobotLocation: " + getPose().getTranslation().toString();
-        return str;
     }
 }
