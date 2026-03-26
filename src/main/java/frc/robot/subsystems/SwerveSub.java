@@ -148,9 +148,7 @@ public class SwerveSub extends SubsystemBase {
     public void periodic() {
         poseEstimator.update(getRotation2d(), getModulePositionsAuto());
 
-        fuseLimelight(LimelightConstants.LimelightFront);
         fuseLimelight(LimelightConstants.LimelightBackLeft);
-        fuseLimelight(LimelightConstants.LimelightBackRight);
 
         m_Field.setRobotPose(poseEstimator.getEstimatedPosition());
 
@@ -179,10 +177,19 @@ public class SwerveSub extends SubsystemBase {
     LimelightHelpers.PoseEstimate poseEst;
     var alliance = DriverStation.getAlliance();
     if (alliance.isPresent() && alliance.get() == DriverStation.Alliance.Red) {
-        poseEst = LimelightHelpers.getBotPoseEstimate_wpiRed(limelightName);
-    } else {
         poseEst = LimelightHelpers.getBotPoseEstimate_wpiBlue(limelightName);
+    } else {
+        poseEst = LimelightHelpers.getBotPoseEstimate_wpiRed(limelightName);
     }
+
+      Pose2d measuredPose = poseEst.pose;
+            if (alliance.isPresent() && alliance.get() == DriverStation.Alliance.Red) {
+                // Flip pose for estimator only
+                measuredPose = new Pose2d(
+                    measuredPose.getTranslation().rotateBy(new Rotation2d(Math.PI)),
+                    measuredPose.getRotation().plus(Rotation2d.fromDegrees(-180))
+                );
+            }
 
     // Smart filtering
     if (poseEst.tagCount >= 1 && 

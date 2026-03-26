@@ -27,7 +27,7 @@ public class RunIntakeRollersCMD extends Command {
   @Override
   public void execute() {
    
-    intakeRollerSub.setVelocity(intakeRollerVelocityRPS);
+    intakeRollerSub.setMotorPower(intakeRollerVelocityRPS);
     
   }
 

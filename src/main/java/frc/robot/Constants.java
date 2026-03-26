@@ -121,7 +121,7 @@ public final class Constants {
   public static final class LimelightConstants {
 
     public static final String LimelightFront = "limelight-track";
-    public static final String LimelightBackLeft = "limelightbackleft"; //TODO
+    public static final String LimelightBackLeft = "limelight-left"; 
     public static final String LimelightBackRight = "limelightbackright"; //TODO
 
   }
@@ -162,14 +162,14 @@ public final class Constants {
   public static final class IntakeRollerConstants{
     public static final int kIntakeMotorPort = 3; 
     
-    public static final double kIntakeRollersKp = 0.1; //TODO
+    public static final double kIntakeRollersKp = 0.5; //TODO
     public static final double kIntakeRollersKi = 0; //TODO
     public static final double kIntakeRollersKd = 0; //TODO
     public static final double kIntakeRollersKs = 0; //TODO
     public static final double kIntakeRollersKv = 0; //TODO
 
-    public static final double kIntakeVelocityRPS = 10;
-    public static final double kOuttakeVelocityRPS = -10;
+    public static final double kIntakeVelocityRPS = -0.8;
+    public static final double kOuttakeVelocityRPS = 0.8;
 
   }
 
@@ -181,7 +181,7 @@ public final class Constants {
     public static final double kMaxPitchDegrees = 105; 
 
     public static final double kPitcherInDegrees = 0; // Setpoint positions
-    public static final double kPitcherOutDegrees = 98; 
+    public static final double kPitcherOutDegrees = 104; 
 
     public static double intakePitcher_kP = 0.1; //TODO
     public static double intakePitcher_kI = 0; //TODO
@@ -217,7 +217,7 @@ public final class Constants {
     public static final double kShooterKv = 12.0 / KrakenX60.kFreeSpeed.in(RotationsPerSecond); //TODO
 
     public static final double kIndexSpeed = 1;
-    public static final double kReverseIndexSpeedWhileIntaking = -0.5;
+    public static final double kReverseIndexSpeedWhileIntaking = -0.9;
     public static final double kReverseIndexSpeed = -1; 
 
     public static final double kWarmupVelocityFPS = 50;

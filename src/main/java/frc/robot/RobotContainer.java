@@ -13,6 +13,8 @@ import frc.robot.Constants.HoodConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.ResetHeadingCMD;
+import frc.robot.commands.RunConveyorCMD;
+import frc.robot.commands.RunIndexerCMD;
 import frc.robot.commands.StopShooterMotorsCMD;
 import frc.robot.commands.SwerveJoystickCMD;
 import frc.robot.commands.TelemetryManagerCMD;
@@ -82,9 +84,9 @@ public class RobotContainer {
       new MoveIntakePitcherCMD(intakePitcherSub, Constants.IntakePitcherConstants.kPitcherOutDegrees)
     );
 
-    telemetrySub.setDefaultCommand(
-      new TelemetryManagerCMD(swerveSub)
-    );
+    // telemetrySub.setDefaultCommand(
+    //   new TelemetryManagerCMD(swerveSub)
+    // );
   }
 
 
@@ -110,13 +112,13 @@ public class RobotContainer {
     //   new RunShooterCMD(shooterSub, swerveSub, ShooterConstants.kShooterVelocityFps)
     // );
 
-    // new JoystickButton(driverJoyStick, OIConstants.kPrepareShotButton).whileTrue(
-    //   new RunIndexerCMD(indexerSub, 1.0)
-    // );
+    new JoystickButton(driverJoyStick, OIConstants.kPrepareShotButton).whileTrue(
+      new RunIndexerCMD(indexerSub, 1.0)
+    );
 
-    // new JoystickButton(driverJoyStick, OIConstants.kPrepareShotButton).whileTrue(
-    //   new RunConveyorCMD(conveyorSub, 0.6)
-    // );
+    new JoystickButton(driverJoyStick, OIConstants.kPrepareShotButton).whileTrue(
+      new RunConveyorCMD(conveyorSub, 0.6)
+    );
 
     // new JoystickButton(driverJoyStick, OIConstants.kPrepareShotButton).whileTrue(
     //   new FlutterIntake(intakePitcherSub).repeatedly()
