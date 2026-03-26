@@ -21,7 +21,7 @@ public class RunShooterCMD extends Command {
         this.swerveSub  = swerveSub;
 
         double targetDistanceInches = PoseManager.getDistanceToHubInches(swerveSub);
-        double distanceFeet         = targetDistanceInches / 12.0;
+        double distanceFeet = targetDistanceInches / 12.0;
 
         ShooterLookup.ShooterParams params = ShooterLookup.getInterpolated(distanceFeet);
         this.desiredVelocity = params.velocityFps;
