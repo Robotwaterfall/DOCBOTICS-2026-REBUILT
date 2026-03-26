@@ -1,7 +1,6 @@
 package frc.robot.commands.commandgroups;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
 import frc.robot.Constants.IntakePitcherConstants;
 import frc.robot.commands.MoveIntakePitcherCMD;

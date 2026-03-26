@@ -2,8 +2,6 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.Constants;
-import frc.robot.Constants.HoodConstants;
-import frc.robot.subsystems.HoodSub;
 import frc.robot.subsystems.ShooterSub;
 
 public class IncrementShooterCMD extends InstantCommand{

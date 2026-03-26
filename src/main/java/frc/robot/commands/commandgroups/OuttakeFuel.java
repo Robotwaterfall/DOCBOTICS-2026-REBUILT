@@ -15,7 +15,7 @@ public class OuttakeFuel extends ParallelCommandGroup{
         ConveyorSub conveyorSub, IndexerSub indexerSub){
 
             addCommands(
-                new RunIntakeRollersCMD(intakeRollersSub, Constants.IntakeRollerConstants.kOutakeMotorPower),
+                new RunIntakeRollersCMD(intakeRollersSub, Constants.IntakeRollerConstants.kOuttakeVelocityRPS),
                 new RunIndexerCMD(indexerSub, Constants.ShooterConstants.kReverseIndexSpeed),
                 new RunConveyorCMD(conveyorSub, Constants.ConveyorConstant.reverseConveyorPower)
             );

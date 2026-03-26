@@ -1,7 +1,6 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.math.VecBuilder;
-import edu.wpi.first.math.estimator.PoseEstimator;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -41,96 +40,108 @@ public class SwerveSub extends SubsystemBase {
     private RobotConfig config;
 
     public SwerveSub() {
-        // 1. Initialize Swerve Modules
-        frontRight = new SwerveModule(
-                DriveConstants.kFrontRightDriveMotorPort,
-                DriveConstants.kFrontRightTurningMotorPort,
-                DriveConstants.kFrontRightDriveEncoderReversed,
-                DriveConstants.kFrontRightTurningEncoderReversed,
-                DriveConstants.kFrontRightDriveAbsoluteEncoderPort,
-                DriveConstants.kFrontRightDriveAbsoluteEncoderOffsetRad,
-                DriveConstants.kFrontRightDriveAbsoluteEncoderReversed);
+         // 1. Initialize Swerve Modules FIRST
+    frontRight = new SwerveModule(
+        DriveConstants.kFrontRightDriveMotorPort,
+        DriveConstants.kFrontRightTurningMotorPort,
+        DriveConstants.kFrontRightDriveEncoderReversed,
+        DriveConstants.kFrontRightTurningEncoderReversed,
+        DriveConstants.kFrontRightDriveAbsoluteEncoderPort,
+        DriveConstants.kFrontRightDriveAbsoluteEncoderOffsetRad,
+        DriveConstants.kFrontRightDriveAbsoluteEncoderReversed);
 
-        frontLeft = new SwerveModule(
-                DriveConstants.kFrontLeftDriveMotorPort,
-                DriveConstants.kFrontLeftTurningMotorPort,
-                DriveConstants.kFrontLeftDriveEncoderReversed,
-                DriveConstants.kFrontLeftTurningEncoderReversed,
-                DriveConstants.kFrontLeftDriveAbsoluteEncoderPort,
-                DriveConstants.kFrontLeftDriveAbsoluteEncoderOffsetRad,
-                DriveConstants.kFrontLeftDriveAbsoluteEncoderReversed);
+    frontLeft = new SwerveModule(
+        DriveConstants.kFrontLeftDriveMotorPort,
+        DriveConstants.kFrontLeftTurningMotorPort,
+        DriveConstants.kFrontLeftDriveEncoderReversed,
+        DriveConstants.kFrontLeftTurningEncoderReversed,
+        DriveConstants.kFrontLeftDriveAbsoluteEncoderPort,
+        DriveConstants.kFrontLeftDriveAbsoluteEncoderOffsetRad,
+        DriveConstants.kFrontLeftDriveAbsoluteEncoderReversed);
 
-        backRight = new SwerveModule(
-                DriveConstants.kBackRightDriveMotorPort,
-                DriveConstants.kBackRightTurningMotorPort,
-                DriveConstants.kBackRightDriveEncoderReversed,
-                DriveConstants.kBackRightTurningEncoderReversed,
-                DriveConstants.kBackRightDriveAbsoluteEncoderPort,
-                DriveConstants.kBackRightDriveAbsoluteEncoderOffsetRad,
-                DriveConstants.kBackRightDriveAbsoluteEncoderReversed);
+    backRight = new SwerveModule(
+        DriveConstants.kBackRightDriveMotorPort,
+        DriveConstants.kBackRightTurningMotorPort,
+        DriveConstants.kBackRightDriveEncoderReversed,
+        DriveConstants.kBackRightTurningEncoderReversed,
+        DriveConstants.kBackRightDriveAbsoluteEncoderPort,
+        DriveConstants.kBackRightDriveAbsoluteEncoderOffsetRad,
+        DriveConstants.kBackRightDriveAbsoluteEncoderReversed);
 
-        backLeft = new SwerveModule(
-                DriveConstants.kBackLeftDriveMotorPort,
-                DriveConstants.kBackLeftTurningMotorPort,
-                DriveConstants.kBackLeftDriveEncoderReversed,
-                DriveConstants.kBackLeftTurningEncoderReversed,
-                DriveConstants.kBackLeftDriveAbsoluteEncoderPort,
-                DriveConstants.kBackLeftDriveAbsoluteEncoderOffsetRad,
-                DriveConstants.kBackLeftDriveAbsoluteEncoderReversed);
+    backLeft = new SwerveModule(
+        DriveConstants.kBackLeftDriveMotorPort,
+        DriveConstants.kBackLeftTurningMotorPort,
+        DriveConstants.kBackLeftDriveEncoderReversed,
+        DriveConstants.kBackLeftTurningEncoderReversed,
+        DriveConstants.kBackLeftDriveAbsoluteEncoderPort,
+        DriveConstants.kBackLeftDriveAbsoluteEncoderOffsetRad,
+        DriveConstants.kBackLeftDriveAbsoluteEncoderReversed);
 
-        swerveModules = new SwerveModule[] { frontLeft, frontRight, backLeft, backRight };
+    swerveModules = new SwerveModule[] { frontLeft, frontRight, backLeft, backRight };
 
-        // 2. Initialize Gyro (Must be before PoseEstimator)
-        gyro = new Pigeon2(Constants.DriveConstants.kImuIdPort, "rio");
+    // 2. Initialize Gyro
+    gyro = new Pigeon2(Constants.DriveConstants.kImuIdPort, "rio");
 
-        // 3. Initialize Pose Estimator
-        poseEstimator = new SwerveDrivePoseEstimator(
-                DriveConstants.kDriveKinematics,
-                getRotation2d(),
-                getModulePositionsAuto(),
-                new Pose2d());
+    // 3. Initialize Pose Estimator WITH VALID DATA (modules exist now)
+    poseEstimator = new SwerveDrivePoseEstimator(
+        DriveConstants.kDriveKinematics,
+        Rotation2d.fromDegrees(0),  // Temp zero until gyro ready
+        getModulePositionsAuto(),   // Safe now - modules initialized
+        new Pose2d());
 
-        // 4. PathPlanner Configuration
-        try {
-            config = RobotConfig.fromGUISettings();
-
-            AutoBuilder.configure(
-                this::getPose, 
-                this::resetPose, 
-                this::getSpeeds, 
-                (speeds, feedforwards) -> driveRobotRelative(speeds), 
-                new PPHolonomicDriveController(
-                    new PIDConstants(5.0, 0.0, 0.0), 
-                    new PIDConstants(5.0, 0.0, 0.0) 
-                ),
-                config,
-                () -> {
-                    var alliance = DriverStation.getAlliance();
-                    if (alliance.isPresent()) {
-                        return alliance.get() == DriverStation.Alliance.Red;
-                    }
-                    return false;
-                },
-                this 
-            );
-        } catch (Exception e) {
-            DriverStation.reportError("PathPlanner config could not be loaded! Check your deploy folder: " + e.getMessage(), e.getStackTrace());
+    // 4. PathPlanner Configuration (Safe)
+    try {
+        config = RobotConfig.fromGUISettings();
+        if (config == null) {
+            DriverStation.reportWarning("settings.json missing", false);
         }
 
-        // Gyro Reset Thread
-        new Thread(() -> {
-            try {
-                Thread.sleep(10900);
-                zeroHeading();
-            } catch (Exception e) {}
-        }).start();
+        AutoBuilder.configure(
+            this::getPose, 
+            this::resetPose, 
+            this::getSpeeds, 
+            (speeds, feedforwards) -> {
+                try {
+                    driveRobotRelative(speeds);
+                } catch (Exception e) {
+                    System.err.println("PathPlanner drive error: " + e.getMessage());
+                }
+            }, 
+            new PPHolonomicDriveController(
+                new PIDConstants(5.0, 0.0, 0.0), 
+                new PIDConstants(5.0, 0.0, 0.0) 
+            ),
+            config,
+            () -> {
+                var alliance = DriverStation.getAlliance();
+                if (alliance.isPresent()) {
+                    return alliance.get() == DriverStation.Alliance.Red;
+                }
+                return false;
+            },
+            this 
+        );
+    } catch (Exception e) {
+        DriverStation.reportError("PathPlanner config failed: " + e.getMessage(), false);
+    }
 
-        SmartDashboard.putData("Field", m_Field);
+    // 5. Gyro Reset Thread
+    new Thread(() -> {
+        try {
+            Thread.sleep(10900);
+            zeroHeading();
+        } catch (Exception e) {}
+    }).start();
 
-        poseEstimator.resetPose(getPose());
-        LimelightHelpers.setPipelineIndex(LimelightConstants.LimelightFront, 0);
-        LimelightHelpers.setPipelineIndex(LimelightConstants.LimelightBackLeft, 0);
-        LimelightHelpers.setPipelineIndex(LimelightConstants.LimelightBackRight, 0);
+    // 6. Dashboard + Limelight
+    SmartDashboard.putData("Field", m_Field);
+    
+    // Reset pose after everything ready
+    poseEstimator.resetPosition(getRotation2d(), getModulePositionsAuto(), new Pose2d());
+    
+    LimelightHelpers.setPipelineIndex(LimelightConstants.LimelightFront, 0);
+    LimelightHelpers.setPipelineIndex(LimelightConstants.LimelightBackLeft, 0);
+    LimelightHelpers.setPipelineIndex(LimelightConstants.LimelightBackRight, 0);
     }
 
     @Override
@@ -194,10 +205,6 @@ public class SwerveSub extends SubsystemBase {
 
     public Pose2d getPose() {
         return poseEstimator.getEstimatedPosition();
-    }
-
-    public void resetPose(){
-        poseEstimator.resetPose(getPose()); 
     }
 
     public void resetPose(Pose2d pose) {

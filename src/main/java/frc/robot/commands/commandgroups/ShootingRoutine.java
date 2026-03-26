@@ -1,6 +1,5 @@
 package frc.robot.commands.commandgroups;
 
-import edu.wpi.first.wpilibj.PS5Controller;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.AlignToHubCMD;
@@ -19,8 +18,7 @@ public class ShootingRoutine extends SequentialCommandGroup{
     HoodSub hoodSub,
     IndexerSub indexerSub,
     ConveyorSub conveyorSub,
-    IntakePitcherSub intakePitcherSub,
-    PS5Controller driverJoystick
+    IntakePitcherSub intakePitcherSub
 ) {
     // Phase 1: Fresh instances for each group
     Command WaitForReady = 
@@ -32,7 +30,7 @@ public class ShootingRoutine extends SequentialCommandGroup{
     
     // Phase 2: Fresh instances again
     Command Fire = 
-        new FireShot(indexerSub, conveyorSub, intakePitcherSub, driverJoystick)
+        new FireShot(indexerSub, conveyorSub, intakePitcherSub)
             .deadlineWith(
                 new PrepareShot(shooterSub, hoodSub, swerveSub),
                 new AlignToHubCMD(swerveSub)  // Fresh instance (not reused)

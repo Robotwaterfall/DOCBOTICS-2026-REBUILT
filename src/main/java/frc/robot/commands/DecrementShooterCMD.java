@@ -1,6 +1,5 @@
 package frc.robot.commands;
 
-import com.google.flatbuffers.Constants;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.ShooterSub;

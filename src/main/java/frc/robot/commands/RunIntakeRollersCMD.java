@@ -6,13 +6,13 @@ import frc.robot.subsystems.IntakeRollersSub;
 public class RunIntakeRollersCMD extends Command {
 
     IntakeRollersSub intakeRollerSub;
-    double intakeRollerPower = 0;
+    double intakeRollerVelocityRPS = 0;
   
 
     // Constructor
-    public RunIntakeRollersCMD(IntakeRollersSub intakeSub, double intakeRollerPower) {
+    public RunIntakeRollersCMD(IntakeRollersSub intakeSub, double intakeRollerVelocityRPS) {
         this.intakeRollerSub = intakeSub;
-        this.intakeRollerPower = intakeRollerPower;
+        this.intakeRollerVelocityRPS = intakeRollerVelocityRPS;
        
         addRequirements(intakeSub);
     }
@@ -20,8 +20,6 @@ public class RunIntakeRollersCMD extends Command {
   // Called when the command is initially scheduled. Preps motors.
   @Override
   public void initialize() {
-    //stop intake when command initializes
-    intakeRollerSub.setMotorPower(0);
     intakeRollerSub.stopMotor();
   }
 
@@ -29,14 +27,13 @@ public class RunIntakeRollersCMD extends Command {
   @Override
   public void execute() {
    
-    intakeRollerSub.setMotorPower(intakeRollerPower);
+    intakeRollerSub.setVelocity(intakeRollerVelocityRPS);
     
   }
 
   @Override
   public void end(boolean interrupted) {
    
-    intakeRollerSub.setMotorPower(0);
     intakeRollerSub.stopMotor();
     
   }

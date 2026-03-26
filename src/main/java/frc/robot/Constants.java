@@ -38,7 +38,7 @@ public final class Constants {
     public static final double kDriveEncoderRPM2MeterPerSec = kDriveEncoderRot2Meter / 60;
     public static final double kTurningEncoderRPM2RadPerSec = kTurningEncoderRot2Rad / 60;
 
-    public static final double kTurning = 0.3; // TODO: Tune this kp for turning
+    public static final double kTurning = 0.3; 
 
   }
 
@@ -52,9 +52,9 @@ public final class Constants {
 
   public static final class DriveConstants {
 
-      public static final double kTrackWidth = Units.inchesToMeters(20.594); //TODO: measure track width and set here
+      public static final double kTrackWidth = Units.inchesToMeters(20.594); 
       // Distance between right and left wheels
-      public static final double kWheelBase = Units.inchesToMeters(25.50); //TODO: measure wheel base and set here
+      public static final double kWheelBase = Units.inchesToMeters(25.50); 
       // Distance between front and back wheels
       public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(
               new Translation2d(kWheelBase / 2, -kTrackWidth / 2),
@@ -143,7 +143,7 @@ public final class Constants {
       public static final int kShootingRoutineButton = 8;
       public static final int kPrepareShotButton = 7;
 
-      public static final int kJuggleButton = 6;
+      public static final int kIntakeButton = 6;
       public static final int kOuttakeButton = 5;
 
       public static final double kRumblePwr = 0.8;
@@ -154,13 +154,22 @@ public final class Constants {
       public static final int kDpadLEFT = 270;
       public static final int kDpadRIGHTDOWN = 135;
 
+      public static final int kPsButton = 13;
+
       public static final double kDeadband = 0.5;
 
   }
   public static final class IntakeRollerConstants{
     public static final int kIntakeMotorPort = 3; 
-    public static final double kIntakeMotorPower = 0.8;
-    public static final double kOutakeMotorPower = -1.0; 
+    
+    public static final double kIntakeRollersKp = 0.1; //TODO
+    public static final double kIntakeRollersKi = 0; //TODO
+    public static final double kIntakeRollersKd = 0; //TODO
+    public static final double kIntakeRollersKs = 0; //TODO
+    public static final double kIntakeRollersKv = 0; //TODO
+
+    public static final double kIntakeVelocityRPS = 10;
+    public static final double kOuttakeVelocityRPS = -10;
 
   }
 
@@ -178,9 +187,9 @@ public final class Constants {
     public static double intakePitcher_kI = 0; //TODO
     public static double intakePitcher_kD = 0; //TODO
 
-    public static double intakePitcherToleranceDegrees = 1;
+    public static double intakePitcherToleranceDegrees = 0.8;
 
-    public static double intakePitcherWaitTimeSec = 1; //TODO
+    public static double intakePitcherWaitTimeSec = 1; 
 
     public static double intakePitcherFlutterDegrees = 95;
 
@@ -201,14 +210,14 @@ public final class Constants {
     public static final double kWheelDiameterInches = 4.0; // 4" wheel
     public static final double kGearRatio = 1.0;
 
-    public static final double kShooterKP = 0.67; //TODO
-    public static final double kShooterKi = 0.45; //TODO
-    public static final double kShooterKd = 0; //TODO
-    public static final double kShooterKs = 0; //TODO
+    public static final double kShooterKP = 0.67; 
+    public static final double kShooterKi = 0.45; 
+    public static final double kShooterKd = 0; 
+    public static final double kShooterKs = 0; 
     public static final double kShooterKv = 12.0 / KrakenX60.kFreeSpeed.in(RotationsPerSecond); //TODO
 
     public static final double kIndexSpeed = 1;
-    public static final double kIndexJuggleSpeed = 0.3; 
+    public static final double kReverseIndexSpeedWhileIntaking = -0.5;
     public static final double kReverseIndexSpeed = -1; 
 
     public static final double kWarmupVelocityFPS = 50;
@@ -217,11 +226,11 @@ public final class Constants {
 
     public static final double kHeightOfHubInches = 72; //height of the hub where fuel can enter
 
-    public static final double shooterTolerance = 5.0; //TODO
+    public static final double shooterTolerance = 2.0; 
 
-    public static final double defaultShooterVelocityPlusPerPress = 5.0; //TODO
+    public static final double defaultShooterVelocityPlusPerPress = 5.0; 
 
-    public static final double shooterVelocityPlusPerPress = 5.0; //TODO
+    public static final double shooterVelocityPlusPerPress = 5.0; 
 
      public static class KrakenX60 {
         public static final AngularVelocity kFreeSpeed = RPM.of(6000);
@@ -231,8 +240,8 @@ public final class Constants {
   }
     public static final class ConveyorConstant {
     public static final int kConveyorMotorPort = 7;
-    public static final double conveyorPower = 0.8; 
-    public static final double reverseConveyorPower = -0.8; 
+    public static final double conveyorPower = 0.6; 
+    public static final double reverseConveyorPower = -0.6; 
  
 
   }
@@ -245,10 +254,10 @@ public final class Constants {
     public static final int kMaxPulseUs = 2000;
     
     public static final double maxExtensionInches = 5.5; //as far as we go out
-    public static final double minExtensionInches = 3; //as far as we retract //TODO: tune
+    public static final double minExtensionInches = 3; //as far as we retract 
 
-    public static final double minHoodAngleDeg = 43; //TODO: find this
-    public static final double maxHoodAngleDeg = 63; //TODO: find this
+    public static final double minHoodAngleDeg = 43; 
+    public static final double maxHoodAngleDeg = 63; 
 
     public static final double kHoodWarmUpDeg = 50; //warmp up position for hood to be in before shooting
 

@@ -4,8 +4,6 @@
 
 package frc.robot;
 
-import javax.print.attribute.standard.JobState;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PS5Controller;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -15,21 +13,14 @@ import frc.robot.Constants.HoodConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.ResetHeadingCMD;
-import frc.robot.commands.ResetPoseCMD;
-import frc.robot.commands.RunConveyorCMD;
-import frc.robot.commands.RunIndexerCMD;
-import frc.robot.commands.RunShooterCMD;
 import frc.robot.commands.StopShooterMotorsCMD;
 import frc.robot.commands.SwerveJoystickCMD;
-import frc.robot.commands.telemetryManagerCMD;
-import frc.robot.commands.commandgroups.FlutterIntake;
-import frc.robot.commands.commandgroups.Juggle;
+import frc.robot.commands.TelemetryManagerCMD;
+import frc.robot.commands.commandgroups.FireShot;
+import frc.robot.commands.commandgroups.IntakeFuel;
 import frc.robot.commands.commandgroups.OuttakeFuel;
-import frc.robot.commands.commandgroups.PrepareShot;
-import frc.robot.commands.commandgroups.ShootingRoutine;
 import frc.robot.subsystems.IntakeRollersSub;
 import frc.robot.subsystems.ShooterSub;
-import frc.robot.commands.AdjustHoodCMD;
 import frc.robot.commands.DecrementHoodCMD;
 import frc.robot.commands.DecrementShooterCMD;
 import frc.robot.commands.IncrementHoodCMD;
@@ -40,7 +31,7 @@ import frc.robot.subsystems.HoodSub;
 import frc.robot.subsystems.IndexerSub;
 import frc.robot.subsystems.IntakePitcherSub;
 import frc.robot.subsystems.SwerveSub;
-import frc.robot.util.PoseManager;
+import frc.robot.subsystems.TelemetrySub;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -57,6 +48,7 @@ public class RobotContainer {
   public final IntakePitcherSub intakePitcherSub = new IntakePitcherSub();
   public final ConveyorSub conveyorSub = new ConveyorSub();
   public final IndexerSub indexerSub = new IndexerSub();
+  public final TelemetrySub telemetrySub = new TelemetrySub();
 
   private final PS5Controller driverJoyStick = new PS5Controller(OIConstants.kDriverControllerPort);
 
@@ -71,7 +63,6 @@ public class RobotContainer {
     // autoChooser = AutoBuilder.buildAutoChooser(); //Default auto will be 'Commands.none()'
     // SmartDashboard.putData("AutoMode: ", autoChooser);
     SmartDashboard.putData("Reset Gyro Heading: ", new ResetHeadingCMD(swerveSub));
-    SmartDashboard.putData("Reset Pose: ", new ResetPoseCMD(swerveSub));
 
     //  DEFAULT COMMANDS
 
@@ -89,6 +80,10 @@ public class RobotContainer {
 
     intakePitcherSub.setDefaultCommand(
       new MoveIntakePitcherCMD(intakePitcherSub, Constants.IntakePitcherConstants.kPitcherOutDegrees)
+    );
+
+    telemetrySub.setDefaultCommand(
+      new TelemetryManagerCMD(swerveSub)
     );
   }
 
@@ -110,25 +105,27 @@ public class RobotContainer {
     //   new PrepareShot(shooterSub, hoodSub, swerveSub)
     // );
 
-    new JoystickButton(driverJoyStick, OIConstants.kShootingRoutineButton).whileTrue(
-      new RunShooterCMD(shooterSub, swerveSub, ShooterConstants.kShooterVelocityFps)
-    );
+    //START OF TEST CODE
+    // new JoystickButton(driverJoyStick, OIConstants.kShootingRoutineButton).whileTrue(
+    //   new RunShooterCMD(shooterSub, swerveSub, ShooterConstants.kShooterVelocityFps)
+    // );
 
-    new JoystickButton(driverJoyStick, OIConstants.kPrepareShotButton).whileTrue(
-      new RunIndexerCMD(indexerSub, 1.0)
-    );
+    // new JoystickButton(driverJoyStick, OIConstants.kPrepareShotButton).whileTrue(
+    //   new RunIndexerCMD(indexerSub, 1.0)
+    // );
 
-    new JoystickButton(driverJoyStick, OIConstants.kPrepareShotButton).whileTrue(
-      new RunConveyorCMD(conveyorSub, 0.6)
-    );
+    // new JoystickButton(driverJoyStick, OIConstants.kPrepareShotButton).whileTrue(
+    //   new RunConveyorCMD(conveyorSub, 0.6)
+    // );
 
-    new JoystickButton(driverJoyStick, OIConstants.kPrepareShotButton).whileTrue(
-      new FlutterIntake(intakePitcherSub).repeatedly()
-    );
+    // new JoystickButton(driverJoyStick, OIConstants.kPrepareShotButton).whileTrue(
+    //   new FlutterIntake(intakePitcherSub).repeatedly()
+    // );
+    //EMD OF TEST CODE
 
-    // // JUGGLE WHILE INTAKING
-    new JoystickButton(driverJoyStick, OIConstants.kJuggleButton).whileTrue(
-      new Juggle(shooterSub, indexerSub, swerveSub, intakeSub, conveyorSub, hoodSub)
+    // INTAKE
+    new JoystickButton(driverJoyStick, OIConstants.kIntakeButton).whileTrue(
+      new IntakeFuel(intakeSub, conveyorSub, indexerSub)
     );
 
     // // OUTTAKE
@@ -142,27 +139,28 @@ public class RobotContainer {
     // );
 
     // INCREMENT SHOOTER MANUALLY
-    JoystickButton incShooterButton = new JoystickButton(driverJoyStick, 1);
+    POVButton incShooterButton = new POVButton(driverJoyStick, Constants.OIConstants.kDpadRIGHT);
     incShooterButton.onTrue(new IncrementShooterCMD(shooterSub, ShooterConstants.shooterVelocityPlusPerPress));
     
     // DECREMENT SHOOTER MANUALLY
-    JoystickButton decShooterButton = new JoystickButton(driverJoyStick, 3);
+    POVButton decShooterButton = new POVButton(driverJoyStick, Constants.OIConstants.kDpadLEFT);
     decShooterButton.onTrue(new DecrementShooterCMD(shooterSub, ShooterConstants.shooterVelocityPlusPerPress));
 
     // INCREMENT HOOD MANUALLY
-    JoystickButton incHoodButton = new JoystickButton(driverJoyStick, 4);
+    POVButton incHoodButton = new POVButton(driverJoyStick, Constants.OIConstants.kDpadUP);
     incHoodButton.onTrue(new IncrementHoodCMD(hoodSub, HoodConstants.hoodAnglePlusPerPress));
 
     // DECREMENT HOOD MANUALLY
-    JoystickButton decHoodButton = new JoystickButton(driverJoyStick, 2);
+    POVButton decHoodButton = new POVButton(driverJoyStick, Constants.OIConstants.kDpadDOWN);
     decHoodButton.onTrue(new DecrementHoodCMD(hoodSub, HoodConstants.hoodAnglePlusPerPress));
 
-    JoystickButton stopMotorsButton = new JoystickButton(driverJoyStick, 13);
-    stopMotorsButton.onTrue(new StopShooterMotorsCMD(shooterSub));
+    //STOP ALL SHOOTER MOTORS
+    JoystickButton stopShooterMotorsButton = new JoystickButton(driverJoyStick, OIConstants.kPsButton);
+    stopShooterMotorsButton.onTrue(new StopShooterMotorsCMD(shooterSub));
 
-    // // MANUAL FIRE SHOT
-    // POVButton fireManualShot = new POVButton(driverJoyStick, OIConstants.kDpadRIGHTDOWN);
-    // fireManualShot.onTrue(new FireShot(indexerSub, conveyorSub, intakePitcherSub, driverJoyStick));
+    // MANUAL FIRE SHOT
+    POVButton fireManualShot = new POVButton(driverJoyStick, OIConstants.kDpadRIGHTDOWN);
+    fireManualShot.onTrue(new FireShot(indexerSub, conveyorSub, intakePitcherSub));
 
    
     
