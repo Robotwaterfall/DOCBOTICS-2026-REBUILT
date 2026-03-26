@@ -1,7 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.units.Unit;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.Constants.HoodConstants;
 import frc.robot.Constants.ShooterConstants;
@@ -43,11 +43,20 @@ public class AdjustHoodCMD extends InstantCommand{
             HoodConstants.maxHoodAngleDeg
         );
 
+        ShooterLookup.ShooterParams params = ShooterLookup.getInterpolated(distanceFeet);
+
+        double angleErrorPercent = Math.abs(params.angleDeg - Math.toDegrees(r.angleRad) / Math.toDegrees(r.angleRad)) * 100;
+        SmartDashboard.putNumber("%ErrorAngle", angleErrorPercent);
+
         if (!r.valid) {
-            ShooterLookup.ShooterParams params = ShooterLookup.getInterpolated(distanceFeet);
             this.desiredAngleDeg = params.angleDeg;
         } else {
-            this.desiredAngleDeg = Math.toDegrees(r.angleRad);
+            if (angleErrorPercent >= 3) {
+                System.out.println("WARNING: Interpolated value is " + angleErrorPercent + "% off from computed value! Using computed value instead.");
+                this.desiredAngleDeg = Math.toDegrees(r.angleRad);
+            } else { 
+                this.desiredAngleDeg = ((Math.toDegrees(r.angleRad) - params.angleDeg) * 0.5); // Average the two values if they are close enough
+            }
         }
 
         addRequirements(hoodSub);
