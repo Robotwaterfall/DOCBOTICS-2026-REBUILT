@@ -7,6 +7,7 @@ import frc.robot.subsystems.HoodSub;
 public class IncrementHoodCMD extends InstantCommand {
 
     private final HoodSub hoodSub;
+    private double deltaHoodAngle;
 
     public IncrementHoodCMD(HoodSub hoodSub){
 
@@ -16,9 +17,14 @@ public class IncrementHoodCMD extends InstantCommand {
     public IncrementHoodCMD(HoodSub hoodSub, double deltaHoodAngle){
 
         this.hoodSub = hoodSub;
-        hoodSub.incrementAngle(deltaHoodAngle);
+        this.deltaHoodAngle = deltaHoodAngle;
         addRequirements(hoodSub);
 
+    }
+    
+    @Override
+    public void execute(){
+        hoodSub.incrementAngle(deltaHoodAngle);
     }
 
 }

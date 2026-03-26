@@ -13,9 +13,7 @@ public class FlutterIntake extends SequentialCommandGroup{
 
         addCommands( 
             new MoveIntakePitcherCMD(intakePitcherSub, IntakePitcherConstants.intakePitcherFlutterDegrees),
-            new WaitCommand(Constants.IntakePitcherConstants.intakePitcherWaitTimeSec),
-            new MoveIntakePitcherCMD(intakePitcherSub, Constants.IntakePitcherConstants.kPitcherOutDegrees),
-            new WaitCommand(Constants.IntakePitcherConstants.intakePitcherWaitTimeSec)
+            new MoveIntakePitcherCMD(intakePitcherSub, Constants.IntakePitcherConstants.kPitcherOutDegrees)
         );
     }
 }

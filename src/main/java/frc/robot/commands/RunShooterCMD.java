@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.ShooterSub;
 import frc.robot.subsystems.SwerveSub;
@@ -41,15 +42,18 @@ public class RunShooterCMD extends Command {
     @Override
     public void execute() {
         shooterSub.setShooterVelocityFPS(desiredVelocity);
+
+        SmartDashboard.putNumber("DesiredVelocity", desiredVelocity);
     }
 
     @Override
     public boolean isFinished() {
-        return shooterSub.isAtSetVelocityFPS();
+        // return shooterSub.isAtSetVelocityFPS();
+        return false;
     }
 
     @Override
     public void end(boolean interrupted) {
-        shooterSub.setShooterVelocityFPS(0);
+        shooterSub.stopShooterMotors();
     }
 }

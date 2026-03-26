@@ -1,24 +1,32 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import frc.robot.Constants.ShooterConstants;
+import frc.robot.Constants;
+import frc.robot.Constants.HoodConstants;
+import frc.robot.subsystems.HoodSub;
 import frc.robot.subsystems.ShooterSub;
 
 public class IncrementShooterCMD extends InstantCommand{
 
     private final ShooterSub shooterSub;
+    private double deltaShooterVelocity;
 
     public IncrementShooterCMD(ShooterSub shooterSub){
 
-        this(shooterSub, ShooterConstants.defaultShooterVelocityPlusPerPress);
+        this(shooterSub, Constants.ShooterConstants.defaultShooterVelocityPlusPerPress);
 
     }
-    public IncrementShooterCMD(ShooterSub shooterSub, double deltaFps){
+    public IncrementShooterCMD(ShooterSub shooterSub, double deltaShooterVelocity){
 
         this.shooterSub = shooterSub;
-        shooterSub.incrementVelocity(deltaFps);
+        this.deltaShooterVelocity = deltaShooterVelocity;
         addRequirements(shooterSub);
 
+    }
+    
+    @Override
+    public void execute(){
+        shooterSub.incrementVelocity(deltaShooterVelocity);
     }
 
 }

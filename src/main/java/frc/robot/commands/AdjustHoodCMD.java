@@ -30,10 +30,10 @@ public class AdjustHoodCMD extends InstantCommand{
 
     // 3‑param constructor
     // → desiredVelocity is passed explicitly
-    public AdjustHoodCMD(HoodSub hoodSub, SwerveSub swerveSub, double desiredVelocity) {
+    public AdjustHoodCMD(HoodSub hoodSub, SwerveSub swerveSub, double desiredAngleDeg) {
         this.hoodSub    = hoodSub;
         this.swerveSub     = swerveSub;
-        this.desiredAngleDeg = desiredVelocity;
+        this.desiredAngleDeg = desiredAngleDeg;
 
         addRequirements(hoodSub);
     }

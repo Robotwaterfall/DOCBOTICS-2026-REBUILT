@@ -21,7 +21,7 @@ public class HoodSub extends SubsystemBase{
     private double hoodAngle;
     private double distanceFromLimelightToGoalInches;
 
-    private double tunableHoodAngle = 0.0;
+    private double tunableHoodAngle = Constants.HoodConstants.kHoodWarmUpDeg; // Start at a safe angle to avoid collisions
 
     public HoodSub(){
         servoHub = new ServoHub(HoodConstants.kHoodId);
@@ -40,13 +40,13 @@ public class HoodSub extends SubsystemBase{
         hoodLinActRightChannel = servoHub.getServoChannel(ChannelId.kChannelId0);
 
         // Channels MUST be enabled and powered to use .setPulseWidth
-        hoodLinActRightChannel.setEnabled(false);
-        hoodLinActRightChannel.setPowered(false);
+        hoodLinActRightChannel.setEnabled(true);
+        hoodLinActRightChannel.setPowered(true);
 
         hoodLinActLeftChannel = servoHub.getServoChannel(ChannelId.kChannelId1);
 
-        hoodLinActLeftChannel.setEnabled(false);
-        hoodLinActLeftChannel.setPowered(false);
+        hoodLinActLeftChannel.setEnabled(true);
+        hoodLinActLeftChannel.setPowered(true);
     }
 
     public ServoChannel getHoodLinActRightChannel(){
@@ -115,13 +115,11 @@ public class HoodSub extends SubsystemBase{
 
    public void incrementAngle(double deltaDegrees) {
         tunableHoodAngle += deltaDegrees;
-        tunableHoodAngle = MathUtil.clamp(tunableHoodAngle, 
-        HoodConstants.kMinDegrees, HoodConstants.kMaxDegrees);  // Add consts
         setHoodAngle(tunableHoodAngle);  // Applies via your pulse logic
     }
 
     public void decrementAngle(double deltaDegrees) {
-        tunableHoodAngle = Math.max(HoodConstants.kMinDegrees, tunableHoodAngle - deltaDegrees);
+        tunableHoodAngle -= deltaDegrees;
         setHoodAngle(tunableHoodAngle);
     }
 

@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.Constants.HoodConstants;
 import frc.robot.subsystems.HoodSub;
@@ -7,6 +8,7 @@ import frc.robot.subsystems.HoodSub;
 public class DecrementHoodCMD extends InstantCommand{
 
     private final HoodSub hoodSub;
+    private double deltaHoodAngle;
 
     public DecrementHoodCMD(HoodSub hoodSub){
 
@@ -15,9 +17,15 @@ public class DecrementHoodCMD extends InstantCommand{
     public DecrementHoodCMD(HoodSub hoodSub, double deltaHoodAngle){
 
         this.hoodSub = hoodSub;
-        hoodSub.decrementAngle(deltaHoodAngle);
-        addRequirements(hoodSub);
+        this.deltaHoodAngle = deltaHoodAngle;
 
+    }
+
+     
+    @Override
+    public void execute(){
+        hoodSub.decrementAngle(deltaHoodAngle);
+        SmartDashboard.putBoolean("isDecrementing", isScheduled());
     }
 
 }

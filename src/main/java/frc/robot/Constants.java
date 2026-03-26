@@ -4,10 +4,13 @@
 
 package frc.robot;
 
+import static edu.wpi.first.units.Units.RPM;
+import static edu.wpi.first.units.Units.RotationsPerSecond;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.units.measure.AngularVelocity;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -156,7 +159,7 @@ public final class Constants {
   }
   public static final class IntakeRollerConstants{
     public static final int kIntakeMotorPort = 3; 
-    public static final double kIntakeMotorPower = 1.0;
+    public static final double kIntakeMotorPower = 0.8;
     public static final double kOutakeMotorPower = -1.0; 
 
   }
@@ -169,7 +172,7 @@ public final class Constants {
     public static final double kMaxPitchDegrees = 105; 
 
     public static final double kPitcherInDegrees = 0; // Setpoint positions
-    public static final double kPitcherOutDegrees = 104; 
+    public static final double kPitcherOutDegrees = 98; 
 
     public static double intakePitcher_kP = 0.1; //TODO
     public static double intakePitcher_kI = 0; //TODO
@@ -179,7 +182,7 @@ public final class Constants {
 
     public static double intakePitcherWaitTimeSec = 1; //TODO
 
-    public static double intakePitcherFlutterDegrees = 90;
+    public static double intakePitcherFlutterDegrees = 95;
 
     public static final IdleMode pitcherIdleMode = IdleMode.kCoast;
 
@@ -191,33 +194,38 @@ public final class Constants {
     public static final int kShooterFollowerRightId = 23;
     public static final int kShooterFollowerLeftId = 22; 
 
-    public static final int kShooterVelocityFps = 130; //TODO: GET RID FOR TESTING
+    public static final int kShooterVelocityFps = 45; //TODO: GET RID FOR TESTING
 
     public static final int kIndexMotorId = 25; 
 
     public static final double kWheelDiameterInches = 4.0; // 4" wheel
     public static final double kGearRatio = 1.0;
 
-    public static final double kShooterKP = 0.09; //TODO
-    public static final double kShooterKi = 0; //TODO
+    public static final double kShooterKP = 0.67; //TODO
+    public static final double kShooterKi = 0.45; //TODO
     public static final double kShooterKd = 0; //TODO
-    public static final double kShooterKs = 0.001; //TODO
-    public static final double kShooterKv = 0; //TODO
+    public static final double kShooterKs = 0; //TODO
+    public static final double kShooterKv = 12.0 / KrakenX60.kFreeSpeed.in(RotationsPerSecond); //TODO
 
     public static final double kIndexSpeed = 1;
+    public static final double kIndexJuggleSpeed = 0.3; 
     public static final double kReverseIndexSpeed = -1; 
 
-    public static final double kWarmupVelocityFPS = 100;
+    public static final double kWarmupVelocityFPS = 50;
 
-    public static final double kJuggleVelocityFPS = 60;
+    public static final double kJuggleVelocityFPS = 10;
 
     public static final double kHeightOfHubInches = 72; //height of the hub where fuel can enter
 
     public static final double shooterTolerance = 5.0; //TODO
 
-    public static final double defaultShooterVelocityPlusPerPress = 2.0; //TODO
+    public static final double defaultShooterVelocityPlusPerPress = 5.0; //TODO
 
-    public static final double shooterVelocityPlusPerPress = 1.5; //TODO
+    public static final double shooterVelocityPlusPerPress = 5.0; //TODO
+
+     public static class KrakenX60 {
+        public static final AngularVelocity kFreeSpeed = RPM.of(6000);
+    }
   
     
   }
@@ -232,21 +240,21 @@ public final class Constants {
   public static final class HoodConstants{
     public static final int kHoodId = 30; 
 
-    public static final int kMinPulseUs = 1650;  //this is the hardware limit of the Lin act //TODO:tune
+    public static final int kMinPulseUs = 1650;  //this is the robots limit of the Lin act
     public static final int kCenterPulseUs = 1750;
     public static final int kMaxPulseUs = 2000;
-
-    public static final int kMaxDegrees = 45; //TODO
-    public static final int kMinDegrees = 0;  //TODO
     
     public static final double maxExtensionInches = 5.5; //as far as we go out
     public static final double minExtensionInches = 3; //as far as we retract //TODO: tune
 
-    public static final double kHoodWarmUpDeg = 30; //TODO
+    public static final double minHoodAngleDeg = 43; //TODO: find this
+    public static final double maxHoodAngleDeg = 63; //TODO: find this
+
+    public static final double kHoodWarmUpDeg = 50; //warmp up position for hood to be in before shooting
 
     public static final double kHoodToleranceUs = 10; //TODO: tune this tolerance for being at the setpoint
 
-    public static final double defaultHoodAnglePlusPerPress = 10; //TODO
+    public static final double defaultHoodAnglePlusPerPress = 2; //TODO
     public static final double hoodAnglePlusPerPress = 2; //TODO
     
     //these are the constants for the cubic approximation to convert from angle to inches

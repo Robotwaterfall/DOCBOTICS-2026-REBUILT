@@ -6,19 +6,20 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.Constants.ShooterConstants;
 
 public class ShooterSub extends SubsystemBase {
 
     public TalonFX shooterLead = new TalonFX(ShooterConstants.kShooterLeadMotorId);
     public TalonFX shooterFollowerRight = new TalonFX(ShooterConstants.kShooterFollowerRightId);
-    // public TalonFX shooterFollowerLeft = new TalonFX(ShooterConstants.kShooterFollowerLeftId);
+    public TalonFX shooterFollowerLeft = new TalonFX(ShooterConstants.kShooterFollowerLeftId);
 
     private final VelocityVoltage velocityRequest = new VelocityVoltage(0);
 
     public static double desiredVelocityFPS;
 
-    private double tunableVelocityFps = 0.0;  // Start at 0, tune via buttons
+    private double tunableVelocityFps = Constants.ShooterConstants.kWarmupVelocityFPS;  // Start at 0, tune via buttons
 
     public ShooterSub() {
 
@@ -34,7 +35,7 @@ public class ShooterSub extends SubsystemBase {
 
         shooterLead.getConfigurator().apply(cfg);
         shooterFollowerRight.getConfigurator().apply(cfg);
-        // shooterFollowerLeft.getConfigurator().apply(cfg);
+        shooterFollowerLeft.getConfigurator().apply(cfg);
     }
 
     public void setShooterVelocityFPS(double wheelVelocityFeetPerSecond) {
@@ -51,7 +52,7 @@ public class ShooterSub extends SubsystemBase {
 
         shooterLead.setControl(velocityRequest.withVelocity(motorRps));
         shooterFollowerRight.setControl(velocityRequest.withVelocity(motorRps));
-        // shooterFollowerLeft.setControl(velocityRequest.withVelocity(motorRps));
+        shooterFollowerLeft.setControl(velocityRequest.withVelocity(-motorRps));
     }
 
     public double getShooterLeadVelocityRPS() {
@@ -62,9 +63,9 @@ public class ShooterSub extends SubsystemBase {
         return shooterFollowerRight.getVelocity().getValueAsDouble();
     }
 
-    // public double getShooterFollowerLeftVelocityRPS() {
-    //     return shooterFollowerLeft.getVelocity().getValueAsDouble();
-    // }
+    public double getShooterFollowerLeftVelocityRPS() {
+        return shooterFollowerLeft.getVelocity().getValueAsDouble();
+    }
 
     public double getShooterLeadVelocityFPS() {
         double motorRps = shooterLead.getVelocity().getValueAsDouble();
@@ -82,23 +83,23 @@ public class ShooterSub extends SubsystemBase {
         return inchesPerSecond / 12.0;
     }
 
-    // public double getShooterFollowerLeftVelocityFPS() {
-    //     double motorRps = shooterFollowerLeft.getVelocity().getValueAsDouble();
-    //     double wheelRps = motorRps / ShooterConstants.kGearRatio;
-    //     double wheelCircumference = Math.PI * ShooterConstants.kWheelDiameterInches;
-    //     double inchesPerSecond = wheelRps * wheelCircumference;
-    //     return inchesPerSecond / 12.0;
-    // }
+    public double getShooterFollowerLeftVelocityFPS() {
+        double motorRps = shooterFollowerLeft.getVelocity().getValueAsDouble();
+        double wheelRps = motorRps / ShooterConstants.kGearRatio;
+        double wheelCircumference = Math.PI * ShooterConstants.kWheelDiameterInches;
+        double inchesPerSecond = wheelRps * wheelCircumference;
+        return inchesPerSecond / 12.0;
+    }
 
     public double getDesiredVelocityFPS() {
         return desiredVelocityFPS;
     }
 
-    // public double getAverageMotorVelocityFPS() {
-    //     return (getShooterLeadVelocityFPS()
-    //             + getShooterFollowerRightVelocityFPS()
-    //             + getShooterFollowerLeftVelocityFPS()) / 3.0;
-    // }
+    public double getAverageMotorVelocityFPS() {
+        return (getShooterLeadVelocityFPS()
+                + getShooterFollowerRightVelocityFPS()
+                + getShooterFollowerLeftVelocityFPS()) / 3.0;
+    }
 
     public boolean isAtSetVelocityFPS() {
         return (getShooterLeadVelocityFPS()) > (desiredVelocityFPS - ShooterConstants.shooterTolerance)
@@ -108,7 +109,7 @@ public class ShooterSub extends SubsystemBase {
     public void stopShooterMotors() {
         shooterLead.stopMotor();
         shooterFollowerRight.stopMotor();
-        // shooterFollowerLeft.stopMotor();
+        shooterFollowerLeft.stopMotor();
     }
 
         // Expose getter/setter for tuning commands

@@ -9,8 +9,9 @@ public class telemetryManagerCMD extends Command{
 
     SwerveSub swerveSub;
 
-    public telemetryManagerCMD(SwerveSub swerveSub) {
-        this.swerveSub = swerveSub;
+    public telemetryManagerCMD() {
+        
+
     }
 
     @Override
