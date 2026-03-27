@@ -1,0 +1,109 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.6120827389443653,
+        "y": 6.072838801711842
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 4.453095577746078,
+        "y": 5.83994293865906
+      },
+      "isLocked": false,
+      "linkedName": "LeftBumpStart"
+    },
+    {
+      "anchor": {
+        "x": 4.763623395149786,
+        "y": 5.3353352353780314
+      },
+      "prevControl": {
+        "x": 4.2160018178020575,
+        "y": 5.268552116189284
+      },
+      "nextControl": {
+        "x": 5.824593437945791,
+        "y": 5.4647218259629105
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 6.471526390870184,
+        "y": 6.072838801711842
+      },
+      "prevControl": {
+        "x": 6.523281027104135,
+        "y": 5.438844507845936
+      },
+      "nextControl": {
+        "x": 6.387203961000671,
+        "y": 7.105788567613392
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 7.5971897289586305,
+        "y": 6.991483594864479
+      },
+      "prevControl": {
+        "x": 7.014950071326678,
+        "y": 6.81034236804565
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "LeftNeutralZone"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 3,
+      "rotationDegrees": 0.0
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [
+    {
+      "fieldPosition": {
+        "x": 7.7,
+        "y": 6.0
+      },
+      "rotationOffset": 0.0,
+      "minWaypointRelativePos": 1.9352159468438648,
+      "maxWaypointRelativePos": 3.0,
+      "name": "Point Towards Zone"
+    }
+  ],
+  "eventMarkers": [
+    {
+      "name": "IntakeOut",
+      "waypointRelativePos": 1.3172757475083015,
+      "endWaypointRelativePos": null,
+      "command": null
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 3.5,
+    "maxAcceleration": 1.5,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -90.0
+  },
+  "reversed": false,
+  "folder": "LeftBoomerangSweepPaths",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "useDefaultConstraints": true
+}

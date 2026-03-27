@@ -3,29 +3,45 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.5456205420827387,
-        "y": 7.340827389443652
+        "x": 7.5971897289586305,
+        "y": 5.0377460770328115
       },
       "prevControl": null,
       "nextControl": {
-        "x": 0.5456205420827388,
-        "y": 6.340827389443652
+        "x": 4.983580599144078,
+        "y": 5.581169757489302
       },
       "isLocked": false,
-      "linkedName": "toDepot"
+      "linkedName": "DroveIntoLeftNeutralZone"
     },
     {
       "anchor": {
-        "x": 0.5456205420827387,
-        "y": 5.1800713266761775
+        "x": 4.763623395149786,
+        "y": 5.529415121255349
       },
       "prevControl": {
-        "x": 0.5456205420827386,
-        "y": 6.1800713266761775
+        "x": 5.797098787446504,
+        "y": 5.466339158345221
+      },
+      "nextControl": {
+        "x": 4.191572254000605,
+        "y": 5.56432904066821
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.874579172610556,
+        "y": 5.257703281027104
+      },
+      "prevControl": {
+        "x": 4.647175463623395,
+        "y": 5.76231098430813
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "driveInDepot"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -42,10 +58,10 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -90.0
+    "rotation": -40.0
   },
   "reversed": false,
-  "folder": "CenterPaths",
+  "folder": "LeftBoomerangSweepPaths",
   "idealStartingState": {
     "velocity": 0,
     "rotation": -90.0

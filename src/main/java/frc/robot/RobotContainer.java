@@ -4,14 +4,12 @@
 
 package frc.robot;
 
-import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 import edu.wpi.first.wpilibj.PS5Controller;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
@@ -24,7 +22,6 @@ import frc.robot.commands.RunIndexerCMD;
 import frc.robot.commands.RunShooterCMD;
 import frc.robot.commands.StopShooterMotorsCMD;
 import frc.robot.commands.SwerveJoystickCMD;
-import frc.robot.commands.TelemetryManagerCMD;
 import frc.robot.commands.commandgroups.FireShot;
 import frc.robot.commands.commandgroups.IntakeFuel;
 import frc.robot.commands.commandgroups.OuttakeFuel;
@@ -88,9 +85,9 @@ public class RobotContainer {
             () -> !
             driverJoyStick.getRawButton(OIConstants.kDriverFieldOrientedButtonIdx))); 
 
-    intakePitcherSub.setDefaultCommand(
-      new MoveIntakePitcherCMD(intakePitcherSub, Constants.IntakePitcherConstants.kPitcherOutDegrees)
-    );
+    // intakePitcherSub.setDefaultCommand(
+    //   new MoveIntakePitcherCMD(intakePitcherSub, Constants.IntakePitcherConstants.kPitcherOutDegrees)
+    // );
 
     // telemetrySub.setDefaultCommand(
     //   new TelemetryManagerCMD(swerveSub)
@@ -98,8 +95,12 @@ public class RobotContainer {
 
     
       autoChooser = new SendableChooser<Command>();
-      SmartDashboard.putData("MoveBackwardAuto", new PathPlannerAuto("MoveBackwardAuto"));
-      autoChooser.setDefaultOption("No Auto (Paths Broken)", new PathPlannerAuto("MoveBackwardAuto"));
+
+      autoChooser.addOption("MiddleDepotShootCenter", 
+                            new PathPlannerAuto("MiddleDepotShootCenter"));
+      
+      autoChooser.addOption("MiddleBackUpShoot", getAutonomousCommand());
+
       SmartDashboard.putData("AutoMode: ", autoChooser);
   }
 
@@ -135,29 +136,14 @@ public class RobotContainer {
 
     // INTAKE
     new JoystickButton(driverJoyStick, OIConstants.kIntakeButton).whileTrue(
-      new IntakeFuel(intakeSub, conveyorSub, indexerSub)
+      new IntakeFuel(intakeSub, conveyorSub, indexerSub, intakePitcherSub)
     );
 
-    // // OUTTAKE
+    // OUTTAKE
     new JoystickButton(driverJoyStick, OIConstants.kOuttakeButton).whileTrue(
       new OuttakeFuel(intakeSub, conveyorSub, indexerSub)
     );
 
-    //CLOSE SHOT
-    new JoystickButton(driverJoyStick, Constants.dumbModeConstants.kCloseShotButton).whileTrue(
-      new RunShooterCMD(shooterSub, swerveSub, 50)
-    );
-    new JoystickButton(driverJoyStick, Constants.dumbModeConstants.kCloseShotButton).whileTrue(
-      new AdjustHoodCMD(hoodSub, swerveSub, 56)
-    );
-
-    //FAR SHOT
-    new JoystickButton(driverJoyStick, Constants.dumbModeConstants.kFarShotButton).whileTrue(
-      new RunShooterCMD(shooterSub, swerveSub, 56)
-    );
-    new JoystickButton(driverJoyStick, Constants.dumbModeConstants.kFarShotButton).whileTrue(
-      new AdjustHoodCMD(hoodSub, swerveSub, 48)
-    );
     // INCREMENT SHOOTER MANUALLY
     POVButton incShooterButton = new POVButton(driverJoyStick, Constants.OIConstants.kDpadRIGHT);
     incShooterButton.onTrue(new IncrementShooterCMD(shooterSub, ShooterConstants.shooterVelocityPlusPerPress));
@@ -178,20 +164,34 @@ public class RobotContainer {
     JoystickButton stopShooterMotorsButton = new JoystickButton(driverJoyStick, OIConstants.kPsButton);
     stopShooterMotorsButton.onTrue(new StopShooterMotorsCMD(shooterSub));
 
-    // MANUAL FIRE SHOT
-    POVButton fireManualShot = new POVButton(driverJoyStick, OIConstants.kDpadRIGHTDOWN);
-    fireManualShot.onTrue(new FireShot(indexerSub, conveyorSub, intakePitcherSub));
-
     Command shootClose =
     new ParallelCommandGroup(
-      new RunShooterCMD(shooterSub, swerveSub, 45),
-      new AdjustHoodCMD(hoodSub, swerveSub, 56),
-      new RunIndexerCMD(indexerSub, 0.8),
-      new RunConveyorCMD(conveyorSub, 0.6)
+      new RunShooterCMD(shooterSub, swerveSub, Constants.GeorgianCollegeConstants.kShootCloseVelocity),
+      new AdjustHoodCMD(hoodSub, swerveSub, Constants.GeorgianCollegeConstants.kShootCloseAngle),
+      new RunIndexerCMD(indexerSub, Constants.ShooterConstants.kIndexSpeed),
+      new RunConveyorCMD(conveyorSub, Constants.ConveyorConstant.conveyorPower)
     );
 
-    NamedCommands.registerCommand("Intake", new IntakeFuel(intakeSub, conveyorSub, indexerSub));
+    new JoystickButton(driverJoyStick, Constants.GeorgianCollegeConstants.kCloseShotButton).whileTrue(
+      shootClose
+    );
+
+    Command shootFar = 
+    new ParallelCommandGroup(
+      new RunShooterCMD(shooterSub, swerveSub, Constants.GeorgianCollegeConstants.kShootFarVelocity),
+      new AdjustHoodCMD(hoodSub, swerveSub,  Constants.GeorgianCollegeConstants.kShootFarAngle),
+      new RunIndexerCMD(indexerSub, Constants.ShooterConstants.kIndexSpeed),
+      new RunConveyorCMD(conveyorSub, Constants.ConveyorConstant.conveyorPower)
+    );
+    new JoystickButton(driverJoyStick, Constants.GeorgianCollegeConstants.kFarShotButton).whileTrue(
+      shootFar
+    );
+
+
+    NamedCommands.registerCommand("Intake", new IntakeFuel(intakeSub, conveyorSub, indexerSub, intakePitcherSub));
+    NamedCommands.registerCommand("IntakeOut", new MoveIntakePitcherCMD(intakePitcherSub, Constants.IntakePitcherConstants.kPitcherOutDegrees));
     NamedCommands.registerCommand("shootClose", shootClose);
+    NamedCommands.registerCommand("shootFar", shootFar);
 
   
 

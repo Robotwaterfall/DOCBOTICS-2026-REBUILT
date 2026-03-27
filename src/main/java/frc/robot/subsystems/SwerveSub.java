@@ -145,14 +145,13 @@ public class SwerveSub extends SubsystemBase {
     
     LimelightHelpers.setPipelineIndex(LimelightConstants.LimelightFront, 0);
     LimelightHelpers.setPipelineIndex(LimelightConstants.LimelightBackLeft, 0);
-    LimelightHelpers.setPipelineIndex(LimelightConstants.LimelightBackRight, 0);
     }
 
     @Override
     public void periodic() {
         poseEstimator.update(getRotation2d(), getModulePositionsAuto());
 
-        fuseLimelight(LimelightConstants.LimelightBackLeft);
+        // fuseLimelight(LimelightConstants.LimelightBackLeft);
 
         m_Field.setRobotPose(poseEstimator.getEstimatedPosition());
 

@@ -11,9 +11,9 @@
           }
         },
         {
-          "type": "wait",
+          "type": "named",
           "data": {
-            "waitTime": 0.5
+            "name": "IntakeOut"
           }
         },
         {
@@ -44,7 +44,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "ToShoot"
+            "pathName": "ToShootCenterFromDepot"
           }
         },
         {
@@ -57,6 +57,6 @@
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "Center AUTO's",
   "choreoAuto": false
 }

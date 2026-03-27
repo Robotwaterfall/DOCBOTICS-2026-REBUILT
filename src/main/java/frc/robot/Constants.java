@@ -181,17 +181,17 @@ public final class Constants {
     public static final double kMaxPitchDegrees = 105; 
 
     public static final double kPitcherInDegrees = 0; // Setpoint positions
-    public static final double kPitcherOutDegrees = 104; 
+    public static final double kPitcherOutDegrees = 95; 
 
-    public static double intakePitcher_kP = 0.1; //TODO
-    public static double intakePitcher_kI = 0; //TODO
-    public static double intakePitcher_kD = 0; //TODO
+    public static double intakePitcher_kP = 0.1; 
+    public static double intakePitcher_kI = 0; 
+    public static double intakePitcher_kD = 0; 
 
-    public static double intakePitcherToleranceDegrees = 0.8;
+    public static double intakePitcherToleranceDegrees = 1;
 
     public static double intakePitcherWaitTimeSec = 1; 
 
-    public static double intakePitcherFlutterDegrees = 95;
+    public static double intakePitcherFlutterDegrees = 90;
 
     public static final IdleMode pitcherIdleMode = IdleMode.kCoast;
 
@@ -287,9 +287,19 @@ public final class Constants {
     
   }
 
-  public static final class dumbModeConstants{
+  public static final class GeorgianCollegeConstants{
     public static final int kCloseShotButton = 1;
     public static final int kFarShotButton = 2;
+    public static final int kNeutralShotButton = 3;
+
+    public static final double kShootFarVelocity = 56;
+    public static final double kShootFarAngle = 48;
+
+    public static final double kShootCloseVelocity = 45;
+    public static final double kShootCloseAngle = 56;
+
+    public static final double kShootInNeutralZoneVelocity = 95;
+    public static final double kShootInNeutralZoneAngle = 47;
   }
   
   public static final double telemetryUpdate = 0.1; //Update every 100ms
