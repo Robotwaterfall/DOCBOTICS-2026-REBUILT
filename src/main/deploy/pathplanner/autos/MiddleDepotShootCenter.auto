@@ -48,15 +48,28 @@
           }
         },
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "shootClose"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "shootClose"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "fireShot"
+                }
+              }
+            ]
           }
         }
       ]
     }
   },
-  "resetOdom": true,
+  "resetOdom": false,
   "folder": "Center AUTO's",
   "choreoAuto": false
 }

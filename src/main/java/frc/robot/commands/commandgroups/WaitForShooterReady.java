@@ -1,7 +1,6 @@
 package frc.robot.commands.commandgroups;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.commands.AlignToHubCMD;
 import frc.robot.subsystems.ShooterSub;
 
 public class WaitForShooterReady extends Command{

@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import javax.naming.PartialResultException;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 import edu.wpi.first.wpilibj.PS5Controller;
@@ -13,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
+import frc.robot.Constants.ConveyorConstant;
 import frc.robot.Constants.HoodConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.ShooterConstants;
@@ -28,6 +30,7 @@ import frc.robot.commands.commandgroups.OuttakeFuel;
 import frc.robot.subsystems.IntakeRollersSub;
 import frc.robot.subsystems.ShooterSub;
 import frc.robot.commands.AdjustHoodCMD;
+import frc.robot.commands.AlignToHubCMD;
 import frc.robot.commands.DecrementHoodCMD;
 import frc.robot.commands.DecrementShooterCMD;
 import frc.robot.commands.IncrementHoodCMD;
@@ -167,9 +170,7 @@ public class RobotContainer {
     Command shootClose =
     new ParallelCommandGroup(
       new RunShooterCMD(shooterSub, swerveSub, Constants.GeorgianCollegeConstants.kShootCloseVelocity),
-      new AdjustHoodCMD(hoodSub, swerveSub, Constants.GeorgianCollegeConstants.kShootCloseAngle),
-      new RunIndexerCMD(indexerSub, Constants.ShooterConstants.kIndexSpeed),
-      new RunConveyorCMD(conveyorSub, Constants.ConveyorConstant.conveyorPower)
+      new AdjustHoodCMD(hoodSub, swerveSub, Constants.GeorgianCollegeConstants.kShootCloseAngle)
     );
 
     new JoystickButton(driverJoyStick, Constants.GeorgianCollegeConstants.kCloseShotButton).whileTrue(
@@ -179,19 +180,32 @@ public class RobotContainer {
     Command shootFar = 
     new ParallelCommandGroup(
       new RunShooterCMD(shooterSub, swerveSub, Constants.GeorgianCollegeConstants.kShootFarVelocity),
-      new AdjustHoodCMD(hoodSub, swerveSub,  Constants.GeorgianCollegeConstants.kShootFarAngle),
-      new RunIndexerCMD(indexerSub, Constants.ShooterConstants.kIndexSpeed),
-      new RunConveyorCMD(conveyorSub, Constants.ConveyorConstant.conveyorPower)
+      new AdjustHoodCMD(hoodSub, swerveSub,  Constants.GeorgianCollegeConstants.kShootFarAngle)
     );
     new JoystickButton(driverJoyStick, Constants.GeorgianCollegeConstants.kFarShotButton).whileTrue(
       shootFar
     );
+
+    Command fireShot = 
+    new ParallelCommandGroup(
+      new RunIndexerCMD(indexerSub, ShooterConstants.kIndexSpeed),
+      new RunConveyorCMD(conveyorSub, ConveyorConstant.conveyorPower)
+    );
+    new JoystickButton(driverJoyStick, Constants.OIConstants.kShootingRoutineButton).whileTrue(
+      fireShot
+    );
+
 
 
     NamedCommands.registerCommand("Intake", new IntakeFuel(intakeSub, conveyorSub, indexerSub, intakePitcherSub));
     NamedCommands.registerCommand("IntakeOut", new MoveIntakePitcherCMD(intakePitcherSub, Constants.IntakePitcherConstants.kPitcherOutDegrees));
     NamedCommands.registerCommand("shootClose", shootClose);
     NamedCommands.registerCommand("shootFar", shootFar);
+    NamedCommands.registerCommand("fireShot", fireShot);
+
+    new JoystickButton(driverJoyStick, Constants.OIConstants.kPrepareShotButton).whileTrue(
+      new AlignToHubCMD(swerveSub)
+    );
 
   
 
