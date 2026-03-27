@@ -286,6 +286,11 @@ public final class Constants {
 
     
   }
+
+  public static final class dumbModeConstants{
+    public static final int kCloseShotButton = 1;
+    public static final int kFarShotButton = 2;
+  }
   
   public static final double telemetryUpdate = 0.1; //Update every 100ms
 }

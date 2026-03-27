@@ -6,17 +6,15 @@ import frc.robot.subsystems.ShooterSub;
 
 public class WaitForShooterReady extends Command{
     private final ShooterSub shooterSub;
-    private final AlignToHubCMD alignToHubCMD;
 
-    public WaitForShooterReady(ShooterSub shooterSub, AlignToHubCMD alignToHubCMD){
+    public WaitForShooterReady(ShooterSub shooterSub){
         this.shooterSub = shooterSub;
-        this.alignToHubCMD = alignToHubCMD;
         addRequirements(shooterSub);
     }
 
     @Override
     public boolean isFinished() {
-        return shooterSub.isAtSetVelocityFPS() && alignToHubCMD.isFinished();
+        return shooterSub.isAtSetVelocityFPS();
     }
 
 }

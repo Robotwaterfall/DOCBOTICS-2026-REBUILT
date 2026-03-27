@@ -4,9 +4,15 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.commands.PathPlannerAuto;
 import edu.wpi.first.wpilibj.PS5Controller;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.Constants.HoodConstants;
@@ -15,6 +21,7 @@ import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.ResetHeadingCMD;
 import frc.robot.commands.RunConveyorCMD;
 import frc.robot.commands.RunIndexerCMD;
+import frc.robot.commands.RunShooterCMD;
 import frc.robot.commands.StopShooterMotorsCMD;
 import frc.robot.commands.SwerveJoystickCMD;
 import frc.robot.commands.TelemetryManagerCMD;
@@ -23,6 +30,7 @@ import frc.robot.commands.commandgroups.IntakeFuel;
 import frc.robot.commands.commandgroups.OuttakeFuel;
 import frc.robot.subsystems.IntakeRollersSub;
 import frc.robot.subsystems.ShooterSub;
+import frc.robot.commands.AdjustHoodCMD;
 import frc.robot.commands.DecrementHoodCMD;
 import frc.robot.commands.DecrementShooterCMD;
 import frc.robot.commands.IncrementHoodCMD;
@@ -53,8 +61,10 @@ public class RobotContainer {
   public final TelemetrySub telemetrySub = new TelemetrySub();
 
   private final PS5Controller driverJoyStick = new PS5Controller(OIConstants.kDriverControllerPort);
+  
+    
 
-  // private final SendableChooser<Command> autoChooser;
+  private final SendableChooser<Command> autoChooser;
 
 
   public RobotContainer() {
@@ -62,8 +72,6 @@ public class RobotContainer {
     configureBindings();
 
     //  PRE INIT
-    // autoChooser = AutoBuilder.buildAutoChooser(); //Default auto will be 'Commands.none()'
-    // SmartDashboard.putData("AutoMode: ", autoChooser);
     SmartDashboard.putData("Reset Gyro Heading: ", new ResetHeadingCMD(swerveSub));
 
     //  DEFAULT COMMANDS
@@ -87,6 +95,12 @@ public class RobotContainer {
     // telemetrySub.setDefaultCommand(
     //   new TelemetryManagerCMD(swerveSub)
     // );
+
+    
+      autoChooser = new SendableChooser<Command>();
+      SmartDashboard.putData("MoveBackwardAuto", new PathPlannerAuto("MoveBackwardAuto"));
+      autoChooser.setDefaultOption("No Auto (Paths Broken)", new PathPlannerAuto("MoveBackwardAuto"));
+      SmartDashboard.putData("AutoMode: ", autoChooser);
   }
 
 
@@ -97,28 +111,22 @@ public class RobotContainer {
       new ResetHeadingCMD(swerveSub)
     );
 
-    // SHOOTING ROUTINE
-    // new JoystickButton(driverJoyStick, OIConstants.kShootingRoutineButton).whileTrue(
-    //   new ShootingRoutine(swerveSub, shooterSub, hoodSub, indexerSub, conveyorSub, intakePitcherSub, driverJoyStick)
-    // );
-
-    // // PREPARE SHOT
-    // new JoystickButton(driverJoyStick, OIConstants.kPrepareShotButton).whileTrue(
-    //   new PrepareShot(shooterSub, hoodSub, swerveSub)
-    // );
+    new JoystickButton(driverJoyStick, OIConstants.kShootingRoutineButton).whileTrue(
+      new FireShot(indexerSub, conveyorSub, intakePitcherSub)
+    );
 
     //START OF TEST CODE
     // new JoystickButton(driverJoyStick, OIConstants.kShootingRoutineButton).whileTrue(
     //   new RunShooterCMD(shooterSub, swerveSub, ShooterConstants.kShooterVelocityFps)
     // );
 
-    new JoystickButton(driverJoyStick, OIConstants.kPrepareShotButton).whileTrue(
-      new RunIndexerCMD(indexerSub, 1.0)
-    );
+    // new JoystickButton(driverJoyStick, OIConstants.kPrepareShotButton).whileTrue(
+    //   new RunIndexerCMD(indexerSub, 1.0)
+    // );
 
-    new JoystickButton(driverJoyStick, OIConstants.kPrepareShotButton).whileTrue(
-      new RunConveyorCMD(conveyorSub, 0.6)
-    );
+    // new JoystickButton(driverJoyStick, OIConstants.kPrepareShotButton).whileTrue(
+    //   new RunConveyorCMD(conveyorSub, 0.6)
+    // );
 
     // new JoystickButton(driverJoyStick, OIConstants.kPrepareShotButton).whileTrue(
     //   new FlutterIntake(intakePitcherSub).repeatedly()
@@ -135,11 +143,21 @@ public class RobotContainer {
       new OuttakeFuel(intakeSub, conveyorSub, indexerSub)
     );
 
+    //CLOSE SHOT
+    new JoystickButton(driverJoyStick, Constants.dumbModeConstants.kCloseShotButton).whileTrue(
+      new RunShooterCMD(shooterSub, swerveSub, 50)
+    );
+    new JoystickButton(driverJoyStick, Constants.dumbModeConstants.kCloseShotButton).whileTrue(
+      new AdjustHoodCMD(hoodSub, swerveSub, 56)
+    );
 
-    // new JoystickButton(driverJoyStick, OIConstants.kShootingRoutineButton).whileTrue(
-    //   new AlignToHubCMD(swerveSub)
-    // );
-
+    //FAR SHOT
+    new JoystickButton(driverJoyStick, Constants.dumbModeConstants.kFarShotButton).whileTrue(
+      new RunShooterCMD(shooterSub, swerveSub, 56)
+    );
+    new JoystickButton(driverJoyStick, Constants.dumbModeConstants.kFarShotButton).whileTrue(
+      new AdjustHoodCMD(hoodSub, swerveSub, 48)
+    );
     // INCREMENT SHOOTER MANUALLY
     POVButton incShooterButton = new POVButton(driverJoyStick, Constants.OIConstants.kDpadRIGHT);
     incShooterButton.onTrue(new IncrementShooterCMD(shooterSub, ShooterConstants.shooterVelocityPlusPerPress));
@@ -164,13 +182,26 @@ public class RobotContainer {
     POVButton fireManualShot = new POVButton(driverJoyStick, OIConstants.kDpadRIGHTDOWN);
     fireManualShot.onTrue(new FireShot(indexerSub, conveyorSub, intakePitcherSub));
 
+    Command shootClose =
+    new ParallelCommandGroup(
+      new RunShooterCMD(shooterSub, swerveSub, 45),
+      new AdjustHoodCMD(hoodSub, swerveSub, 56),
+      new RunIndexerCMD(indexerSub, 0.8),
+      new RunConveyorCMD(conveyorSub, 0.6)
+    );
+
+    NamedCommands.registerCommand("Intake", new IntakeFuel(intakeSub, conveyorSub, indexerSub));
+    NamedCommands.registerCommand("shootClose", shootClose);
+
+  
+
    
     
   }
 
 
   public Command getAutonomousCommand() {
-    // return autoChooser.getSelected();
-    return null;
+    return autoChooser.getSelected();
+    // return null;
   }
 }
