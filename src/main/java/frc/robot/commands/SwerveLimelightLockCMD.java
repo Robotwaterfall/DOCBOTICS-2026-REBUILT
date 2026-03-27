@@ -68,7 +68,7 @@ public class SwerveLimelightLockCMD extends Command {
 
         if (LimelightHelpers.getTV(LimelightConstants.LimelightFront)) {
             double tx = LimelightHelpers.getTX(LimelightConstants.LimelightFront);
-            turnCommand = -tx * DriveConstants.autoTargetConstants.autoOrientKp;
+            turnCommand = tx * DriveConstants.autoTargetConstants.autoOrientKp;
         }
 
         turnCommand = MathUtil.clamp(turnCommand, -1.0, 1.0);

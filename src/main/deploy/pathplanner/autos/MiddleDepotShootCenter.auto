@@ -5,15 +5,28 @@
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "deadline",
           "data": {
-            "pathName": "MoveBackwardToDepot"
+            "commands": [
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 0.9
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeOut"
+                }
+              }
+            ]
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "IntakeOut"
+            "pathName": "MoveBackwardToDepot"
           }
         },
         {

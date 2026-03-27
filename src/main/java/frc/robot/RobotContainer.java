@@ -24,6 +24,7 @@ import frc.robot.commands.RunIndexerCMD;
 import frc.robot.commands.RunShooterCMD;
 import frc.robot.commands.StopShooterMotorsCMD;
 import frc.robot.commands.SwerveJoystickCMD;
+import frc.robot.commands.SwerveLimelightLockCMD;
 import frc.robot.commands.commandgroups.FireShot;
 import frc.robot.commands.commandgroups.IntakeFuel;
 import frc.robot.commands.commandgroups.OuttakeFuel;
@@ -87,6 +88,7 @@ public class RobotContainer {
              /// By default will be on field oriented.
             () -> !
             driverJoyStick.getRawButton(OIConstants.kDriverFieldOrientedButtonIdx))); 
+    
 
     // intakePitcherSub.setDefaultCommand(
     //   new MoveIntakePitcherCMD(intakePitcherSub, Constants.IntakePitcherConstants.kPitcherOutDegrees)
@@ -101,8 +103,8 @@ public class RobotContainer {
 
       autoChooser.addOption("MiddleDepotShootCenter", 
                             new PathPlannerAuto("MiddleDepotShootCenter"));
-      
-      autoChooser.addOption("MiddleBackUpShoot", getAutonomousCommand());
+     
+      autoChooser.addOption("RightBumpSweep", new PathPlannerAuto("RightBumpSweep"));
 
       SmartDashboard.putData("AutoMode: ", autoChooser);
   }
@@ -195,6 +197,17 @@ public class RobotContainer {
       fireShot
     );
 
+    
+    // LIMELIGHT LOCK / AIM ASSIST
+    new JoystickButton(driverJoyStick, OIConstants.kPrepareShotButton).whileTrue(
+      new SwerveLimelightLockCMD(
+        swerveSub,
+        () -> -driverJoyStick.getRawAxis(OIConstants.kDriverYAxis),
+        () -> driverJoyStick.getRawAxis(OIConstants.kDriverXAxis),
+        0.5
+      )
+    );
+
 
 
     NamedCommands.registerCommand("Intake", new IntakeFuel(intakeSub, conveyorSub, indexerSub, intakePitcherSub));
@@ -203,9 +216,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("shootFar", shootFar);
     NamedCommands.registerCommand("fireShot", fireShot);
 
-    new JoystickButton(driverJoyStick, Constants.OIConstants.kPrepareShotButton).whileTrue(
-      new AlignToHubCMD(swerveSub)
-    );
+
 
   
 
