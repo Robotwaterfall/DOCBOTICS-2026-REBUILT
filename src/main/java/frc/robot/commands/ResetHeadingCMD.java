@@ -1,10 +1,10 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.SwerveSub;
 
-public class ResetHeadingCMD extends Command  {
+public class ResetHeadingCMD extends InstantCommand  {
     private final SwerveSub swerveSub;
 
     public ResetHeadingCMD(SwerveSub swerveSub){
@@ -13,7 +13,7 @@ public class ResetHeadingCMD extends Command  {
          
     }
     @Override
-    public void execute() {
+    public void initialize() {
         //reset heading
         swerveSub.zeroHeading();
     }

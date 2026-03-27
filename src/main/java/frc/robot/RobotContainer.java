@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.Constants.ConveyorConstant;
+import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.HoodConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.ShooterConstants;
@@ -42,7 +43,6 @@ import frc.robot.subsystems.HoodSub;
 import frc.robot.subsystems.IndexerSub;
 import frc.robot.subsystems.IntakePitcherSub;
 import frc.robot.subsystems.SwerveSub;
-import frc.robot.subsystems.TelemetrySub;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -59,7 +59,6 @@ public class RobotContainer {
   public final IntakePitcherSub intakePitcherSub = new IntakePitcherSub();
   public final ConveyorSub conveyorSub = new ConveyorSub();
   public final IndexerSub indexerSub = new IndexerSub();
-  public final TelemetrySub telemetrySub = new TelemetrySub();
 
   private final PS5Controller driverJoyStick = new PS5Controller(OIConstants.kDriverControllerPort);
   
@@ -204,7 +203,7 @@ public class RobotContainer {
         swerveSub,
         () -> -driverJoyStick.getRawAxis(OIConstants.kDriverYAxis),
         () -> driverJoyStick.getRawAxis(OIConstants.kDriverXAxis),
-        0.5
+        DriveConstants.autoTargetConstants.autoOrientSpeed
       )
     );
 
@@ -212,6 +211,11 @@ public class RobotContainer {
 
     NamedCommands.registerCommand("Intake", new IntakeFuel(intakeSub, conveyorSub, indexerSub, intakePitcherSub));
     NamedCommands.registerCommand("IntakeOut", new MoveIntakePitcherCMD(intakePitcherSub, Constants.IntakePitcherConstants.kPitcherOutDegrees));
+    NamedCommands.registerCommand("LockOnHub", new SwerveLimelightLockCMD(
+                                    swerveSub, 
+                                      () -> 0.0, 
+                                      () -> 0.0, 
+                                       DriveConstants.autoTargetConstants.autoOrientSpeed));
     NamedCommands.registerCommand("shootClose", shootClose);
     NamedCommands.registerCommand("shootFar", shootFar);
     NamedCommands.registerCommand("fireShot", fireShot);

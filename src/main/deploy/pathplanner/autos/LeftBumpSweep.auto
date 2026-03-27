@@ -50,6 +50,12 @@
                 "data": {
                   "name": "fireShot"
                 }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "LockOnHub"
+                }
               }
             ]
           }
