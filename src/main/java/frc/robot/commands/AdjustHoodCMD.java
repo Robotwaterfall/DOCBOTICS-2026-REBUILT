@@ -48,11 +48,10 @@ public class AdjustHoodCMD extends InstantCommand{
         double angleErrorPercent = Math.abs(params.angleDeg - Math.toDegrees(r.angleRad) / Math.toDegrees(r.angleRad)) * 100;
         SmartDashboard.putNumber("%ErrorAngle", angleErrorPercent);
 
-        if (!r.valid) {
+        if (!r.valid) { // If the physics calculation is invalid, fall back to the lookup table value
             this.desiredAngleDeg = params.angleDeg;
         } else {
-            if (angleErrorPercent >= 3) {
-                System.out.println("WARNING: Interpolated value is " + angleErrorPercent + "% off from computed value! Using computed value instead.");
+            if (angleErrorPercent >= 3) { // If the physics calculation is significantly different from the lookup table, use it directly
                 this.desiredAngleDeg = Math.toDegrees(r.angleRad);
             } else { 
                 this.desiredAngleDeg = ((Math.toDegrees(r.angleRad) - params.angleDeg) * 0.5); // Average the two values if they are close enough

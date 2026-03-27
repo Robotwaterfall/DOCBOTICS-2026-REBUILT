@@ -45,8 +45,7 @@ public class ShooterLookup {
         table.put(10.5, new ShooterParams(54.5, ShooterConstants.kShooterVelocityFps));
         table.put(11.0, new ShooterParams(54.0, ShooterConstants.kShooterVelocityFps));
         table.put(11.5, new ShooterParams(53.5, ShooterConstants.kShooterVelocityFps));
-        table.put(12.0, new ShooterParams(53.0, ShooterConstants.kShooterVelocityFps));
-    }
+        table.put(12.0, new ShooterParams(53.0, ShooterConstants.kShooterVelocityFps));    }
 
     // Returns interpolated ShooterParams object for a given distance in feet
     public static ShooterParams getInterpolated(double distanceFt) {

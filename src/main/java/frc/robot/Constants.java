@@ -181,17 +181,17 @@ public final class Constants {
     public static final double kMaxPitchDegrees = 105; 
 
     public static final double kPitcherInDegrees = 0; // Setpoint positions
-    public static final double kPitcherOutDegrees = 98; 
+    public static final double kPitcherOutDegrees = 95; 
 
-    public static double intakePitcher_kP = 0.1; //TODO
-    public static double intakePitcher_kI = 0; //TODO
-    public static double intakePitcher_kD = 0; //TODO
+    public static double intakePitcher_kP = 0.1;
+    public static double intakePitcher_kI = 0;
+    public static double intakePitcher_kD = 0; 
 
-    public static double intakePitcherToleranceDegrees = 0.8;
+    public static double intakePitcherToleranceDegrees = 1;
 
     public static double intakePitcherWaitTimeSec = 1; 
 
-    public static double intakePitcherFlutterDegrees = 95;
+    public static double intakePitcherFlutterDegrees = 90;
 
     public static final IdleMode pitcherIdleMode = IdleMode.kCoast;
 
@@ -226,7 +226,7 @@ public final class Constants {
 
     public static final double kShooterHeightInches = 0; //TODO: measure from floor to center of shooter wheel
 
-    public static final double kHeightOfHubInches = 72; //height of the hub where fuel can enter
+    public static final double kHeightOfHubInches = 72; 
 
 
     public static final double shooterTolerance = 2.0; 
@@ -237,8 +237,8 @@ public final class Constants {
 
     public static final double shooterVelocityPlusPerPress = 5.0; 
 
-    public static final double kMaxShooterVelocityFPS  = 110; //TODO: find max shooter velocity
-    public static final double kMaxShooterRPM  = kMaxShooterVelocityFPS * 60 / (Math.PI * ShooterConstants.kWheelDiameterInches); //TODO: find min shooter velocity
+    public static final double kMaxShooterVelocityFPS  = 110;
+    public static final double kMaxShooterRPM  = kMaxShooterVelocityFPS * 60 / (Math.PI * ShooterConstants.kWheelDiameterInches); 
 
      public static class KrakenX60 {
         public static final AngularVelocity kFreeSpeed = RPM.of(6000);

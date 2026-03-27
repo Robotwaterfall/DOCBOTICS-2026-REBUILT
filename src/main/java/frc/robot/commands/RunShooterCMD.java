@@ -47,10 +47,10 @@ public class RunShooterCMD extends Command {
         double velocityErrorPercent = Math.abs(params.velocityFps - velocityFps) / velocityFps * 100;
         SmartDashboard.putNumber("%ErrorVelocity", velocityErrorPercent);
 
-        if (!r.valid) {
+        if (!r.valid) { // If the physics calculation is invalid, fall back to the lookup table value
             this.desiredVelocity = params.velocityFps;
         } else {
-            if (velocityErrorPercent >= 3) {
+            if (velocityErrorPercent >= 3) { // If the physics calculation is significantly different from the lookup table, use it directly
                 this.desiredVelocity = Math.toDegrees(r.angleRad);
             } else { 
                 this.desiredVelocity = (velocityFps - params.velocityFps) * 0.5; // Average the two values if they are close enough
