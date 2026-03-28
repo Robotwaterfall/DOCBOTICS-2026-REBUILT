@@ -111,9 +111,8 @@ public final class Constants {
     
 
     public static class autoTargetConstants {
-      public static final double autoOrientKp = 0.0035;
-
-      public static final double autoLockKp = 0; //TODO
+      public static final double autoOrientKp = 0.02;
+      public static final double autoOrientSpeed = 0.5;
 
     }
   }
@@ -121,7 +120,7 @@ public final class Constants {
   public static final class LimelightConstants {
 
     public static final String LimelightFront = "limelight-track";
-    public static final String LimelightBackLeft = "limelightbackleft"; //TODO
+    public static final String LimelightBackLeft = "limelight-left";
     public static final String LimelightBackRight = "limelightbackright"; //TODO
 
   }
@@ -162,14 +161,14 @@ public final class Constants {
   public static final class IntakeRollerConstants{
     public static final int kIntakeMotorPort = 3; 
     
-    public static final double kIntakeRollersKp = 0.1; //TODO
+    public static final double kIntakeRollersKp = 0.5; //TODO
     public static final double kIntakeRollersKi = 0; //TODO
     public static final double kIntakeRollersKd = 0; //TODO
     public static final double kIntakeRollersKs = 0; //TODO
     public static final double kIntakeRollersKv = 0; //TODO
 
-    public static final double kIntakeVelocityRPS = 10;
-    public static final double kOuttakeVelocityRPS = -10;
+    public static final double kIntakeVelocityRPS = -0.8;
+    public static final double kOuttakeVelocityRPS = 0.8;
 
   }
 
@@ -181,7 +180,7 @@ public final class Constants {
     public static final double kMaxPitchDegrees = 105; 
 
     public static final double kPitcherInDegrees = 0; // Setpoint positions
-    public static final double kPitcherOutDegrees = 95; 
+    public static final double kPitcherOutDegrees = 103; 
 
     public static double intakePitcher_kP = 0.1;
     public static double intakePitcher_kI = 0;
@@ -217,7 +216,7 @@ public final class Constants {
     public static final double kShooterKv = 12.0 / KrakenX60.kFreeSpeed.in(RotationsPerSecond); //TODO
 
     public static final double kIndexSpeed = 1;
-    public static final double kReverseIndexSpeedWhileIntaking = -0.5;
+    public static final double kReverseIndexSpeedWhileIntaking = -0.9;
     public static final double kReverseIndexSpeed = -1; 
 
     public static final double kWarmupVelocityFPS = 50;
@@ -293,6 +292,21 @@ public final class Constants {
     public static final double ALLIANCE_ZONE_Y_MAX_BLUEin = 317.68; 
 
     
+  }
+
+    public static final class GeorgianCollegeConstants{
+    public static final int kCloseShotButton = 1;
+    public static final int kFarShotButton = 2;
+    public static final int kNeutralShotButton = 3;
+
+    public static final double kShootFarVelocity = 56;
+    public static final double kShootFarAngle = 48;
+
+    public static final double kShootCloseVelocity = 45;
+    public static final double kShootCloseAngle = 56;
+
+    public static final double kShootInNeutralZoneVelocity = 95;
+    public static final double kShootInNeutralZoneAngle = 47;
   }
   
   public static final double telemetryUpdate = 0.1; //Update every 100ms

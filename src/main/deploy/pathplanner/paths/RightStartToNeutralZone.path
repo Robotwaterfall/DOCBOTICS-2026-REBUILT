@@ -1,0 +1,97 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.689714693295292,
+        "y": 2.0230385164051357
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 4.8541940085592,
+        "y": 2.5794008559201154
+      },
+      "isLocked": false,
+      "linkedName": "RightBumpStart"
+    },
+    {
+      "anchor": {
+        "x": 4.905948644793153,
+        "y": 2.695848787446506
+      },
+      "prevControl": {
+        "x": 4.517788873038516,
+        "y": 2.669971469329529
+      },
+      "nextControl": {
+        "x": 5.848378788685366,
+        "y": 2.75867746370599
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 6.963195435092723,
+        "y": 2.1394864479315263
+      },
+      "prevControl": {
+        "x": 6.357147980325576,
+        "y": 2.1619326499599385
+      },
+      "nextControl": {
+        "x": 7.312539229671896,
+        "y": 2.126547788873039
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 7.66188302425107,
+        "y": 1.1949643366619125
+      },
+      "prevControl": {
+        "x": 6.355078459343795,
+        "y": 1.1561483594864492
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "LineUpNeutralZoneRight"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [
+    {
+      "fieldPosition": {
+        "x": 7.75,
+        "y": 2.0
+      },
+      "rotationOffset": 0.0,
+      "minWaypointRelativePos": 2.1744186046511507,
+      "maxWaypointRelativePos": 3.0,
+      "name": "Point Towards Zone"
+    }
+  ],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.5,
+    "maxAcceleration": 1.5,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 90.0
+  },
+  "reversed": false,
+  "folder": "RightBoomerangSweepPaths",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "useDefaultConstraints": true
+}

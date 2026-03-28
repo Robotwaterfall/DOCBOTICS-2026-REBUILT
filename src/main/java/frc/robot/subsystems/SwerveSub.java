@@ -96,30 +96,34 @@ public class SwerveSub extends SubsystemBase {
             DriverStation.reportWarning("settings.json missing", false);
         }
 
-        AutoBuilder.configure(
-            this::getPose, 
-            this::resetPose, 
-            this::getSpeeds, 
-            (speeds, feedforwards) -> {
-                try {
-                    driveRobotRelative(speeds);
-                } catch (Exception e) {
-                    System.err.println("PathPlanner drive error: " + e.getMessage());
-                }
-            }, 
-            new PPHolonomicDriveController(
-                new PIDConstants(5.0, 0.0, 0.0), 
-                new PIDConstants(5.0, 0.0, 0.0) 
-            ),
-            config,
-            () -> {
-                var alliance = DriverStation.getAlliance();
-                if (alliance.isPresent()) {
-                    return alliance.get() == DriverStation.Alliance.Red;
-                }
-                return false;
-            },
-            this 
+                AutoBuilder.configure(
+                this::getPose, // Robot pose supplier.
+                this::resetPose, // Method to reset odometry (will be called if your auto has a starting pose).
+                this::getSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE.
+                (speeds, feedforwards) -> driveRobotRelative(speeds), // Method that will drive the robot given ROBOT
+                                                                      // RELATIVE ChassisSpeeds.
+                new PPHolonomicDriveController( // HolonomicPathFollowerConfig, this should likely live in your
+                                                // Constants class.
+                        new PIDConstants(6.0, 0.0, 0.0), // Translation PID constants.
+                        new PIDConstants(6.0, 0.0, 0.0) // Rotation PID constants.
+
+                ),
+                config,
+                () -> {
+                    /*
+                     * Boolean supplier that controls when the path will be mirrored for the red
+                     * alliance,
+                     * This will flip the path being followed to the red side of the field.
+                     * THE ORIGIN WILL REMAIN ON THE BLUE SIDE.
+                     */
+
+                    var alliance = DriverStation.getAlliance();
+                    if (alliance.isPresent()) {
+                        return alliance.get() == DriverStation.Alliance.Red;
+                    }
+                    return false;
+                },
+                this // Reference to this subsystem to set requirements
         );
     } catch (Exception e) {
         DriverStation.reportError("PathPlanner config failed: " + e.getMessage(), false);
@@ -141,16 +145,14 @@ public class SwerveSub extends SubsystemBase {
     
     LimelightHelpers.setPipelineIndex(LimelightConstants.LimelightFront, 0);
     LimelightHelpers.setPipelineIndex(LimelightConstants.LimelightBackLeft, 0);
-    LimelightHelpers.setPipelineIndex(LimelightConstants.LimelightBackRight, 0);
+    // LimelightHelpers.setPipelineIndex(LimelightConstants.LimelightBackRight, 0);
     }
 
     @Override
     public void periodic() {
         poseEstimator.update(getRotation2d(), getModulePositionsAuto());
 
-        fuseLimelight(LimelightConstants.LimelightFront);
-        fuseLimelight(LimelightConstants.LimelightBackLeft);
-        fuseLimelight(LimelightConstants.LimelightBackRight);
+        //fuseLimelight(LimelightConstants.LimelightBackLeft);
 
         m_Field.setRobotPose(poseEstimator.getEstimatedPosition());
 
@@ -179,10 +181,19 @@ public class SwerveSub extends SubsystemBase {
     LimelightHelpers.PoseEstimate poseEst;
     var alliance = DriverStation.getAlliance();
     if (alliance.isPresent() && alliance.get() == DriverStation.Alliance.Red) {
-        poseEst = LimelightHelpers.getBotPoseEstimate_wpiRed(limelightName);
-    } else {
         poseEst = LimelightHelpers.getBotPoseEstimate_wpiBlue(limelightName);
+            } else {
+        poseEst = LimelightHelpers.getBotPoseEstimate_wpiRed(limelightName);
     }
+
+          Pose2d measuredPose = poseEst.pose;
+            if (alliance.isPresent() && alliance.get() == DriverStation.Alliance.Red) {
+                // Flip pose for estimator only
+                measuredPose = new Pose2d(
+                    measuredPose.getTranslation().rotateBy(new Rotation2d(Math.PI)),
+                    measuredPose.getRotation().plus(Rotation2d.fromDegrees(-180))
+                );
+            }
 
     // Smart filtering
     if (poseEst.tagCount >= 1 && 
