@@ -5,6 +5,12 @@
     "data": {
       "commands": [
         {
+          "type": "path",
+          "data": {
+            "pathName": "RightStartToNeutralZone"
+          }
+        },
+        {
           "type": "deadline",
           "data": {
             "commands": [
@@ -21,12 +27,6 @@
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "RightStartToNeutralZone"
           }
         },
         {

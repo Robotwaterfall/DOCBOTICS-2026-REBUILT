@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "LeftBumpToNeutralZone"
+            "pathName": "LeftBumpToDepot"
           }
         },
         {
@@ -36,7 +36,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "LeftDriveIntoNeutralZone"
+                  "pathName": "DriveIntoDepot"
                 }
               },
               {
@@ -51,7 +51,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "LeftNeutralZoneDriveIntoLeftShoot"
+            "pathName": "ToShootCenterFromDepot"
           }
         },
         {
