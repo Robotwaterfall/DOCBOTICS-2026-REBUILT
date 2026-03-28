@@ -82,7 +82,7 @@
       ]
     }
   },
-  "resetOdom": false,
+  "resetOdom": true,
   "folder": "Right Side AUTO's",
   "choreoAuto": false
 }

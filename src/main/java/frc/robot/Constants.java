@@ -100,7 +100,7 @@ public final class Constants {
     public static final double kPhysicalMaxSpeedMetersPerSecond = 5;
     public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 2 * 2 * Math.PI;
 
-    public static final double kTeleDriveMaxSpeedMetersPerSecond = kPhysicalMaxSpeedMetersPerSecond  / 1.75;
+    public static final double kTeleDriveMaxSpeedMetersPerSecond = kPhysicalMaxSpeedMetersPerSecond  / 1.0;
     public static final double kTeleDriveMaxAngularSpeedRadiansPerSecond = kPhysicalMaxAngularSpeedRadiansPerSecond / 2.5;
     public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 2;
     public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 2;
@@ -153,6 +153,8 @@ public final class Constants {
       public static final int kDpadLEFT = 270;
       public static final int kDpadRIGHTDOWN = 135;
 
+      public static final int kTouchPadButton = 14;
+
       public static final int kPsButton = 13;
 
       public static final double kDeadband = 0.5;
@@ -188,9 +190,9 @@ public final class Constants {
 
     public static double intakePitcherToleranceDegrees = 1;
 
-    public static double intakePitcherWaitTimeSec = 1; 
+    public static double intakePitcherWaitTimeSec = 0.8; 
 
-    public static double intakePitcherFlutterDegrees = 90;
+    public static double intakePitcherFlutterDegrees = 95;
 
     public static final IdleMode pitcherIdleMode = IdleMode.kCoast;
 
@@ -291,14 +293,12 @@ public final class Constants {
     public static final int kFarShotButton = 2;
     public static final int kNeutralShotButton = 3;
 
-    public static final double kShootFarVelocity = 56;
-    public static final double kShootFarAngle = 48;
+    public static final double kShootFarVelocity = 100;
+    public static final double kShootFarAngle = 45;
 
     public static final double kShootCloseVelocity = 45;
     public static final double kShootCloseAngle = 56;
 
-    public static final double kShootInNeutralZoneVelocity = 95;
-    public static final double kShootInNeutralZoneAngle = 47;
   }
   
   public static final double telemetryUpdate = 0.1; //Update every 100ms

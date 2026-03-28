@@ -12,11 +12,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.Constants.ConveyorConstant;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.HoodConstants;
+import frc.robot.Constants.IntakePitcherConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.ResetHeadingCMD;
@@ -99,6 +102,7 @@ public class RobotContainer {
 
     
       autoChooser = new SendableChooser<Command>();
+      autoChooser.addOption("BackUpShootMiddle", new PathPlannerAuto("MoveBackShoot"));
 
       autoChooser.addOption("MiddleDepotShootCenter", 
                             new PathPlannerAuto("MiddleDepotShootCenter"));
@@ -106,7 +110,7 @@ public class RobotContainer {
       autoChooser.addOption("RightBumpSweep", new PathPlannerAuto("RightBumpSweep"));
       autoChooser.addOption("LeftBumpSweep", new PathPlannerAuto("LeftBumpSweep"));
 
-      autoChooser.addOption("LeftBumpToDepotShootMiddleAuto", new PathPlannerAuto("LeftBumpToDepotShootMiddleAuto"));
+      // autoChooser.addOption("LeftBumpToDepotShootMiddleAuto", new PathPlannerAuto("LeftBumpToDepotShootMiddleAuto"));
 
       SmartDashboard.putData("AutoMode: ", autoChooser);
   }
@@ -123,23 +127,12 @@ public class RobotContainer {
       new FireShot(indexerSub, conveyorSub, intakePitcherSub)
     );
 
-    //START OF TEST CODE
-    // new JoystickButton(driverJoyStick, OIConstants.kShootingRoutineButton).whileTrue(
-    //   new RunShooterCMD(shooterSub, swerveSub, ShooterConstants.kShooterVelocityFps)
-    // );
+    new JoystickButton(driverJoyStick, OIConstants.kTouchPadButton).whileTrue(
+      new MoveIntakePitcherCMD(intakePitcherSub, Constants.IntakePitcherConstants.kPitcherInDegrees)
+    );
 
-    // new JoystickButton(driverJoyStick, OIConstants.kPrepareShotButton).whileTrue(
-    //   new RunIndexerCMD(indexerSub, 1.0)
-    // );
+    
 
-    // new JoystickButton(driverJoyStick, OIConstants.kPrepareShotButton).whileTrue(
-    //   new RunConveyorCMD(conveyorSub, 0.6)
-    // );
-
-    // new JoystickButton(driverJoyStick, OIConstants.kPrepareShotButton).whileTrue(
-    //   new FlutterIntake(intakePitcherSub).repeatedly()
-    // );
-    //EMD OF TEST CODE
 
     // INTAKE
     new JoystickButton(driverJoyStick, OIConstants.kIntakeButton).whileTrue(
@@ -194,6 +187,7 @@ public class RobotContainer {
     new ParallelCommandGroup(
       new RunIndexerCMD(indexerSub, ShooterConstants.kIndexSpeed),
       new RunConveyorCMD(conveyorSub, ConveyorConstant.conveyorPower)
+
     );
     new JoystickButton(driverJoyStick, Constants.OIConstants.kShootingRoutineButton).whileTrue(
       fireShot

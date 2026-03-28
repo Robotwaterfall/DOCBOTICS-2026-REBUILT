@@ -33,7 +33,7 @@ public class MoveIntakePitcherCMD extends Command{
   @Override
   public boolean isFinished(){
     //when the pitcher is at the set setpoint stop command
-    return intakePitcherSub.getCurrentAngle() == intakePitcherPosDeg;
+    return intakePitcherSub.isPitcherAtSetpoint();
 
   }
 
