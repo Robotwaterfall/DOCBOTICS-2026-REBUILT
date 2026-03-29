@@ -16,6 +16,8 @@ public class RunShooterCMD extends Command {
     private final ShooterSub shooterSub;
     private final SwerveSub swerveSub;
 
+    ShooterPhysics CalculateShot = new ShooterPhysics();
+
     private double desiredVelocity; // fps
     ShooterPhysics CalculateShot = new ShooterPhysics();
 

@@ -1,7 +1,10 @@
 package frc.robot.commands;
 
 import edu.wpi.first.math.util.Units;
+<<<<<<< Updated upstream
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+=======
+>>>>>>> Stashed changes
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.Constants.HoodConstants;
 import frc.robot.Constants.ShooterConstants;
@@ -60,7 +63,7 @@ public class AdjustHoodCMD extends InstantCommand{
 
         addRequirements(hoodSub);
     }
-
+    
     // 3‑param constructor
     // → desiredVelocity is passed explicitly
     public AdjustHoodCMD(HoodSub hoodSub, SwerveSub swerveSub, double desiredAngleDeg) {

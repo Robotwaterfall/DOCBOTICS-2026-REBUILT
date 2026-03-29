@@ -141,16 +141,29 @@ public class SwerveSub extends SubsystemBase {
     
     LimelightHelpers.setPipelineIndex(LimelightConstants.LimelightFront, 0);
     LimelightHelpers.setPipelineIndex(LimelightConstants.LimelightBackLeft, 0);
+<<<<<<< Updated upstream
     LimelightHelpers.setPipelineIndex(LimelightConstants.LimelightBackRight, 0);
+=======
+    
+    // SmartDashboard sliders for vision tuning were removed per request. Theta stddev remains configurable in Constants.
+>>>>>>> Stashed changes
     }
 
     @Override
     public void periodic() {
         poseEstimator.update(getRotation2d(), getModulePositionsAuto());
 
+<<<<<<< Updated upstream
         fuseLimelight(LimelightConstants.LimelightFront);
         fuseLimelight(LimelightConstants.LimelightBackLeft);
         fuseLimelight(LimelightConstants.LimelightBackRight);
+=======
+        // Fuse both front and back limelights (if they see tags) into the pose estimator.
+        // This will allow PoseManager.getPose() to return a fused field pose instead of
+        // relying only on gyro + odometry or a single tx heading.
+        fuseLimelight(LimelightConstants.LimelightFront);
+        fuseLimelight(LimelightConstants.LimelightBackLeft);
+>>>>>>> Stashed changes
 
         m_Field.setRobotPose(poseEstimator.getEstimatedPosition());
 
@@ -190,10 +203,13 @@ public class SwerveSub extends SubsystemBase {
         poseEst.rawFiducials[0].ambiguity < 0.7 &&
         poseEst.latency > 0.01) {
 
+        // Use default XY stddevs inline (front/back) and theta from Constants.
+        // Front is slightly more trusted than back.
         double xyStdDev = limelightName.contains("Back") ? 1.0 : 0.5;
-        poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(xyStdDev, xyStdDev, 1000));
-        
-        // CRITICAL: Actually add the measurement!
+        // double thetaStdDev = Math.toRadians(Constants.VisionConstants.LIMELIGHT_THETA_STDDEV_DEGREES);
+        poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(xyStdDev, xyStdDev, 1000.0)); // Use gyro for heading, effectively ignoring Limelight's theta measurement due to its high uncertainty.
+
+        // Add the vision measurement (pose + timestamp) so the estimator can fuse both cameras.
         poseEstimator.addVisionMeasurement(poseEst.pose, poseEst.timestampSeconds);
         
         // Debug
