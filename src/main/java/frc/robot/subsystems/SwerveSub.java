@@ -151,7 +151,7 @@ public class SwerveSub extends SubsystemBase {
     public void periodic() {
         poseEstimator.update(getRotation2d(), getModulePositionsAuto());
 
-        // fuseLimelight(LimelightConstants.LimelightBackLeft);
+        fuseLimelight(LimelightConstants.LimelightFront);
 
         m_Field.setRobotPose(poseEstimator.getEstimatedPosition());
 
@@ -172,41 +172,40 @@ public class SwerveSub extends SubsystemBase {
 
         SmartDashboard.putNumber("RobotHeading: ", getHeading());
         SmartDashboard.putString("RobotLocation: ", getPose().getTranslation().toString());
+
+        // Limelight distance to target for shooter calibration
+        edu.wpi.first.math.geometry.Pose3d targetPose =
+            LimelightHelpers.getTargetPose3d_CameraSpace(LimelightConstants.LimelightFront);
+        double distMeters = Math.sqrt(
+            targetPose.getX() * targetPose.getX() +
+            targetPose.getY() * targetPose.getY() +
+            targetPose.getZ() * targetPose.getZ());
+        SmartDashboard.putNumber("LL_Dist_ft", edu.wpi.first.math.util.Units.metersToInches(distMeters) / 12.0);
+        SmartDashboard.putNumber("LL_Dist_in", edu.wpi.first.math.util.Units.metersToInches(distMeters));
     }
 
     private void fuseLimelight(String limelightName) {
     if (!LimelightHelpers.getTV(limelightName)) return;
 
-    LimelightHelpers.PoseEstimate poseEst;
-    var alliance = DriverStation.getAlliance();
-    if (alliance.isPresent() && alliance.get() == DriverStation.Alliance.Red) {
-        poseEst = LimelightHelpers.getBotPoseEstimate_wpiBlue(limelightName);
-    } else {
-        poseEst = LimelightHelpers.getBotPoseEstimate_wpiRed(limelightName);
-    }
+    // Feed gyro heading to Limelight for MegaTag2
+    LimelightHelpers.SetRobotOrientation(limelightName,
+        getHeading(), 0, 0, 0, 0, 0);
 
-      Pose2d measuredPose = poseEst.pose;
-            if (alliance.isPresent() && alliance.get() == DriverStation.Alliance.Red) {
-                // Flip pose for estimator only
-                measuredPose = new Pose2d(
-                    measuredPose.getTranslation().rotateBy(new Rotation2d(Math.PI)),
-                    measuredPose.getRotation().plus(Rotation2d.fromDegrees(-180))
-                );
-            }
+    // Always use wpiBlue — pose estimator works in blue-origin coordinates regardless of alliance
+    LimelightHelpers.PoseEstimate poseEst = LimelightHelpers.getBotPoseEstimate_wpiBlue(limelightName);
+
+    if (poseEst == null || poseEst.tagCount < 1) return;
 
     // Smart filtering
-    if (poseEst.tagCount >= 1 && 
-        poseEst.rawFiducials != null && poseEst.rawFiducials.length > 0 &&
+    if (poseEst.rawFiducials != null && poseEst.rawFiducials.length > 0 &&
         poseEst.rawFiducials[0].ambiguity < 0.7 &&
         poseEst.latency > 0.01) {
 
         double xyStdDev = limelightName.contains("Back") ? 1.0 : 0.5;
         poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(xyStdDev, xyStdDev, 1000));
-        
-        // CRITICAL: Actually add the measurement!
+
         poseEstimator.addVisionMeasurement(poseEst.pose, poseEst.timestampSeconds);
-        
-        // Debug
+
         SmartDashboard.putNumber(limelightName + "_tagCount", poseEst.tagCount);
         SmartDashboard.putNumber(limelightName + "_ambiguity", poseEst.rawFiducials[0].ambiguity);
     }
@@ -254,6 +253,11 @@ public class SwerveSub extends SubsystemBase {
 
     public void zeroHeading() {
         gyro.reset();
+        // On red alliance, "forward" is 180° in the blue-origin coordinate system
+        var alliance = DriverStation.getAlliance();
+        if (alliance.isPresent() && alliance.get() == DriverStation.Alliance.Red) {
+            gyro.setYaw(180);
+        }
     }
 
     public double getHeading() {

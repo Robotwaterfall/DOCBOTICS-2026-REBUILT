@@ -41,6 +41,7 @@ import frc.robot.commands.DecrementShooterCMD;
 import frc.robot.commands.IncrementHoodCMD;
 import frc.robot.commands.IncrementShooterCMD;
 import frc.robot.commands.MoveIntakePitcherCMD;
+import frc.robot.commands.ShooterTuningCMD;
 import frc.robot.subsystems.ConveyorSub;
 import frc.robot.subsystems.HoodSub;
 import frc.robot.subsystems.IndexerSub;
@@ -166,21 +167,26 @@ public class RobotContainer {
 
     Command shootClose =
     new ParallelCommandGroup(
-      new RunShooterCMD(shooterSub, swerveSub, Constants.GeorgianCollegeConstants.kShootCloseVelocity),
-      new AdjustHoodCMD(hoodSub, swerveSub, Constants.GeorgianCollegeConstants.kShootCloseAngle)
+      new RunShooterCMD(shooterSub, Constants.GeorgianCollegeConstants.kShootCloseVelocity),
+      new AdjustHoodCMD(hoodSub, Constants.GeorgianCollegeConstants.kShootCloseAngle)
     );
 
     new JoystickButton(driverJoyStick, Constants.GeorgianCollegeConstants.kCloseShotButton).whileTrue(
       shootClose
     );
 
-    Command shootFar = 
+    Command shootFar =
     new ParallelCommandGroup(
-      new RunShooterCMD(shooterSub, swerveSub, Constants.GeorgianCollegeConstants.kShootFarVelocity),
-      new AdjustHoodCMD(hoodSub, swerveSub,  Constants.GeorgianCollegeConstants.kShootFarAngle)
+      new RunShooterCMD(shooterSub, Constants.GeorgianCollegeConstants.kShootFarVelocity),
+      new AdjustHoodCMD(hoodSub, Constants.GeorgianCollegeConstants.kShootFarAngle)
     );
     new JoystickButton(driverJoyStick, Constants.GeorgianCollegeConstants.kFarShotButton).whileTrue(
       shootFar
+    );
+
+    // TUNING MODE: Hold button 3, D-pad LEFT/RIGHT adjusts shooter velocity
+    new JoystickButton(driverJoyStick, Constants.GeorgianCollegeConstants.kNeutralShotButton).whileTrue(
+      new ShooterTuningCMD(shooterSub, driverJoyStick)
     );
 
     Command fireShot = 

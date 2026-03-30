@@ -277,8 +277,8 @@ public final class Constants {
 
   public static final class Pose2DConstants{
     
-    public static final double xHubPose = 8.23; //default blue
-    public static final double yHubPose = 8.23; //default blue
+    public static final double xHubPose = 4.63; // blue hub center (meters), derived from AprilTag ring
+    public static final double yHubPose = 4.03; // blue hub center (meters), derived from AprilTag ring
 
     public static final double ALLIANCE_ZONE_X_MIN_BLUEin = 0.0;
     public static final double ALLIANCE_ZONE_X_MAX_BLUEin = 182.11;
