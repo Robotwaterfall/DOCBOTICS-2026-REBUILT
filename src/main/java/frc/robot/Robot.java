@@ -4,9 +4,11 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.LedSub;
 
 /**
  * The methods in this class are called automatically corresponding to each mode, as described in
@@ -17,6 +19,7 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private final RobotContainer m_robotContainer;
+  private final LedSub robotLights = new LedSub();
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -46,10 +49,11 @@ public class Robot extends TimedRobot {
 
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
-  public void disabledInit() {}
+  public void disabledInit() {
+    robotLights.setSolidRed();
+  }
 
-  @Override
-  public void disabledPeriodic() {}
+  
 
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
@@ -60,26 +64,42 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       CommandScheduler.getInstance().schedule(m_autonomousCommand);
     }
+    // When autonomous starts the robot is enabled. Use the field/DS attachment
+    // to decide LED behavior.
+    if (DriverStation.isFMSAttached()) {
+      robotLights.setRainbow();
+    }
   }
 
   /** This function is called periodically during autonomous. */
   @Override
-  public void autonomousPeriodic() {}
-
-  @Override
-  public void teleopInit() {
-    // This makes sure that the autonomous stops running when
-    // teleop starts running. If you want the autonomous to
-    // continue until interrupted by another command, remove
-    // this line or comment it out.
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.cancel();
+  public void autonomousPeriodic() {
+    if (!DriverStation.isFMSAttached()) {
+      robotLights.setOrangeBlink();
     }
   }
 
+  @Override
+  public void teleopInit() {
+    if (m_autonomousCommand != null) {
+      m_autonomousCommand.cancel();
+    }
+
+    if (DriverStation.isFMSAttached()) {
+      robotLights.setRainbow();
+    }
+  }
+
+  @Override
+  public void disabledPeriodic() {}
+
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    if (!DriverStation.isFMSAttached()) {
+      robotLights.setOrangeBlink();
+    }
+  }
 
   @Override
   public void testInit() {

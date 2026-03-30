@@ -6,7 +6,6 @@ package frc.robot;
 
 import static edu.wpi.first.units.Units.RPM;
 import static edu.wpi.first.units.Units.RotationsPerSecond;
-import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
@@ -41,7 +40,7 @@ public final class Constants {
     public static final double kTurning = 0.3; 
 
   }
-
+  
   public static final class LockOnPoseConstants {
 
     public static final double kMax_Rotational_Speed = 0.8;//TODO:find max lock on speed
@@ -139,6 +138,25 @@ public final class Constants {
     public static final double LIMELIGHT_THETA_STDDEV_DEGREES = 5.0;
   }
 
+  /** REV Blinkin / LED related constants. Adjust the PWM port and pattern values to match your wiring
+   *  and the Blinkin datasheet. The raw numeric values here are placeholders and must be replaced with
+   *  the correct PWM/raw values from REV's Blinkin documentation for solid red, orange blink, and RGB
+   *  (rainbow) patterns.
+   */
+  public static final class LEDConstants {
+    // PWM port on the RoboRIO where the Blinkin is connected (change as needed).
+    public static final int BLINKIN_PWM_PORT = 0;
+
+    // Raw PWM values for patterns. These are placeholders — please replace with the values
+    // from the Blinkin documentation or your working mapping.
+    // Patterns expressed as normalized position values (0.0 - 1.0) for use with Servo.setPosition()
+    // These are placeholders — replace with values from the Blinkin documentation / your mapping.
+    public static final double BLINKIN_PATTERN_SOLID_RED_POS = -0.25;
+    public static final double BLINKIN_PATTERN_ORANGE_BLINK_POS = 0.65;
+    public static final double BLINKIN_PATTERN_RAINBOW_POS = -0.99; 
+    public static final double BLINKIN_PATTERN_DOC_POS = -0.99; 
+  }
+
     public static final class OIConstants {
 
       public static final int kDriverControllerPort = 0;
@@ -205,8 +223,6 @@ public final class Constants {
     public static double intakePitcherWaitTimeSec = 1; 
 
     public static double intakePitcherFlutterDegrees = 90;
-
-    public static final IdleMode pitcherIdleMode = IdleMode.kCoast;
 
     public static final double pitcherMaxSpeed = 0.25;
   }
