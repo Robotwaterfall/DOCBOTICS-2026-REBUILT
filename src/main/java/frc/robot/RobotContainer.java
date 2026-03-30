@@ -103,15 +103,16 @@ public class RobotContainer {
 
     
       autoChooser = new SendableChooser<Command>();
-      autoChooser.addOption("BackUpShootMiddle", new PathPlannerAuto("MoveBackShoot"));
+      // autoChooser.addOption("BackUpShootMiddle", new PathPlannerAuto("MoveBackShoot"));
 
-      autoChooser.addOption("MiddleDepotShootCenter", 
-                            new PathPlannerAuto("MiddleDepotShootCenter"));
+      // autoChooser.addOption("MiddleDepotShootCenter", 
+      //                       new PathPlannerAuto("MiddleDepotShootCenter"));
      
-      autoChooser.addOption("RightBumpSweep", new PathPlannerAuto("RightBumpSweep"));
-      autoChooser.addOption("LeftBumpSweep", new PathPlannerAuto("LeftBumpSweep"));
+      // autoChooser.addOption("RightBumpSweep", new PathPlannerAuto("RightBumpSweep"));
+      // autoChooser.addOption("LeftBumpSweep", new PathPlannerAuto("LeftBumpSweep"));
 
       // autoChooser.addOption("LeftBumpToDepotShootMiddleAuto", new PathPlannerAuto("LeftBumpToDepotShootMiddleAuto"));
+      autoChooser.addOption("MoveBackward", new PathPlannerAuto("MoveBackward"));
 
       SmartDashboard.putData("AutoMode: ", autoChooser);
   }
@@ -124,104 +125,103 @@ public class RobotContainer {
       new ResetHeadingCMD(swerveSub)
     );
 
-    new JoystickButton(driverJoyStick, OIConstants.kShootingRoutineButton).whileTrue(
-      new FireShot(indexerSub, conveyorSub, intakePitcherSub)
-    );
+    // new JoystickButton(driverJoyStick, OIConstants.kShootingRoutineButton).whileTrue(
+    //   new FireShot(indexerSub, conveyorSub, intakePitcherSub)
+    // );
 
-    new JoystickButton(driverJoyStick, OIConstants.kTouchPadButton).whileTrue(
-      new MoveIntakePitcherCMD(intakePitcherSub, Constants.IntakePitcherConstants.kPitcherInDegrees)
-    );
+    // new JoystickButton(driverJoyStick, OIConstants.kTouchPadButton).whileTrue(
+    //   new MoveIntakePitcherCMD(intakePitcherSub, Constants.IntakePitcherConstants.kPitcherInDegrees)
+    // );
 
     
 
 
-    // INTAKE
-    new JoystickButton(driverJoyStick, OIConstants.kIntakeButton).whileTrue(
-      new IntakeFuel(intakeSub, conveyorSub, indexerSub, intakePitcherSub)
-    );
+    // // INTAKE
+    // new JoystickButton(driverJoyStick, OIConstants.kIntakeButton).whileTrue(
+    //   new IntakeFuel(intakeSub, conveyorSub, indexerSub, intakePitcherSub)
+    // );
 
-    // OUTTAKE
-    new JoystickButton(driverJoyStick, OIConstants.kOuttakeButton).whileTrue(
-      new OuttakeFuel(intakeSub, conveyorSub, indexerSub)
-    );
+    // // OUTTAKE
+    // new JoystickButton(driverJoyStick, OIConstants.kOuttakeButton).whileTrue(
+    //   new OuttakeFuel(intakeSub, conveyorSub, indexerSub)
+    // );
 
-    // INCREMENT SHOOTER MANUALLY
-    POVButton incShooterButton = new POVButton(driverJoyStick, Constants.OIConstants.kDpadRIGHT);
-    incShooterButton.onTrue(new IncrementShooterCMD(shooterSub, ShooterConstants.shooterVelocityPlusPerPress));
+    // // INCREMENT SHOOTER MANUALLY
+    // POVButton incShooterButton = new POVButton(driverJoyStick, Constants.OIConstants.kDpadRIGHT);
+    // incShooterButton.onTrue(new IncrementShooterCMD(shooterSub, ShooterConstants.shooterVelocityPlusPerPress));
     
-    // DECREMENT SHOOTER MANUALLY
-    POVButton decShooterButton = new POVButton(driverJoyStick, Constants.OIConstants.kDpadLEFT);
-    decShooterButton.onTrue(new DecrementShooterCMD(shooterSub, ShooterConstants.shooterVelocityPlusPerPress));
+    // // DECREMENT SHOOTER MANUALLY
+    // POVButton decShooterButton = new POVButton(driverJoyStick, Constants.OIConstants.kDpadLEFT);
+    // decShooterButton.onTrue(new DecrementShooterCMD(shooterSub, ShooterConstants.shooterVelocityPlusPerPress));
 
-    // INCREMENT HOOD MANUALLY
-    POVButton incHoodButton = new POVButton(driverJoyStick, Constants.OIConstants.kDpadUP);
-    incHoodButton.onTrue(new IncrementHoodCMD(hoodSub, HoodConstants.hoodAnglePlusPerPress));
+    // // INCREMENT HOOD MANUALLY
+    // POVButton incHoodButton = new POVButton(driverJoyStick, Constants.OIConstants.kDpadUP);
+    // incHoodButton.onTrue(new IncrementHoodCMD(hoodSub, HoodConstants.hoodAnglePlusPerPress));
 
-    // DECREMENT HOOD MANUALLY
-    POVButton decHoodButton = new POVButton(driverJoyStick, Constants.OIConstants.kDpadDOWN);
-    decHoodButton.onTrue(new DecrementHoodCMD(hoodSub, HoodConstants.hoodAnglePlusPerPress));
+    // // DECREMENT HOOD MANUALLY
+    // POVButton decHoodButton = new POVButton(driverJoyStick, Constants.OIConstants.kDpadDOWN);
+    // decHoodButton.onTrue(new DecrementHoodCMD(hoodSub, HoodConstants.hoodAnglePlusPerPress));
 
-    //STOP ALL SHOOTER MOTORS
-    JoystickButton stopShooterMotorsButton = new JoystickButton(driverJoyStick, OIConstants.kPsButton);
-    stopShooterMotorsButton.onTrue(new StopShooterMotorsCMD(shooterSub));
+    // //STOP ALL SHOOTER MOTORS
+    // JoystickButton stopShooterMotorsButton = new JoystickButton(driverJoyStick, OIConstants.kPsButton);
+    // stopShooterMotorsButton.onTrue(new StopShooterMotorsCMD(shooterSub));
 
     Command shootClose =
     new ParallelCommandGroup(
-      new RunShooterCMD(shooterSub, Constants.GeorgianCollegeConstants.kShootCloseVelocity),
-      new AdjustHoodCMD(hoodSub, Constants.GeorgianCollegeConstants.kShootCloseAngle)
+      new RunShooterCMD(shooterSub)
     );
 
     new JoystickButton(driverJoyStick, Constants.GeorgianCollegeConstants.kCloseShotButton).whileTrue(
       shootClose
     );
 
-    Command shootFar =
-    new ParallelCommandGroup(
-      new RunShooterCMD(shooterSub, Constants.GeorgianCollegeConstants.kShootFarVelocity),
-      new AdjustHoodCMD(hoodSub, Constants.GeorgianCollegeConstants.kShootFarAngle)
-    );
-    new JoystickButton(driverJoyStick, Constants.GeorgianCollegeConstants.kFarShotButton).whileTrue(
-      shootFar
-    );
+    // Command shootFar =
+    // new ParallelCommandGroup(
+    //   new RunShooterCMD(shooterSub, Constants.GeorgianCollegeConstants.kShootFarVelocity),
+    //   new AdjustHoodCMD(hoodSub, Constants.GeorgianCollegeConstants.kShootFarAngle)
+    // );
+    // new JoystickButton(driverJoyStick, Constants.GeorgianCollegeConstants.kFarShotButton).whileTrue(
+    //   shootFar
+    // );
 
-    // TUNING MODE: Hold button 3, D-pad LEFT/RIGHT adjusts shooter velocity
-    new JoystickButton(driverJoyStick, Constants.GeorgianCollegeConstants.kNeutralShotButton).whileTrue(
-      new ShooterTuningCMD(shooterSub, driverJoyStick)
-    );
+    // // TUNING MODE: Hold button 3, D-pad LEFT/RIGHT adjusts shooter velocity
+    // new JoystickButton(driverJoyStick, Constants.GeorgianCollegeConstants.kNeutralShotButton).whileTrue(
+    //   new ShooterTuningCMD(shooterSub, driverJoyStick)
+    // );
 
-    Command fireShot = 
-    new ParallelCommandGroup(
-      new RunIndexerCMD(indexerSub, ShooterConstants.kIndexSpeed),
-      new RunConveyorCMD(conveyorSub, ConveyorConstant.conveyorPower)
+    // Command fireShot = 
+    // new ParallelCommandGroup(
+    //   new RunIndexerCMD(indexerSub, ShooterConstants.kIndexSpeed),
+    //   new RunConveyorCMD(conveyorSub, ConveyorConstant.conveyorPower)
 
-    );
-    new JoystickButton(driverJoyStick, Constants.OIConstants.kShootingRoutineButton).whileTrue(
-      fireShot
-    );
+    // );
+    // new JoystickButton(driverJoyStick, Constants.OIConstants.kShootingRoutineButton).whileTrue(
+    //   fireShot
+    // );
 
     
-    // LIMELIGHT LOCK / AIM ASSIST
-    new JoystickButton(driverJoyStick, OIConstants.kPrepareShotButton).whileTrue(
-      new SwerveLimelightLockCMD(
-        swerveSub,
-        () -> -driverJoyStick.getRawAxis(OIConstants.kDriverYAxis),
-        () -> driverJoyStick.getRawAxis(OIConstants.kDriverXAxis),
-        DriveConstants.autoTargetConstants.autoOrientSpeed
-      )
-    );
+    // // LIMELIGHT LOCK / AIM ASSIST
+    // new JoystickButton(driverJoyStick, OIConstants.kPrepareShotButton).whileTrue(
+    //   new SwerveLimelightLockCMD(
+    //     swerveSub,
+    //     () -> -driverJoyStick.getRawAxis(OIConstants.kDriverYAxis),
+    //     () -> driverJoyStick.getRawAxis(OIConstants.kDriverXAxis),
+    //     DriveConstants.autoTargetConstants.autoOrientSpeed
+    //   )
+    // );
 
 
 
-    NamedCommands.registerCommand("Intake", new IntakeFuel(intakeSub, conveyorSub, indexerSub, intakePitcherSub));
-    NamedCommands.registerCommand("IntakeOut", new MoveIntakePitcherCMD(intakePitcherSub, Constants.IntakePitcherConstants.kPitcherOutDegrees));
-    NamedCommands.registerCommand("LockOnHub", new SwerveLimelightLockCMD(
-                                    swerveSub, 
-                                      () -> 0.0, 
-                                      () -> 0.0, 
-                                       DriveConstants.autoTargetConstants.autoOrientSpeed));
-    NamedCommands.registerCommand("shootClose", shootClose);
-    NamedCommands.registerCommand("shootFar", shootFar);
-    NamedCommands.registerCommand("fireShot", fireShot);
+    // NamedCommands.registerCommand("Intake", new IntakeFuel(intakeSub, conveyorSub, indexerSub, intakePitcherSub));
+    // NamedCommands.registerCommand("IntakeOut", new MoveIntakePitcherCMD(intakePitcherSub, Constants.IntakePitcherConstants.kPitcherOutDegrees));
+    // NamedCommands.registerCommand("LockOnHub", new SwerveLimelightLockCMD(
+    //                                 swerveSub, 
+    //                                   () -> 0.0, 
+    //                                   () -> 0.0, 
+    //                                    DriveConstants.autoTargetConstants.autoOrientSpeed));
+    // NamedCommands.registerCommand("shootClose", shootClose);
+    // NamedCommands.registerCommand("shootFar", shootFar);
+    // NamedCommands.registerCommand("fireShot", fireShot);
 
 
 

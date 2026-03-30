@@ -39,6 +39,8 @@ public class SwerveSub extends SubsystemBase {
     private final Field2d m_Field = new Field2d();
     private RobotConfig config;
 
+    public double distMeters;
+
     public SwerveSub() {
          // 1. Initialize Swerve Modules FIRST
     frontRight = new SwerveModule(
@@ -176,7 +178,7 @@ public class SwerveSub extends SubsystemBase {
         // Limelight distance to target for shooter calibration
         edu.wpi.first.math.geometry.Pose3d targetPose =
             LimelightHelpers.getTargetPose3d_CameraSpace(LimelightConstants.LimelightFront);
-        double distMeters = Math.sqrt(
+        distMeters = Math.sqrt(
             targetPose.getX() * targetPose.getX() +
             targetPose.getY() * targetPose.getY() +
             targetPose.getZ() * targetPose.getZ());
@@ -214,6 +216,10 @@ public class SwerveSub extends SubsystemBase {
 
     public Pose2d getPose() {
         return poseEstimator.getEstimatedPosition();
+    }
+
+    public double getDistMeters(){
+        return distMeters;
     }
 
     public void resetPose(Pose2d pose) {
