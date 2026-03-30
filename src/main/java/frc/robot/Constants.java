@@ -240,22 +240,16 @@ public final class Constants {
     public static final double kShooterHeightInches = 0; //TODO: measure from floor to center of shooter wheel
 
     public static final double kHeightOfHubInches = 72; 
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
 
     public static final double shooterTolerance = 2.0; 
 
-    public static final double shooterEfficiency = 0.8;
 
     public static final double defaultShooterVelocityPlusPerPress = 5.0; 
 
     public static final double shooterVelocityPlusPerPress = 5.0;
     public static final double shooterEfficiency = 0.8; 
     
-    public static final double kMaxShooterVelocityFPS  = 110;
-    public static final double kMaxShooterRPM  = kMaxShooterVelocityFPS * 60 / (Math.PI * ShooterConstants.kWheelDiameterInches); 
 
     public static final double kMaxShooterVelocityFPS  = 110;
     public static final double kMaxShooterRPM  = kMaxShooterVelocityFPS * 60 / (Math.PI * ShooterConstants.kWheelDiameterInches); 
