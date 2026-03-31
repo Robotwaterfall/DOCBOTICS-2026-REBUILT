@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.LedSub;
 
 /**
  * The methods in this class are called automatically corresponding to each mode, as described in
@@ -18,7 +19,7 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private final RobotContainer m_robotContainer;
-  private static boolean onField = false; // Set to true to enable competition-specific features (e.g. auto-balancing on charge station)
+  private final LedSub robotLights = new LedSub();
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -48,7 +49,9 @@ public class Robot extends TimedRobot {
 
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
-  public void disabledInit() {}
+  public void disabledInit() {
+    robotLights.setSolidRed();
+  }
 
   
 
@@ -64,41 +67,39 @@ public class Robot extends TimedRobot {
     // When autonomous starts the robot is enabled. Use the field/DS attachment
     // to decide LED behavior.
     if (DriverStation.isFMSAttached()) {
-      m_robotContainer.ledSub.setRainbow();
-    } else {
-      m_robotContainer.ledSub.setOrangeBlink();
+      robotLights.setRainbow();
     }
   }
 
   /** This function is called periodically during autonomous. */
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+    if (!DriverStation.isFMSAttached()) {
+      robotLights.setOrangeBlink();
+    }
+  }
 
   @Override
   public void teleopInit() {
-    onField = DriverStation.isFMSAttached();
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
 
-    if (onField && DriverStation.isDSAttached()) {
-      // if on the field, enable competition-specific features
-      m_robotContainer.ledSub.setRainbow();
-    } else { 
-      // If not on the field, enable all features for testing purposes
-      m_robotContainer.ledSub.setOrangeBlink();
+    if (DriverStation.isFMSAttached()) {
+      robotLights.setRainbow();
     }
   }
 
   @Override
-  public void disabledPeriodic() {
-    // Ensure LEDs are red when disabled
-    m_robotContainer.ledSub.setSolidRed();
-  }
+  public void disabledPeriodic() {}
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    if (!DriverStation.isFMSAttached()) {
+      robotLights.setOrangeBlink();
+    }
+  }
 
   @Override
   public void testInit() {

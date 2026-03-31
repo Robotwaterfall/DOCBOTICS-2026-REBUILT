@@ -151,8 +151,8 @@ public final class Constants {
     // from the Blinkin documentation or your working mapping.
     // Patterns expressed as normalized position values (0.0 - 1.0) for use with Servo.setPosition()
     // These are placeholders — replace with values from the Blinkin documentation / your mapping.
-    public static final double BLINKIN_PATTERN_SOLID_RED_POS = 0.25;
-    public static final double BLINKIN_PATTERN_ORANGE_BLINK_POS = 0.63;
+    public static final double BLINKIN_PATTERN_SOLID_RED_POS = -0.25;
+    public static final double BLINKIN_PATTERN_ORANGE_BLINK_POS = 0.65;
     public static final double BLINKIN_PATTERN_RAINBOW_POS = -0.99; 
     public static final double BLINKIN_PATTERN_DOC_POS = -0.99; 
   }
