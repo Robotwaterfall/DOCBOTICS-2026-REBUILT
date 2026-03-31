@@ -20,10 +20,6 @@ public class LedSub extends SubsystemBase {
   public void setRawPattern(double value) {
     Blikin.set(value);
   }
-
-  public void setSolidRed() {
-    setRawPattern(Constants.LEDConstants.BLINKIN_PATTERN_SOLID_RED_POS);
-  }
   
   public void setRSL() {
     setRawPattern(LEDConstants.BLINKIN_PATTERN_ORANGE_BLINK_POS);
@@ -47,7 +43,6 @@ public class LedSub extends SubsystemBase {
   }
 
   public void disable() {
-    //Most likely wont need to be called tbh.
-    Blikin.set(0);
+    Blikin.stopMotor();
   }
 }
