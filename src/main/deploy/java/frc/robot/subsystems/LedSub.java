@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Constants.LEDConstants;
 
 
 public class LedSub extends SubsystemBase {
@@ -22,6 +23,10 @@ public class LedSub extends SubsystemBase {
 
   public void setSolidRed() {
     setRawPattern(Constants.LEDConstants.BLINKIN_PATTERN_SOLID_RED_POS);
+  }
+  
+  public void setRSL() {
+    setRawPattern(LEDConstants.BLINKIN_PATTERN_ORANGE_BLINK_POS);
   }
 
   public void setOrangeBlink() {
