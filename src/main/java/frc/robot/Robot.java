@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.LedSub;
-import frc.robot.util.ActiveHub;
+import frc.robot.util.HubLogic;
 
 /**
  * The methods in this class are called automatically corresponding to each mode, as described in

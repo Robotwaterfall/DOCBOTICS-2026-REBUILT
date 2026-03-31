@@ -1,6 +1,9 @@
+package frc.robot.util;
+
 import java.util.Optional;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import frc.robot.Constants.LEDConstants;
 
 public class HubLogic {
 
@@ -59,8 +62,7 @@ public class HubLogic {
   }
 
   private HubState evaluate(double time, double threshold, boolean active) {
-    // 5-second warning window before shift change
-    if (time <= threshold + 5 && time > threshold) {
+    if (time <= threshold + LEDConstants.HUB_SHIFT_WARNING_TIME && time > threshold) {
       return HubState.WARNING;
     }
 
