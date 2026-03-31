@@ -24,7 +24,7 @@ public class Robot extends TimedRobot {
 
   private final RobotContainer m_robotContainer;
   private final LedSub robotLights = new LedSub();
-  private final ActiveHub gameData = new ActiveHub();
+  private final HubLogic hubLogic = new HubLogic();
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -62,15 +62,22 @@ public class Robot extends TimedRobot {
     }
     } else if (DriverStation.isTeleop()) {
       if (DriverStation.isFMSAttached()) {
-        if (gameData.isHubActive()) {
-          robotLights.setRainbow();
-        } else {
+
+switch (hubLogic.getHubState()) {
+  case ACTIVE:
+    robotLights.setRainbow();
+    break;
+  case INACTIVE:
           if (ally.get() == Alliance.Red) {
             robotLights.setRawPattern(Constants.LEDConstants.BLINKIN_PATTERN_BLUE_POS);
           } else {
             robotLights.setRawPattern(Constants.LEDConstants.BLINKIN_PATTERN_RED_POS);
           }
-        }
+    break;
+  case WARNING:
+    robotLights.setRawPattern(Constants.LEDConstants.BLINKIN_PATTERN_SHIFT);
+    break;
+}
       } else {
         robotLights.setOrangeBlink();
       }

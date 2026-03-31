@@ -26,5 +26,6 @@ public final class Constants {
     public static final double BLINKIN_PATTERN_ORANGE_BLINK_POS = 0.65;
     public static final double BLINKIN_PATTERN_RAINBOW_POS = -0.99; 
     public static final double BLINKIN_PATTERN_DOC_POS = -0.99; 
+    public static final double BLINKIN_PATTERN_SHIFT = -0.87;
   }
 }
