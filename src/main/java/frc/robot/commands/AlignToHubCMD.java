@@ -1,50 +1,99 @@
 package frc.robot.commands;
 
+import java.util.function.Supplier;
+
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
+import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.SwerveSub;
 import frc.robot.util.PoseManager;
 
-public class AlignToHubCMD extends Command{
+public class AlignToHubCMD extends Command {
 
-    SwerveSub swerveSub;
+    private final SwerveSub swerveSubsystem;
 
-    public AlignToHubCMD(SwerveSub swerveSub){
-        this.swerveSub = swerveSub;
-        addRequirements(swerveSub);
+    public final Supplier<Double> xSpdFunction;
+    public final Supplier<Double> ySpdFunction;
 
+    private final SlewRateLimiter xLimiter;
+    private final SlewRateLimiter yLimiter;
+    private final SlewRateLimiter turningLimiter;
+
+    public static double CurrentXSpeed;
+    public static double CurrentYSpeed;
+    public static double CurrentTurningSpeed;
+    public static boolean CurrentOrientation;
+
+    public final double speed;
+
+    public AlignToHubCMD(
+            SwerveSub swerveSubsystem,
+            Supplier<Double> xSpdFunction,
+            Supplier<Double> ySpdFunction,
+            double speed) {
+
+        this.swerveSubsystem = swerveSubsystem;
+        this.xSpdFunction = xSpdFunction;
+        this.ySpdFunction = ySpdFunction;
+        this.speed = speed;
+
+        this.xLimiter = new SlewRateLimiter(DriveConstants.kTeleDriveMaxAccelerationUnitsPerSecond);
+        this.yLimiter = new SlewRateLimiter(DriveConstants.kTeleDriveMaxAccelerationUnitsPerSecond);
+        this.turningLimiter = new SlewRateLimiter(DriveConstants.kTeleDriveMaxAngularAccelerationUnitsPerSecond);
+
+        addRequirements(swerveSubsystem);
     }
 
     @Override
-    public void initialize(){
-
+    public void initialize() {
     }
 
     @Override
-    public void execute(){
-        double headingErrorDeg = PoseManager.getHeadingErrorDegreesHub(swerveSub);
+    public void execute() {
+        double xSpeed = xSpdFunction.get();
+        double ySpeed = ySpdFunction.get();
 
-        double rotSpeeds = Constants.LockOnPoseConstants.kTurning * Math.toRadians(headingErrorDeg);
-        rotSpeeds = MathUtil.clamp(rotSpeeds, -Constants.LockOnPoseConstants.kMax_Rotational_Speed,
-                                    Constants.LockOnPoseConstants.kMax_Rotational_Speed
-        );
+        xSpeed = Math.abs(xSpeed) > OIConstants.kDeadband ? xSpeed : 0.0;
+        ySpeed = Math.abs(ySpeed) > OIConstants.kDeadband ? ySpeed : 0.0;
 
-        swerveSub.driveRobotRelative(new ChassisSpeeds(0, 0, rotSpeeds));;
-        
+        xSpeed = xLimiter.calculate(xSpeed) * DriveConstants.kTeleDriveMaxSpeedMetersPerSecond;
+        ySpeed = yLimiter.calculate(ySpeed) * DriveConstants.kTeleDriveMaxSpeedMetersPerSecond;
+
+        double turnCommand = 0.0;
+
+        turnCommand = PoseManager.getHeadingErrorDegreesHub(swerveSubsystem);
+
+        turnCommand = MathUtil.clamp(turnCommand, -1.0, 1.0);
+
+        double turningSpeed = turningLimiter.calculate(turnCommand)
+                * DriveConstants.kTeleDriveMaxAngularSpeedRadiansPerSecond;
+
+        ChassisSpeeds chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
+                xSpeed,
+                -ySpeed,
+                -turningSpeed,
+                swerveSubsystem.getRotation2d());
+
+        CurrentXSpeed = xSpeed;
+        CurrentYSpeed = ySpeed;
+        CurrentTurningSpeed = turningSpeed;
+
+        SwerveModuleState[] moduleStates =
+                DriveConstants.kDriveKinematics.toSwerveModuleStates(chassisSpeeds);
+
+        swerveSubsystem.setModuleStates(moduleStates, true);
     }
 
     @Override
-    public boolean isFinished(){
-        return Math.abs(PoseManager.getHeadingErrorDegreesHub(swerveSub)) 
-                            <= Constants.LockOnPoseConstants.headingToleranceDeg;
-        
+    public void end(boolean interrupted) {
     }
 
     @Override
-    public void end(boolean interrupted){
-        swerveSub.driveRobotRelative(new ChassisSpeeds(0,0,0));
+    public boolean isFinished() {
+        return false;
     }
-
 }

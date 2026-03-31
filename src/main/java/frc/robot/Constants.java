@@ -44,9 +44,9 @@ public final class Constants {
 
   public static final class LockOnPoseConstants {
 
-    public static final double kMax_Rotational_Speed = 0.8;//TODO:find max lock on speed
-    public static final double headingToleranceDeg = 2.0; //TODO:find tolerance 
-    public static final double kTurning = 0.6; //TODO
+    public static final double kMax_Rotational_Speed = 0.8;
+    public static final double headingToleranceDeg = 2.0; 
+    public static final double kTurning = 0.6; 
 
   } 
 

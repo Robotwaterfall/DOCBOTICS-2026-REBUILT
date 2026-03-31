@@ -1,0 +1,25 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "MoveBackwardCenter"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Drive around hub"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "Center AUTO's",
+  "choreoAuto": false
+}
