@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 7.66188302425107,
+        "y": 0.9
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 7.66188302425107,
+        "y": 1.9
+      },
+      "isLocked": false,
+      "linkedName": "LineUpNeutralZoneRight"
+    },
+    {
+      "anchor": {
+        "x": 7.66188302425107,
+        "y": 3.174579172610556
+      },
+      "prevControl": {
+        "x": 7.66188302425107,
+        "y": 2.174579172610556
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "DroveInNeutralZoneRight"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 1.5,
+    "maxAcceleration": 0.5,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 90.0
+  },
+  "reversed": false,
+  "folder": "RightBoomerangSweepPaths",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 90.0
+  },
+  "useDefaultConstraints": true
+}

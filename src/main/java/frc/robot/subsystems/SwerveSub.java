@@ -39,6 +39,8 @@ public class SwerveSub extends SubsystemBase {
     private final Field2d m_Field = new Field2d();
     private RobotConfig config;
 
+    public double distMeters;
+
     public SwerveSub() {
          // 1. Initialize Swerve Modules FIRST
     frontRight = new SwerveModule(
@@ -96,30 +98,34 @@ public class SwerveSub extends SubsystemBase {
             DriverStation.reportWarning("settings.json missing", false);
         }
 
-        AutoBuilder.configure(
-            this::getPose, 
-            this::resetPose, 
-            this::getSpeeds, 
-            (speeds, feedforwards) -> {
-                try {
-                    driveRobotRelative(speeds);
-                } catch (Exception e) {
-                    System.err.println("PathPlanner drive error: " + e.getMessage());
-                }
-            }, 
-            new PPHolonomicDriveController(
-                new PIDConstants(5.0, 0.0, 0.0), 
-                new PIDConstants(5.0, 0.0, 0.0) 
-            ),
-            config,
-            () -> {
-                var alliance = DriverStation.getAlliance();
-                if (alliance.isPresent()) {
-                    return alliance.get() == DriverStation.Alliance.Red;
-                }
-                return false;
-            },
-            this 
+                AutoBuilder.configure(
+                this::getPose, // Robot pose supplier.
+                this::resetPose, // Method to reset odometry (will be called if your auto has a starting pose).
+                this::getSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE.
+                (speeds, feedforwards) -> driveRobotRelative(speeds), // Method that will drive the robot given ROBOT
+                                                                      // RELATIVE ChassisSpeeds.
+                new PPHolonomicDriveController( // HolonomicPathFollowerConfig, this should likely live in your
+                                                // Constants class.
+                        new PIDConstants(6.0, 0.0, 0.0), // Translation PID constants.
+                        new PIDConstants(6.0, 0.0, 0.0) // Rotation PID constants.
+
+                ),
+                config,
+                () -> {
+                    /*
+                     * Boolean supplier that controls when the path will be mirrored for the red
+                     * alliance,
+                     * This will flip the path being followed to the red side of the field.
+                     * THE ORIGIN WILL REMAIN ON THE BLUE SIDE.
+                     */
+
+                    var alliance = DriverStation.getAlliance();
+                    if (alliance.isPresent()) {
+                        return alliance.get() == DriverStation.Alliance.Red;
+                    }
+                    return false;
+                },
+                this // Reference to this subsystem to set requirements
         );
     } catch (Exception e) {
         DriverStation.reportError("PathPlanner config failed: " + e.getMessage(), false);
@@ -141,29 +147,13 @@ public class SwerveSub extends SubsystemBase {
     
     LimelightHelpers.setPipelineIndex(LimelightConstants.LimelightFront, 0);
     LimelightHelpers.setPipelineIndex(LimelightConstants.LimelightBackLeft, 0);
-<<<<<<< Updated upstream
-    LimelightHelpers.setPipelineIndex(LimelightConstants.LimelightBackRight, 0);
-=======
-    
-    // SmartDashboard sliders for vision tuning were removed per request. Theta stddev remains configurable in Constants.
->>>>>>> Stashed changes
     }
 
     @Override
     public void periodic() {
         poseEstimator.update(getRotation2d(), getModulePositionsAuto());
 
-<<<<<<< Updated upstream
         fuseLimelight(LimelightConstants.LimelightFront);
-        fuseLimelight(LimelightConstants.LimelightBackLeft);
-        fuseLimelight(LimelightConstants.LimelightBackRight);
-=======
-        // Fuse both front and back limelights (if they see tags) into the pose estimator.
-        // This will allow PoseManager.getPose() to return a fused field pose instead of
-        // relying only on gyro + odometry or a single tx heading.
-        fuseLimelight(LimelightConstants.LimelightFront);
-        fuseLimelight(LimelightConstants.LimelightBackLeft);
->>>>>>> Stashed changes
 
         m_Field.setRobotPose(poseEstimator.getEstimatedPosition());
 
@@ -184,35 +174,40 @@ public class SwerveSub extends SubsystemBase {
 
         SmartDashboard.putNumber("RobotHeading: ", getHeading());
         SmartDashboard.putString("RobotLocation: ", getPose().getTranslation().toString());
+
+        // Limelight distance to target for shooter calibration
+        edu.wpi.first.math.geometry.Pose3d targetPose =
+            LimelightHelpers.getTargetPose3d_CameraSpace(LimelightConstants.LimelightFront);
+        distMeters = Math.sqrt(
+            targetPose.getX() * targetPose.getX() +
+            targetPose.getY() * targetPose.getY() +
+            targetPose.getZ() * targetPose.getZ());
+        SmartDashboard.putNumber("LL_Dist_ft", edu.wpi.first.math.util.Units.metersToInches(distMeters) / 12.0);
+        SmartDashboard.putNumber("LL_Dist_in", edu.wpi.first.math.util.Units.metersToInches(distMeters));
     }
 
     private void fuseLimelight(String limelightName) {
     if (!LimelightHelpers.getTV(limelightName)) return;
 
-    LimelightHelpers.PoseEstimate poseEst;
-    var alliance = DriverStation.getAlliance();
-    if (alliance.isPresent() && alliance.get() == DriverStation.Alliance.Red) {
-        poseEst = LimelightHelpers.getBotPoseEstimate_wpiRed(limelightName);
-    } else {
-        poseEst = LimelightHelpers.getBotPoseEstimate_wpiBlue(limelightName);
-    }
+    // Feed gyro heading to Limelight for MegaTag2
+    LimelightHelpers.SetRobotOrientation(limelightName,
+        getHeading(), 0, 0, 0, 0, 0);
+
+    // Always use wpiBlue — pose estimator works in blue-origin coordinates regardless of alliance
+    LimelightHelpers.PoseEstimate poseEst = LimelightHelpers.getBotPoseEstimate_wpiBlue(limelightName);
+
+    if (poseEst == null || poseEst.tagCount < 1) return;
 
     // Smart filtering
-    if (poseEst.tagCount >= 1 && 
-        poseEst.rawFiducials != null && poseEst.rawFiducials.length > 0 &&
+    if (poseEst.rawFiducials != null && poseEst.rawFiducials.length > 0 &&
         poseEst.rawFiducials[0].ambiguity < 0.7 &&
         poseEst.latency > 0.01) {
 
-        // Use default XY stddevs inline (front/back) and theta from Constants.
-        // Front is slightly more trusted than back.
         double xyStdDev = limelightName.contains("Back") ? 1.0 : 0.5;
-        // double thetaStdDev = Math.toRadians(Constants.VisionConstants.LIMELIGHT_THETA_STDDEV_DEGREES);
-        poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(xyStdDev, xyStdDev, 1000.0)); // Use gyro for heading, effectively ignoring Limelight's theta measurement due to its high uncertainty.
+        poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(xyStdDev, xyStdDev, 1000));
 
-        // Add the vision measurement (pose + timestamp) so the estimator can fuse both cameras.
         poseEstimator.addVisionMeasurement(poseEst.pose, poseEst.timestampSeconds);
-        
-        // Debug
+
         SmartDashboard.putNumber(limelightName + "_tagCount", poseEst.tagCount);
         SmartDashboard.putNumber(limelightName + "_ambiguity", poseEst.rawFiducials[0].ambiguity);
     }
@@ -221,6 +216,10 @@ public class SwerveSub extends SubsystemBase {
 
     public Pose2d getPose() {
         return poseEstimator.getEstimatedPosition();
+    }
+
+    public double getDistMeters(){
+        return distMeters;
     }
 
     public void resetPose(Pose2d pose) {
@@ -260,6 +259,11 @@ public class SwerveSub extends SubsystemBase {
 
     public void zeroHeading() {
         gyro.reset();
+        // On red alliance, "forward" is 180° in the blue-origin coordinate system
+        var alliance = DriverStation.getAlliance();
+        if (alliance.isPresent() && alliance.get() == DriverStation.Alliance.Red) {
+            gyro.setYaw(180);
+        }
     }
 
     public double getHeading() {

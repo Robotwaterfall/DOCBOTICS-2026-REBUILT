@@ -132,6 +132,9 @@ public class ShooterSub extends SubsystemBase {
         SmartDashboard.putNumber("currentDesiredVelocityFPS", desiredVelocityFPS);
         SmartDashboard.putNumber("shooterLeadVelocityFPS", getShooterLeadVelocityFPS());
         SmartDashboard.putNumber("shooterFollowerRightVelocityFPS", getShooterFollowerRightVelocityFPS());
+        SmartDashboard.putNumber("shooterFollowerLeftVelocityFPS", getShooterFollowerLeftVelocityFPS());
+        SmartDashboard.putNumber("shooterAvgVelocityFPS", getAverageMotorVelocityFPS());
+        SmartDashboard.putNumber("shooterVelocityErrorFPS", desiredVelocityFPS - getAverageMotorVelocityFPS());
         SmartDashboard.putBoolean("atDesiredVelocityFPS", isAtSetVelocityFPS());
     }
 

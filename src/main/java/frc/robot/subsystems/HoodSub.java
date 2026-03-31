@@ -90,7 +90,7 @@ public class HoodSub extends SubsystemBase{
     // int return type required because .setPulseWidth has int param
 
     private int inchesToPulseWidth(double extensionInches){
-        MathUtil.clamp(extensionInches, Constants.HoodConstants.minExtensionInches, 
+        extensionInches = MathUtil.clamp(extensionInches, Constants.HoodConstants.minExtensionInches,
             Constants.HoodConstants.maxExtensionInches);
         
         return (int)map(extensionInches, // Casting done *here* instead of map method to avoid int division -> avoids excessive rounding

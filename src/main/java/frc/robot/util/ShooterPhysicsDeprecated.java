@@ -1,17 +1,15 @@
 package frc.robot.util;
 
-public class ShooterPhysics {
+public class ShooterPhysicsDeprecated {
 
     private final double g = 9.80665; // m/s^2
 
-    private double hubFrontXM;
-    private double hubDepthM;
-    private double hubWidthM;
-    private double hubRimHeightM;
+    private double hubFrontXM = 0;
+    private double hubDepthM = 1.05918;
+    private double hubWidthM = 1.1938;
+    private double hubRimHeightM = 1.8288;
 
     private final double ballRadiusM = 0.075;
-
-    private final double fixedAngleDeg = 45.0;
 
     public void setHubGeometry(double frontX, double rimHeight, double width, double depth) {
         this.hubFrontXM = frontX;
@@ -30,14 +28,15 @@ public class ShooterPhysics {
             double wheelRadiusM,
             double efficiency,
             double maxRPM,
-            double fixedAngleDeg
+            double minAngleDeg,
+            double maxAngleDeg
     ) {
         double dx = hubX - shooterX;
         double dy = hubY - shooterY;
         double horizontalDistM = Math.hypot(dx, dy);
-
         if (horizontalDistM <= 0) {
-            return ShotResult.invalid(fixedAngleDeg, fixedAngleDeg);
+            return ShotResult.invalid(minAngleDeg, maxAngleDeg);
+     
         }
 
         double yawRad = Math.atan2(dy, dx);
@@ -49,9 +48,9 @@ public class ShooterPhysics {
                 wheelRadiusM,
                 efficiency,
                 maxRPM,
-                fixedAngleDeg
+                minAngleDeg,
+                maxAngleDeg
         );
-
         return new ShotResult(
                 base.angleRad,
                 base.velocityMPerSec,
@@ -65,7 +64,7 @@ public class ShooterPhysics {
         );
     }
 
-       /**
+    /**
      * Robot-friendly API: compute a shot from values similar to the sliders.
      *
      * @param distanceToFrontHubM distance from shooter to front of hub (m)
@@ -76,10 +75,10 @@ public class ShooterPhysics {
      * @param wheelRadiusM wheel radius (m)
      * @param efficiency drivetrain/wheel efficiency (0..1)
      * @param maxRPM maximum shooter RPM
-     * @param fixedAngleDeg hood angle deg
+     * @param minAngleDeg min hood angle deg
+     * @param maxAngleDeg max hood angle deg
      * @return shot result
      */
-
     public ShotResult computeShot(
             double distanceToFrontHubM,
             double shooterHeightM,
@@ -89,12 +88,11 @@ public class ShooterPhysics {
             double wheelRadiusM,
             double efficiency,
             double maxRPM,
-            double fixedAngleDeg
+            double minAngleDeg,
+            double maxAngleDeg
     ) {
         setHubGeometry(0, hubRimHeightM, hubWidthM, hubDepthM);
-
         double distanceRimM = Math.max(distanceToFrontHubM, 0) + hubDepthM / 2.0;
-
         return computeOptionC(
                 distanceRimM,
                 shooterHeightM,
@@ -102,7 +100,8 @@ public class ShooterPhysics {
                 wheelRadiusM,
                 efficiency,
                 maxRPM,
-                fixedAngleDeg
+                minAngleDeg,
+                maxAngleDeg
         );
     }
 
@@ -116,18 +115,16 @@ public class ShooterPhysics {
             double wheelRadiusM,
             double efficiency,
             double maxRPM,
-            double fixedAngleDeg
+            double minAngleDeg,
+            double maxAngleDeg
     ) {
         double dx = hubX - shooterX;
         double dy = hubY - shooterY;
         double horizontalDistM = Math.hypot(dx, dy);
-
         if (horizontalDistM <= 0) {
-            return ShotResult.invalid(fixedAngleDeg, fixedAngleDeg);
+            return ShotResult.invalid(minAngleDeg, maxAngleDeg);
         }
-
         double yawRad = Math.atan2(dy, dx);
-
         ShotResult base = computeOptionC(
                 horizontalDistM,
                 shooterZ,
@@ -135,9 +132,9 @@ public class ShooterPhysics {
                 wheelRadiusM,
                 efficiency,
                 maxRPM,
-                fixedAngleDeg
+                minAngleDeg,
+                maxAngleDeg
         );
-
         return new ShotResult(
                 base.angleRad,
                 base.velocityMPerSec,
@@ -158,7 +155,8 @@ public class ShooterPhysics {
             double wheelRadiusM,
             double efficiency,
             double maxRPM,
-            double fixedAngleDeg
+            double minAngleDeg,
+            double maxAngleDeg
     ) {
         distanceRimM = Math.max(distanceRimM, 0);
         shooterHeightM = Math.max(shooterHeightM, 0);
@@ -167,47 +165,81 @@ public class ShooterPhysics {
         efficiency = Math.max(0.01, Math.min(efficiency, 1.0));
         maxRPM = Math.max(maxRPM, 1);
 
-        double theta = Math.toRadians(fixedAngleDeg);
-        double cos = Math.cos(theta);
-        double tan = Math.tan(theta);
-
         double h = hubRimHeightM - shooterHeightM;
 
-        double denom = 2 * cos * cos * (distanceRimM * tan - h);
+        double bestAngle = Double.NaN;
+        double bestVelocity = Double.NaN;
+        double bestTime = Double.NaN;
+        double bestRPM = Double.NaN;
+        double bestFinalAngle = Double.NaN;
 
-        if (denom <= 0) {
-            return ShotResult.invalid(fixedAngleDeg, fixedAngleDeg);
+        // Search from steepest → flattest
+        for (double angleDeg = maxAngleDeg; angleDeg >= minAngleDeg; angleDeg -= 0.1) {
+
+            double theta = Math.toRadians(angleDeg);
+            double cos = Math.cos(theta);
+            double tan = Math.tan(theta);
+
+            double denom = 2 * cos * cos * (distanceRimM * tan - h);
+            if (denom <= 0) continue;
+
+            double v = Math.sqrt((g * distanceRimM * distanceRimM) / denom);
+            double t = distanceRimM / (v * cos);
+
+            double vx = v * cos;
+            double vy = v * Math.sin(theta) - g * t;
+
+            if (vy >= 0) continue;
+
+            double rpm = velocityToRPM(v, wheelRadiusM, efficiency);
+
+            // If RPM too high, lower hood (continue loop)
+            if (rpm > maxRPM) continue;
+
+            double finalAngle = Math.atan2(vy, vx); // negative = downward
+
+            if (Double.isNaN(bestAngle)) {
+                bestAngle = theta;
+                bestVelocity = v;
+                bestTime = t;
+                bestRPM = rpm;
+                bestFinalAngle = finalAngle;
+            } else {
+                if (finalAngle < bestFinalAngle - 1e-4) {
+                    bestAngle = theta;
+                    bestVelocity = v;
+                    bestTime = t;
+                    bestRPM = rpm;
+                    bestFinalAngle = finalAngle;
+                } else if (Math.abs(finalAngle - bestFinalAngle) <= 1e-4 && rpm < bestRPM) {
+                    bestAngle = theta;
+                    bestVelocity = v;
+                    bestTime = t;
+                    bestRPM = rpm;
+                    bestFinalAngle = finalAngle;
+                }
+            }
         }
 
-        double v = Math.sqrt((g * distanceRimM * distanceRimM) / denom);
-        double t = distanceRimM / (v * cos);
-
-        double vx = v * cos;
-        double vy = v * Math.sin(theta) - g * t;
-
-        if (vy >= 0) {
-            return ShotResult.invalid(fixedAngleDeg, fixedAngleDeg);
+        if (Double.isNaN(bestAngle)) {
+            return ShotResult.invalid(minAngleDeg, maxAngleDeg);
         }
 
-        double rpm = velocityToRPM(v, wheelRadiusM, efficiency);
+    // We don't need the full trajectory for a stationary, hub-locked robot.
+    // Return only the calculated angle and velocity (trajectory empty).
+    double[][] traj = new double[0][0];
 
-        if (rpm > maxRPM) {
-            return ShotResult.invalid(fixedAngleDeg, fixedAngleDeg);
-        }
-
-        double[][] traj = new double[0][0];
-
-        return new ShotResult(
-                theta,
-                v,
-                rpm,
-                t,
-                true,
-                traj,
-                theta,
-                theta,
-                0.0
-        );
+    return new ShotResult(
+        bestAngle,
+        bestVelocity,
+        bestRPM,
+        bestTime,
+        true,
+        traj,
+        Math.toRadians(minAngleDeg),
+        Math.toRadians(maxAngleDeg),
+        0.0
+    );
     }
 
     private double velocityToRPM(double ballVelocityMPerSec, double wheelRadiusM, double efficiency) {
@@ -216,6 +248,7 @@ public class ShooterPhysics {
         double revPerSec = wheelSurfaceVelocity / circumferenceM;
         return revPerSec * 60.0;
     }
+    
 
     public static class ShotResult {
         public final double angleRad;

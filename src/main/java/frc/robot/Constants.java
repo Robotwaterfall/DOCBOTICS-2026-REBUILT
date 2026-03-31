@@ -100,7 +100,7 @@ public final class Constants {
     public static final double kPhysicalMaxSpeedMetersPerSecond = 5;
     public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 2 * 2 * Math.PI;
 
-    public static final double kTeleDriveMaxSpeedMetersPerSecond = kPhysicalMaxSpeedMetersPerSecond  / 1.75;
+    public static final double kTeleDriveMaxSpeedMetersPerSecond = kPhysicalMaxSpeedMetersPerSecond  / 1.0;
     public static final double kTeleDriveMaxAngularSpeedRadiansPerSecond = kPhysicalMaxAngularSpeedRadiansPerSecond / 2.5;
     public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 2;
     public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 2;
@@ -111,9 +111,8 @@ public final class Constants {
     
 
     public static class autoTargetConstants {
-      public static final double autoOrientKp = 0.0035;
-
-      public static final double autoLockKp = 0; //TODO
+      public static final double autoOrientKp = 0.02; 
+      public static final double autoOrientSpeed = 0.5;
 
     }
   }
@@ -121,22 +120,9 @@ public final class Constants {
   public static final class LimelightConstants {
 
     public static final String LimelightFront = "limelight-track";
-    public static final String LimelightBackLeft = "limelightbackleft"; //TODO
+    public static final String LimelightBackLeft = "limelight-left"; 
     public static final String LimelightBackRight = "limelightbackright"; //TODO
 
-  }
-
-  /**
-   * Vision tuning constants for Limelight / tag-based pose measurements.
-   *
-   * Notes:
-   *  - XY stddevs are in meters.
-   *  - Theta stddev is expressed in degrees for readability; callers should
-   *    convert to radians with Math.toRadians(...) before passing to WPILib.
-   */
-  public static final class VisionConstants {
-    // Default angular uncertainty (degrees) for limelight pose yaw. Keep conservative until tuned.
-    public static final double LIMELIGHT_THETA_STDDEV_DEGREES = 5.0;
   }
 
     public static final class OIConstants {
@@ -167,6 +153,8 @@ public final class Constants {
       public static final int kDpadLEFT = 270;
       public static final int kDpadRIGHTDOWN = 135;
 
+      public static final int kTouchPadButton = 14;
+
       public static final int kPsButton = 13;
 
       public static final double kDeadband = 0.5;
@@ -175,14 +163,14 @@ public final class Constants {
   public static final class IntakeRollerConstants{
     public static final int kIntakeMotorPort = 3; 
     
-    public static final double kIntakeRollersKp = 0.1; //TODO
+    public static final double kIntakeRollersKp = 0.5; //TODO
     public static final double kIntakeRollersKi = 0; //TODO
     public static final double kIntakeRollersKd = 0; //TODO
     public static final double kIntakeRollersKs = 0; //TODO
     public static final double kIntakeRollersKv = 0; //TODO
 
-    public static final double kIntakeVelocityRPS = 10;
-    public static final double kOuttakeVelocityRPS = -10;
+    public static final double kIntakeVelocityRPS = -0.8;
+    public static final double kOuttakeVelocityRPS = 0.8;
 
   }
 
@@ -194,17 +182,17 @@ public final class Constants {
     public static final double kMaxPitchDegrees = 105; 
 
     public static final double kPitcherInDegrees = 0; // Setpoint positions
-    public static final double kPitcherOutDegrees = 95; 
+    public static final double kPitcherOutDegrees = 103; 
 
-    public static double intakePitcher_kP = 0.1;
-    public static double intakePitcher_kI = 0;
+    public static double intakePitcher_kP = 0.1; 
+    public static double intakePitcher_kI = 0; 
     public static double intakePitcher_kD = 0; 
 
     public static double intakePitcherToleranceDegrees = 1;
 
-    public static double intakePitcherWaitTimeSec = 1; 
+    public static double intakePitcherWaitTimeSec = 0.8; 
 
-    public static double intakePitcherFlutterDegrees = 90;
+    public static double intakePitcherFlutterDegrees = 95;
 
     public static final IdleMode pitcherIdleMode = IdleMode.kCoast;
 
@@ -230,33 +218,25 @@ public final class Constants {
     public static final double kShooterKv = 12.0 / KrakenX60.kFreeSpeed.in(RotationsPerSecond); //TODO
 
     public static final double kIndexSpeed = 1;
-    public static final double kReverseIndexSpeedWhileIntaking = -0.5;
+    public static final double kReverseIndexSpeedWhileIntaking = -0.9;
     public static final double kReverseIndexSpeed = -1; 
 
     public static final double kWarmupVelocityFPS = 50;
 
     public static final double kJuggleVelocityFPS = 10;
 
-    public static final double kShooterHeightInches = 0; //TODO: measure from floor to center of shooter wheel
-
-    public static final double kHeightOfHubInches = 72; 
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
+    public static final double kHeightOfHubInches = 72; //height of the hub where fuel can enter
 
     public static final double shooterTolerance = 2.0; 
-
-    public static final double shooterEfficiency = 0.8;
 
     public static final double defaultShooterVelocityPlusPerPress = 5.0; 
 
     public static final double shooterVelocityPlusPerPress = 5.0;
-    public static final double shooterEfficiency = 0.8; 
     
-    public static final double kMaxShooterVelocityFPS  = 110;
-    public static final double kMaxShooterRPM  = kMaxShooterVelocityFPS * 60 / (Math.PI * ShooterConstants.kWheelDiameterInches); 
-
+    public static final double kShooterHeightInches = 0; //TODO: measure from floor to center of shooter wheel
+    
+    public static final double shooterEfficiency = 0.8;
+    
     public static final double kMaxShooterVelocityFPS  = 110;
     public static final double kMaxShooterRPM  = kMaxShooterVelocityFPS * 60 / (Math.PI * ShooterConstants.kWheelDiameterInches); 
 
@@ -299,13 +279,15 @@ public final class Constants {
     public static final double a1 = 0.0376843712267;
     public static final double a2 = -0.00289877526491;
     public static final double a3 = 1.49396327886e-05;
+
+    public static final double kShooterFixedAngle  = 0; //TODO: Talk to design on the fixed angle of the shooter.
   }
 
 
   public static final class Pose2DConstants{
     
-    public static final double xHubPose = 8.23; //default blue
-    public static final double yHubPose = 8.23; //default blue
+    public static final double xHubPose = 4.63; // blue hub center (meters), derived from AprilTag ring
+    public static final double yHubPose = 4.03; // blue hub center (meters), derived from AprilTag ring
 
     public static final double ALLIANCE_ZONE_X_MIN_BLUEin = 0.0;
     public static final double ALLIANCE_ZONE_X_MAX_BLUEin = 182.11;
@@ -313,6 +295,19 @@ public final class Constants {
     public static final double ALLIANCE_ZONE_Y_MAX_BLUEin = 317.68; 
 
     
+  }
+
+  public static final class GeorgianCollegeConstants{
+    public static final int kCloseShotButton = 1;
+    public static final int kFarShotButton = 2;
+    public static final int kNeutralShotButton = 3;
+
+    public static final double kShootFarVelocity = 100;
+    public static final double kShootFarAngle = 45;
+
+    public static final double kShootCloseVelocity = 45;
+    public static final double kShootCloseAngle = 56;
+
   }
   
   public static final double telemetryUpdate = 0.1; //Update every 100ms

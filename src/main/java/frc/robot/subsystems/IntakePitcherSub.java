@@ -64,6 +64,10 @@ public class IntakePitcherSub extends SubsystemBase {
         targetAngle = degrees;
     }
 
+    public boolean isPitcherAtSetpoint(){
+        return intakePitchController.atSetpoint();
+    }
+
     public void stopMotor() {
         intakePitcherMotor.stopMotor();
     }

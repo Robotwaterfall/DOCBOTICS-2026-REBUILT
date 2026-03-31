@@ -1,37 +1,54 @@
 package frc.robot.commands;
 
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.HoodConstants;
+import frc.robot.Constants.LimelightConstants;
 import frc.robot.Constants.ShooterConstants;
+import frc.robot.config.LimelightHelpers;
 import frc.robot.subsystems.ShooterSub;
-import frc.robot.subsystems.SwerveSub;
-import frc.robot.util.PoseManager;
 import frc.robot.util.ShooterLookup;
 import frc.robot.util.ShooterPhysics;
+import frc.robot.util.ShooterPhysicsDeprecated;
 
 public class RunShooterCMD extends Command {
 
     private final ShooterSub shooterSub;
-    private final SwerveSub swerveSub;
-
-    ShooterPhysics CalculateShot = new ShooterPhysics();
 
     private double desiredVelocity; // fps
+    private final boolean distanceBased;
+
     ShooterPhysics CalculateShot = new ShooterPhysics();
+    ShooterPhysicsDeprecated calculateShotDeprecated = new ShooterPhysicsDeprecated();
+
+    // 1‑param constructor
+    // → distance-based: looks up velocity from Limelight distance when command starts
+    public RunShooterCMD(ShooterSub shooterSub) {
+        this.shooterSub = shooterSub;
+        this.desiredVelocity = 0;
+        this.distanceBased = true;
+
+        addRequirements(shooterSub);
+    }
 
     // 2‑param constructor
     // → get distance to hub, then set desiredVelocity from lookup table
-    public RunShooterCMD(ShooterSub shooterSub, SwerveSub swerveSub) {
+    public RunShooterCMD(ShooterSub shooterSub, double desiredVelocity) {
         this.shooterSub = shooterSub;
-        this.swerveSub  = swerveSub;
+        this.desiredVelocity = desiredVelocity;
+        this.distanceBased = false;
 
-        double targetDistanceInches = PoseManager.getDistanceToHubInches(swerveSub);
-        double distanceFeet = targetDistanceInches / 12.0;
+        addRequirements(shooterSub);
+    }
 
-        ShooterPhysics.ShotResult r = CalculateShot.computeShot(
-            Units.inchesToMeters(targetDistanceInches),
+    public void initialize() {
+        if (distanceBased) {
+            double distanceFeet = getLimelightDistanceFeet();
+
+            ShooterPhysics.ShotResult r = CalculateShot.computeShot(
+            Units.inchesToMeters(distanceFeet),
             Units.inchesToMeters(ShooterConstants.kShooterHeightInches),
             Units.inchesToMeters(ShooterConstants.kHeightOfHubInches),
             Units.inchesToMeters(41.7),
@@ -39,38 +56,31 @@ public class RunShooterCMD extends Command {
             Units.inchesToMeters(ShooterConstants.kWheelDiameterInches / 2.0),
             ShooterConstants.shooterEfficiency,
             ShooterConstants.kMaxShooterRPM,
-            HoodConstants.minHoodAngleDeg,
-            HoodConstants.maxHoodAngleDeg
-        );
+            HoodConstants.kShooterFixedAngle
+            );
 
-        ShooterLookup.ShooterParams params = ShooterLookup.getInterpolated(distanceFeet);
-        double velocityFps = Units.metersToFeet(r.velocityMPerSec);
+            double velocityFps = Units.metersToFeet(r.velocityMPerSec);
 
-        double velocityErrorPercent = Math.abs(params.velocityFps - velocityFps) / velocityFps * 100;
-        SmartDashboard.putNumber("%ErrorVelocity", velocityErrorPercent);
+            double velocityErrorPercent = Math.abs(velocityFps - ShooterLookup.getInterpolatedVelocity(distanceFeet)) / velocityFps * 100;
+            SmartDashboard.putNumber("%ErrorVelocity", velocityErrorPercent);
 
-        if (!r.valid) { // If the physics calculation is invalid, fall back to the lookup table value
-            this.desiredVelocity = params.velocityFps;
-        } else {
-            if (velocityErrorPercent >= 3) { // If the physics calculation is significantly different from the lookup table, use it directly
-                this.desiredVelocity = Math.toDegrees(r.angleRad);
-            } else { 
-                this.desiredVelocity = (velocityFps - params.velocityFps) * 0.5; // Average the two values if they are close enough
+            if (!r.valid || velocityErrorPercent >= 3) { // If the physics calculation is invalid or significantly different from the lookup table, use it directly
+                this.desiredVelocity = velocityFps;
+            } else { // Otherwise, use the lookup table value (or some blend of the two)
+                this.desiredVelocity = ShooterLookup.getInterpolatedVelocity(distanceFeet);
             }
         }
-        addRequirements(shooterSub);
     }
 
-    // 3‑param constructor
-    // → desiredVelocity is passed explicitly
-    public RunShooterCMD(ShooterSub shooterSub, SwerveSub swerveSub, double desiredVelocity) {
-        this.shooterSub    = shooterSub;
-        this.swerveSub     = swerveSub;
-        this.desiredVelocity = desiredVelocity;
-
-        addRequirements(shooterSub);
+        private double getLimelightDistanceFeet() {
+        Pose3d targetPose = LimelightHelpers.getTargetPose3d_CameraSpace(LimelightConstants.LimelightFront);
+        double distMeters = Math.sqrt(
+            targetPose.getX() * targetPose.getX() +
+            targetPose.getY() * targetPose.getY() +
+            targetPose.getZ() * targetPose.getZ());
+        return Units.metersToInches(distMeters) / 12.0;
     }
-
+    
     @Override
     public void execute() {
         shooterSub.setShooterVelocityFPS(desiredVelocity);
