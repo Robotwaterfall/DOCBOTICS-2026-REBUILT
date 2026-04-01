@@ -9,6 +9,7 @@ import java.util.Optional;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.LedSub;
@@ -65,17 +66,25 @@ public class Robot extends TimedRobot {
 
 switch (hubLogic.getHubState()) {
   case ACTIVE:
+          // if (ally.get() == Alliance.Red) {
+          //   SmartDashboard.putString("Active Hub:", "Red");
+          // } else {
+          //   SmartDashboard.putString("Active Hub:", "Blue");
+          // }
     robotLights.setRainbow();
     break;
   case INACTIVE:
           if (ally.get() == Alliance.Red) {
             robotLights.setRawPattern(Constants.LEDConstants.BLINKIN_PATTERN_BLUE_POS);
+            // SmartDashboard.putString("Active Hub:", "Blue");
           } else {
             robotLights.setRawPattern(Constants.LEDConstants.BLINKIN_PATTERN_RED_POS);
+            // SmartDashboard.putString("Active Hub:", "Red");
           }
     break;
   case WARNING:
     robotLights.setRawPattern(Constants.LEDConstants.BLINKIN_PATTERN_SHIFT);
+    // SmartDashboard.putString("Active Hub:", "Shifting..");
     break;
 }
       } else {
