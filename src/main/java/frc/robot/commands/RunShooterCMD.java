@@ -2,7 +2,6 @@ package frc.robot.commands;
 
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.LimelightConstants;
 import frc.robot.config.LimelightHelpers;
@@ -56,14 +55,12 @@ public class RunShooterCMD extends Command {
     @Override
     public void execute() {
         shooterSub.setShooterVelocityFPS(desiredVelocity);
-
-        SmartDashboard.putNumber("DesiredVelocity", desiredVelocity);
     }
 
     @Override
     public boolean isFinished() {
         // return shooterSub.isAtSetVelocityFPS();
-        return false;
+        return true;
     }
 
     @Override

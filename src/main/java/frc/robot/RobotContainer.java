@@ -5,21 +5,17 @@
 package frc.robot;
 
 import com.pathplanner.lib.commands.PathPlannerAuto;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PS5Controller;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIConstants;
-import frc.robot.commands.AlignToHubCMD;
 import frc.robot.commands.ResetHeadingCMD;
-import frc.robot.commands.RunShooterCMD;
 import frc.robot.commands.SwerveJoystickCMD;
-import frc.robot.commands.commandgroups.FireShot;
 import frc.robot.commands.commandgroups.IntakeFuel;
 import frc.robot.commands.commandgroups.OuttakeFuel;
+import frc.robot.commands.commandgroups.ShootingRoutine;
 import frc.robot.subsystems.IntakeRollersSub;
 import frc.robot.subsystems.ShooterSub;
 import frc.robot.subsystems.ConveyorSub;
@@ -88,13 +84,8 @@ public class RobotContainer {
       new ResetHeadingCMD(swerveSub)
     );
 
-    Command shootClose =
-    new ParallelCommandGroup(
-      new RunShooterCMD(shooterSub)
-    );
-
     new JoystickButton(driverJoyStick, Constants.OIConstants.kR2TriggerButton).whileTrue(
-      shootClose
+      new ShootingRoutine(shooterSub, indexerSub, conveyorSub)
     );
 
     new JoystickButton(driverJoyStick, Constants.OIConstants.kR1Button).whileTrue(
@@ -103,10 +94,6 @@ public class RobotContainer {
     
     new JoystickButton(driverJoyStick, Constants.OIConstants.kL1Button).whileTrue(
       new OuttakeFuel(intakeSub, conveyorSub, indexerSub)
-    );
-
-    new JoystickButton(driverJoyStick, Constants.OIConstants.kL2TriggerButton).whileTrue(
-      new FireShot(indexerSub, conveyorSub, intakePitcherSub)
     );
   
 

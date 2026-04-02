@@ -16,7 +16,7 @@ public class IntakeFuel extends ParallelCommandGroup{
     ){
 
         addCommands( 
-            new RunIntakeRollersCMD(intakeRollersSub, Constants.IntakeRollerConstants.kIntakeVelocityRPS),
+            new RunIntakeRollersCMD(intakeRollersSub, Constants.IntakeRollerConstants.kIntakePower),
             new MoveIntakePitcherCMD(intakePitcherSub, Constants.IntakePitcherConstants.kPitcherOutDegrees)
         );
 

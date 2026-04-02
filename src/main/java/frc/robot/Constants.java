@@ -121,7 +121,6 @@ public final class Constants {
 
     public static final String LimelightFront = "limelight-track";
     public static final String LimelightBackLeft = "limelight-left"; 
-    public static final String LimelightBackRight = "limelightbackright"; //TODO
 
   }
 
@@ -164,15 +163,9 @@ public final class Constants {
   }
   public static final class IntakeRollerConstants{
     public static final int kIntakeMotorPort = 3; 
-    
-    public static final double kIntakeRollersKp = 0.5; //TODO
-    public static final double kIntakeRollersKi = 0; //TODO
-    public static final double kIntakeRollersKd = 0; //TODO
-    public static final double kIntakeRollersKs = 0; //TODO
-    public static final double kIntakeRollersKv = 0; //TODO
 
-    public static final double kIntakeVelocityRPS = -0.8;
-    public static final double kOuttakeVelocityRPS = 0.8;
+    public static final double kIntakePower = -0.8;
+    public static final double kOuttakePower = 0.8;
 
   }
   
@@ -217,8 +210,6 @@ public final class Constants {
     public static final int kShooterFollowerRightId = 23;
     public static final int kShooterFollowerLeftId = 22; 
 
-    public static final int kShooterVelocityFps = 45; //TODO: GET RID FOR TESTING
-
     public static final int kIndexMotorId = 25; 
 
     public static final double kWheelDiameterInches = 4.0; // 4" wheel
@@ -228,10 +219,9 @@ public final class Constants {
     public static final double kShooterKi = 0.45; 
     public static final double kShooterKd = 0; 
     public static final double kShooterKs = 0; 
-    public static final double kShooterKv = 12.0 / KrakenX60.kFreeSpeed.in(RotationsPerSecond); //TODO
+    public static final double kShooterKv = 12.0 / KrakenX60.kFreeSpeed.in(RotationsPerSecond);
 
     public static final double kIndexSpeed = 1;
-    public static final double kReverseIndexSpeedWhileIntaking = -0.9;
     public static final double kReverseIndexSpeed = -1; 
 
     public static final double kWarmupVelocityFPS = 50;
@@ -240,7 +230,7 @@ public final class Constants {
 
     public static final double kHeightOfHubInches = 72; //height of the hub where fuel can enter
 
-    public static final double shooterTolerance = 2.0; 
+    public static final double shooterTolerance = 0.8; 
 
     public static final double defaultShooterVelocityPlusPerPress = 5.0; 
 
@@ -260,34 +250,6 @@ public final class Constants {
 
   }
 
-  public static final class HoodConstants{
-    public static final int kHoodId = 30; 
-
-    public static final int kMinPulseUs = 1650;  //this is the robots limit of the Lin act
-    public static final int kCenterPulseUs = 1750;
-    public static final int kMaxPulseUs = 2000;
-    
-    public static final double maxExtensionInches = 5.5; //as far as we go out
-    public static final double minExtensionInches = 3; //as far as we retract 
-
-    public static final double minHoodAngleDeg = 43; 
-    public static final double maxHoodAngleDeg = 63; 
-
-    public static final double kHoodWarmUpDeg = 50; //warmp up position for hood to be in before shooting
-
-    public static final double kHoodToleranceUs = 10; //TODO: tune this tolerance for being at the setpoint
-
-    public static final double defaultHoodAnglePlusPerPress = 2; //TODO
-    public static final double hoodAnglePlusPerPress = 2; //TODO
-    
-    //these are the constants for the cubic approximation to convert from angle to inches
-    public static final double a0 = 8.15031546257;
-    public static final double a1 = 0.0376843712267;
-    public static final double a2 = -0.00289877526491;
-    public static final double a3 = 1.49396327886e-05;
-  }
-
-
   public static final class Pose2DConstants{
     
     public static final double xHubPose = 4.63; // blue hub center (meters), derived from AprilTag ring
@@ -298,8 +260,5 @@ public final class Constants {
     public static final double ALLIANCE_ZONE_Y_MIN_BLUEin = 0.0;
     public static final double ALLIANCE_ZONE_Y_MAX_BLUEin = 317.68; 
 
-    
   }
-  
-  public static final double telemetryUpdate = 0.1; //Update every 100ms
 }
