@@ -125,9 +125,9 @@ public class RobotContainer {
       new ResetHeadingCMD(swerveSub)
     );
 
-    // new JoystickButton(driverJoyStick, OIConstants.kShootingRoutineButton).whileTrue(
-    //   new FireShot(indexerSub, conveyorSub, intakePitcherSub)
-    // );
+    new JoystickButton(driverJoyStick, OIConstants.kShootingRoutineButton).whileTrue(
+      new FireShot(indexerSub, conveyorSub, intakePitcherSub)
+    );
 
     // new JoystickButton(driverJoyStick, OIConstants.kTouchPadButton).whileTrue(
     //   new MoveIntakePitcherCMD(intakePitcherSub, Constants.IntakePitcherConstants.kPitcherInDegrees)
@@ -162,18 +162,18 @@ public class RobotContainer {
     // POVButton decHoodButton = new POVButton(driverJoyStick, Constants.OIConstants.kDpadDOWN);
     // decHoodButton.onTrue(new DecrementHoodCMD(hoodSub, HoodConstants.hoodAnglePlusPerPress));
 
-    // //STOP ALL SHOOTER MOTORS
-    // JoystickButton stopShooterMotorsButton = new JoystickButton(driverJoyStick, OIConstants.kPsButton);
-    // stopShooterMotorsButton.onTrue(new StopShooterMotorsCMD(shooterSub));
+    //STOP ALL SHOOTER MOTORS
+    JoystickButton stopShooterMotorsButton = new JoystickButton(driverJoyStick, OIConstants.kPsButton);
+    stopShooterMotorsButton.onTrue(new StopShooterMotorsCMD(shooterSub));
 
-    Command shootClose =
-    new ParallelCommandGroup(
-      new RunShooterCMD(shooterSub)
-    );
+    // Command shootClose =
+    // new ParallelCommandGroup(
+    //   new RunShooterCMD(shooterSub)
+    // );
 
-    new JoystickButton(driverJoyStick, Constants.GeorgianCollegeConstants.kCloseShotButton).whileTrue(
-      shootClose
-    );
+    // new JoystickButton(driverJoyStick, Constants.GeorgianCollegeConstants.kCloseShotButton).whileTrue(
+    //   shootClose
+    // );
 
     // Command shootFar =
     // new ParallelCommandGroup(
@@ -200,15 +200,15 @@ public class RobotContainer {
     // );
 
     
-    // // LIMELIGHT LOCK / AIM ASSIST
-    // new JoystickButton(driverJoyStick, OIConstants.kPrepareShotButton).whileTrue(
-    //   new SwerveLimelightLockCMD(
-    //     swerveSub,
-    //     () -> -driverJoyStick.getRawAxis(OIConstants.kDriverYAxis),
-    //     () -> driverJoyStick.getRawAxis(OIConstants.kDriverXAxis),
-    //     DriveConstants.autoTargetConstants.autoOrientSpeed
-    //   )
-    // );
+    // LIMELIGHT LOCK / AIM ASSIST
+    new JoystickButton(driverJoyStick, OIConstants.kPrepareShotButton).whileTrue(
+      new SwerveLimelightLockCMD(
+        swerveSub,
+        () -> -driverJoyStick.getRawAxis(OIConstants.kDriverYAxis),
+        () -> driverJoyStick.getRawAxis(OIConstants.kDriverXAxis),
+        DriveConstants.autoTargetConstants.autoOrientSpeed
+      )
+    );
 
 
 

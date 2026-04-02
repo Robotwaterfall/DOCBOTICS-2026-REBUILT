@@ -233,12 +233,14 @@ public final class Constants {
 
     public static final double shooterVelocityPlusPerPress = 5.0;
     
-    public static final double kShooterHeightInches = 0; //TODO: measure from floor to center of shooter wheel
+    public static final double kShooterHeightInches = 0; //TODO: measure from floor to center of ball in shooter.
     
     public static final double shooterEfficiency = 0.8;
     
     public static final double kMaxShooterVelocityFPS  = 110;
     public static final double kMaxShooterRPM  = kMaxShooterVelocityFPS * 60 / (Math.PI * ShooterConstants.kWheelDiameterInches); 
+
+    public static final double kShooterFixedAngle  = 60; 
 
      public static class KrakenX60 {
         public static final AngularVelocity kFreeSpeed = RPM.of(6000);
@@ -253,36 +255,6 @@ public final class Constants {
  
 
   }
-
-  public static final class HoodConstants{
-    public static final int kHoodId = 30; 
-
-    public static final int kMinPulseUs = 1650;  //this is the robots limit of the Lin act
-    public static final int kCenterPulseUs = 1750;
-    public static final int kMaxPulseUs = 2000;
-    
-    public static final double maxExtensionInches = 5.5; //as far as we go out
-    public static final double minExtensionInches = 3; //as far as we retract 
-
-    public static final double minHoodAngleDeg = 43; 
-    public static final double maxHoodAngleDeg = 63; 
-
-    public static final double kHoodWarmUpDeg = 50; //warmp up position for hood to be in before shooting
-
-    public static final double kHoodToleranceUs = 10; //TODO: tune this tolerance for being at the setpoint
-
-    public static final double defaultHoodAnglePlusPerPress = 2; //TODO
-    public static final double hoodAnglePlusPerPress = 2; //TODO
-    
-    //these are the constants for the cubic approximation to convert from angle to inches
-    public static final double a0 = 8.15031546257;
-    public static final double a1 = 0.0376843712267;
-    public static final double a2 = -0.00289877526491;
-    public static final double a3 = 1.49396327886e-05;
-
-    public static final double kShooterFixedAngle  = 0; //TODO: Talk to design on the fixed angle of the shooter.
-  }
-
 
   public static final class Pose2DConstants{
     
@@ -311,4 +283,15 @@ public final class Constants {
   }
   
   public static final double telemetryUpdate = 0.1; //Update every 100ms
+
+  public static final class LEDConstants {
+    public static final int BLINKIN_PWM_PORT = 0;
+    public static final double BLINKIN_PATTERN_RED_POS = -0.25;
+    public static final double BLINKIN_PATTERN_BLUE_POS = -0.23;
+    public static final double BLINKIN_PATTERN_ORANGE_BLINK_POS = 0.65;
+    public static final double BLINKIN_PATTERN_RAINBOW_POS = -0.99; 
+    public static final double BLINKIN_PATTERN_DOC_POS = -0.99; 
+    public static final double BLINKIN_PATTERN_SHIFT = -0.07;
+    public static final double HUB_SHIFT_WARNING_TIME = 3; // in seconds
+  }
 }
