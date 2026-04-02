@@ -15,8 +15,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.LimelightConstants;
+import frc.robot.Constants.PathPlannerConstants;
 import frc.robot.config.LimelightHelpers;
-
+import frc.robot.util.PoseManager;
 import org.littletonrobotics.junction.Logger;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
@@ -106,8 +107,11 @@ public class SwerveSub extends SubsystemBase {
                                                                       // RELATIVE ChassisSpeeds.
                 new PPHolonomicDriveController( // HolonomicPathFollowerConfig, this should likely live in your
                                                 // Constants class.
-                        new PIDConstants(6.0, 0.0, 0.0), // Translation PID constants.
-                        new PIDConstants(6.0, 0.0, 0.0) // Rotation PID constants.
+                        new PIDConstants(PathPlannerConstants.kTranslationalKp, PathPlannerConstants.kTranslationalKi, 
+                            PathPlannerConstants.kTranslationalKd), // Translation PID constants.
+
+                        new PIDConstants(PathPlannerConstants.kRotationalKp, PathPlannerConstants.kRotationalKi, 
+                            PathPlannerConstants.kRotationalKd) // Rotation PID constants.
 
                 ),
                 config,
@@ -174,6 +178,9 @@ public class SwerveSub extends SubsystemBase {
 
         SmartDashboard.putNumber("RobotHeading: ", getHeading());
         SmartDashboard.putString("RobotLocation: ", getPose().getTranslation().toString());
+
+        SmartDashboard.putNumber("ErrorToHub", PoseManager.getHeadingErrorDegreesHub(this));
+        SmartDashboard.putBoolean("isInAllianceZone", PoseManager.isInAllianceZone(this));
 
         // Limelight distance to target for shooter calibration
         edu.wpi.first.math.geometry.Pose3d targetPose =

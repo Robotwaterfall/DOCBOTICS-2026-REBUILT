@@ -16,10 +16,11 @@ import frc.robot.commands.AlignToHubCMD;
 import frc.robot.commands.ResetHeadingCMD;
 import frc.robot.commands.RunShooterCMD;
 import frc.robot.commands.SwerveJoystickCMD;
+import frc.robot.commands.commandgroups.IntakeFuel;
+import frc.robot.commands.commandgroups.OuttakeFuel;
 import frc.robot.subsystems.IntakeRollersSub;
 import frc.robot.subsystems.ShooterSub;
 import frc.robot.subsystems.ConveyorSub;
-import frc.robot.subsystems.HoodSub;
 import frc.robot.subsystems.IndexerSub;
 import frc.robot.subsystems.IntakePitcherSub;
 import frc.robot.subsystems.SwerveSub;
@@ -34,7 +35,6 @@ public class RobotContainer {
 
   public final SwerveSub swerveSub = new SwerveSub();
   public final IntakeRollersSub intakeSub = new IntakeRollersSub();
-  public final HoodSub hoodSub = new HoodSub();
   public final ShooterSub shooterSub = new ShooterSub();
   public final IntakePitcherSub intakePitcherSub = new IntakePitcherSub();
   public final ConveyorSub conveyorSub = new ConveyorSub();
@@ -95,11 +95,20 @@ public class RobotContainer {
       shootClose
     );
 
-    new JoystickButton(driverJoyStick, OIConstants.kPrepareShotButton).whileTrue(
-      new AlignToHubCMD(swerveSub,  () -> -driverJoyStick.getRawAxis(OIConstants.kDriverXAxis), 
-                                    () -> driverJoyStick.getRawAxis(OIConstants.kDriverYAxis),
-                                     0.5)
+    new JoystickButton(driverJoyStick, Constants.OIConstants.kIntakeButton).whileTrue(
+      new IntakeFuel(intakeSub, conveyorSub, indexerSub, intakePitcherSub)
     );
+    
+    new JoystickButton(driverJoyStick, Constants.OIConstants.kOuttakeButton).whileTrue(
+      new OuttakeFuel(intakeSub, conveyorSub, indexerSub)
+    );
+  
+
+    // new JoystickButton(driverJoyStick, OIConstants.kPrepareShotButton).whileTrue(
+    //   new AlignToHubCMD(swerveSub,  () -> -driverJoyStick.getRawAxis(OIConstants.kDriverXAxis), 
+    //                                 () -> driverJoyStick.getRawAxis(OIConstants.kDriverYAxis),
+    //                                  0.5)
+    // );
 
   }
 

@@ -46,7 +46,7 @@ public final class Constants {
 
     public static final double kMax_Rotational_Speed = 0.8;
     public static final double headingToleranceDeg = 2.0; 
-    public static final double kTurning = 0.6; 
+    public static final double kTurning = 0.2; 
 
   } 
 
@@ -173,6 +173,17 @@ public final class Constants {
     public static final double kOuttakeVelocityRPS = 0.8;
 
   }
+  
+  public static final class PathPlannerConstants {
+    public static final double kTranslationalKp = 5.0;
+    public static final double kTranslationalKi = 0.0;
+    public static final double kTranslationalKd = 0.0;
+
+    public static final double kRotationalKp = 5.0;
+    public static final double kRotationalKi = 0.0;
+    public static final double kRotationalKd = 0.0;
+    
+  }
 
   public static final class IntakePitcherConstants {
     public static final int kIntakePitcherMotorPort = 2; 
@@ -182,7 +193,7 @@ public final class Constants {
     public static final double kMaxPitchDegrees = 105; 
 
     public static final double kPitcherInDegrees = 0; // Setpoint positions
-    public static final double kPitcherOutDegrees = 103; 
+    public static final double kPitcherOutDegrees = 97; 
 
     public static double intakePitcher_kP = 0.1; 
     public static double intakePitcher_kI = 0; 
