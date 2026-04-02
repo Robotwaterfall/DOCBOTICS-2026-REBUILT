@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.634236804564908,
-        "y": 5.568231098430813
+        "x": 2.6028673323823104,
+        "y": 4.015592011412268
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.09453637660485,
-        "y": 5.024807417974323
+        "x": 1.063166904422253,
+        "y": 3.4721683309557783
       },
       "isLocked": false,
       "linkedName": "kjkbnjaknbdkjanda"
@@ -48,7 +48,7 @@
   "folder": "CenterPaths",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -90.0
+    "rotation": 0.0
   },
   "useDefaultConstraints": true
 }

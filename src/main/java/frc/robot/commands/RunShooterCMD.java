@@ -3,12 +3,13 @@ package frc.robot.commands;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.Constants.LimelightConstants;
 import frc.robot.config.LimelightHelpers;
 import frc.robot.subsystems.ShooterSub;
 import frc.robot.util.ShooterLookup;
 
-public class RunShooterCMD extends Command {
+public class RunShooterCMD extends InstantCommand {
 
     private final ShooterSub shooterSub;
 
@@ -57,14 +58,4 @@ public class RunShooterCMD extends Command {
         shooterSub.setShooterVelocityFPS(desiredVelocity);
     }
 
-    @Override
-    public boolean isFinished() {
-        // return shooterSub.isAtSetVelocityFPS();
-        return true;
-    }
-
-    @Override
-    public void end(boolean interrupted) {
-        shooterSub.stopShooterMotors();
-    }
 }

@@ -188,7 +188,7 @@ public final class Constants {
     public static final double kMaxPitchDegrees = 105; 
 
     public static final double kPitcherInDegrees = 0; // Setpoint positions
-    public static final double kPitcherOutDegrees = 97; 
+    public static final double kPitcherOutDegrees = 100; 
 
     public static double intakePitcher_kP = 0.1; 
     public static double intakePitcher_kI = 0; 

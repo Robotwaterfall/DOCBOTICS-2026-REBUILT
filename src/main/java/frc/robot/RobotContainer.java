@@ -4,18 +4,32 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
+
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PS5Controller;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
+import frc.robot.Constants.IntakePitcherConstants;
 import frc.robot.Constants.OIConstants;
+import frc.robot.commands.DecrementShooterCMD;
+import frc.robot.commands.IncrementShooterCMD;
+import frc.robot.commands.MoveIntakePitcherCMD;
 import frc.robot.commands.ResetHeadingCMD;
+import frc.robot.commands.RunShooterCMD;
+import frc.robot.commands.StopShooterMotorsCMD;
 import frc.robot.commands.SwerveJoystickCMD;
+import frc.robot.commands.commandgroups.FireShot;
 import frc.robot.commands.commandgroups.IntakeFuel;
 import frc.robot.commands.commandgroups.OuttakeFuel;
 import frc.robot.commands.commandgroups.ShootingRoutine;
+import frc.robot.commands.commandgroups.WaitForShooterReady;
 import frc.robot.subsystems.IntakeRollersSub;
 import frc.robot.subsystems.ShooterSub;
 import frc.robot.subsystems.ConveyorSub;
@@ -72,6 +86,7 @@ public class RobotContainer {
     
       autoChooser.addOption("MoveBackward", new PathPlannerAuto("MoveBackward"));
       autoChooser.addOption("DriveAroundHub", new PathPlannerAuto("DriveAroundHub"));
+      autoChooser.addOption("MiddleDepotShootCenter", new PathPlannerAuto("MiddleDepotShootCenter"));
 
       SmartDashboard.putData("AutoMode: ", autoChooser);
   }
@@ -84,10 +99,6 @@ public class RobotContainer {
       new ResetHeadingCMD(swerveSub)
     );
 
-    new JoystickButton(driverJoyStick, Constants.OIConstants.kR2TriggerButton).whileTrue(
-      new ShootingRoutine(shooterSub, indexerSub, conveyorSub)
-    );
-
     new JoystickButton(driverJoyStick, Constants.OIConstants.kR1Button).whileTrue(
       new IntakeFuel(intakeSub, conveyorSub, indexerSub, intakePitcherSub)
     );
@@ -95,6 +106,36 @@ public class RobotContainer {
     new JoystickButton(driverJoyStick, Constants.OIConstants.kL1Button).whileTrue(
       new OuttakeFuel(intakeSub, conveyorSub, indexerSub)
     );
+
+    new JoystickButton(driverJoyStick, OIConstants.kTouchPadButton).whileTrue(
+      new MoveIntakePitcherCMD(intakePitcherSub, IntakePitcherConstants.kPitcherInDegrees)
+    );
+    new JoystickButton(driverJoyStick, Constants.OIConstants.kR2TriggerButton).whileTrue(
+      new ShootingRoutine(shooterSub, indexerSub, conveyorSub, intakePitcherSub)
+    );
+    new JoystickButton(driverJoyStick, Constants.OIConstants.kR2TriggerButton).whileFalse(
+      new StopShooterMotorsCMD(shooterSub)
+    );
+    new JoystickButton(driverJoyStick, Constants.OIConstants.kR2TriggerButton).whileFalse(
+      new MoveIntakePitcherCMD(intakePitcherSub, Constants.IntakePitcherConstants.kPitcherOutDegrees)
+    );
+
+    new POVButton(driverJoyStick, OIConstants.kDpadUP).whileTrue(
+      new IncrementShooterCMD(shooterSub)
+    );
+
+    new POVButton(driverJoyStick, OIConstants.kDpadDOWN).whileTrue(
+      new DecrementShooterCMD(shooterSub)    
+    );
+
+    new POVButton(driverJoyStick, OIConstants.kDpadRIGHTDOWN).whileTrue(
+      new FireShot(indexerSub, conveyorSub, intakePitcherSub)    
+    );
+
+    new JoystickButton(driverJoyStick, OIConstants.kPsButton).whileTrue(
+      new StopShooterMotorsCMD(shooterSub)
+    );
+
   
 
     // new JoystickButton(driverJoyStick, OIConstants.kL2TriggerButton).whileTrue(
@@ -103,6 +144,8 @@ public class RobotContainer {
     //                                  0.5)
     // );
 
+    NamedCommands.registerCommand("Intake", new IntakeFuel(intakeSub, conveyorSub, indexerSub, intakePitcherSub));
+    NamedCommands.registerCommand("ShootingRoutine", new ShootingRoutine(shooterSub, indexerSub, conveyorSub, intakePitcherSub));
   }
 
 

@@ -8,19 +8,67 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.2627389443651924,
-        "y": 4.804850213980028
+        "x": 2.978088445078458,
+        "y": 3.510984308131241
       },
       "isLocked": false,
       "linkedName": "MiddleShoot"
     },
     {
       "anchor": {
-        "x": 4.634236804564908,
-        "y": 5.568231098430813
+        "x": 4.608359486447931,
+        "y": 2.3853209700427964
       },
       "prevControl": {
-        "x": 3.120413694721825,
+        "x": 3.608359486447931,
+        "y": 2.3853209700427964
+      },
+      "nextControl": {
+        "x": 5.608359486447931,
+        "y": 2.3853209700427964
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 6.600912981455064,
+        "y": 4.015592011412268
+      },
+      "prevControl": {
+        "x": 6.600912981455064,
+        "y": 3.0155920114122683
+      },
+      "nextControl": {
+        "x": 6.600912981455064,
+        "y": 5.015592011412268
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 4.711868758915834,
+        "y": 5.64586305278174
+      },
+      "prevControl": {
+        "x": 5.711868758915834,
+        "y": 5.64586305278174
+      },
+      "nextControl": {
+        "x": 3.711868758915834,
+        "y": 5.64586305278174
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.6028673323823104,
+        "y": 4.015592011412268
+      },
+      "prevControl": {
+        "x": 2.4605420827389435,
         "y": 5.089500713266761
       },
       "nextControl": null,
@@ -38,7 +86,7 @@
       },
       "rotationOffset": 0.0,
       "minWaypointRelativePos": 0.0,
-      "maxWaypointRelativePos": 1.0,
+      "maxWaypointRelativePos": 4.0,
       "name": "Point Towards Zone"
     }
   ],
@@ -53,7 +101,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -90.0
+    "rotation": 0.0
   },
   "reversed": false,
   "folder": "CenterPaths",

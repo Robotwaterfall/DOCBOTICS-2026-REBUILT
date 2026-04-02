@@ -4,12 +4,12 @@
     {
       "anchor": {
         "x": 0.5456205420827387,
-        "y": 6.780031037471644
+        "y": 5.0
       },
       "prevControl": null,
       "nextControl": {
         "x": 3.09453637660485,
-        "y": 7.621043876273356
+        "y": 5.841012838801713
       },
       "isLocked": false,
       "linkedName": "driveInDepot"
