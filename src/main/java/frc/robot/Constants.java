@@ -135,15 +135,15 @@ public final class Constants {
 
       public static final int kDriveGyroResetButtonIdx = 10;
     
-      public static final int kSlowModeIdx = 11;
+      public static final int kL3Button = 11; //L3 Button
 
       public static final int kDriverFieldOrientedButtonIdx = 9;
 
-      public static final int kShootingRoutineButton = 8;
-      public static final int kPrepareShotButton = 7;
+      public static final int kR2TriggerButton = 8;
+      public static final int kL2TriggerButton = 7;
 
-      public static final int kIntakeButton = 6;
-      public static final int kOuttakeButton = 5;
+      public static final int kR1Button = 6;
+      public static final int kL1Button = 5;
 
       public static final double kRumblePwr = 0.8;
 
@@ -154,6 +154,8 @@ public final class Constants {
       public static final int kDpadRIGHTDOWN = 135;
 
       public static final int kTouchPadButton = 14;
+
+      public static final int kSquareButton = 1;
 
       public static final int kPsButton = 13;
 
@@ -297,19 +299,6 @@ public final class Constants {
     public static final double ALLIANCE_ZONE_Y_MAX_BLUEin = 317.68; 
 
     
-  }
-
-  public static final class GeorgianCollegeConstants{
-    public static final int kCloseShotButton = 1;
-    public static final int kFarShotButton = 2;
-    public static final int kNeutralShotButton = 3;
-
-    public static final double kShootFarVelocity = 100;
-    public static final double kShootFarAngle = 45;
-
-    public static final double kShootCloseVelocity = 45;
-    public static final double kShootCloseAngle = 56;
-
   }
   
   public static final double telemetryUpdate = 0.1; //Update every 100ms

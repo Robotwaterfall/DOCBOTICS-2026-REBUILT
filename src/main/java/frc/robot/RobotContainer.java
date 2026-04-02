@@ -5,6 +5,7 @@
 package frc.robot;
 
 import com.pathplanner.lib.commands.PathPlannerAuto;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PS5Controller;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -16,6 +17,7 @@ import frc.robot.commands.AlignToHubCMD;
 import frc.robot.commands.ResetHeadingCMD;
 import frc.robot.commands.RunShooterCMD;
 import frc.robot.commands.SwerveJoystickCMD;
+import frc.robot.commands.commandgroups.FireShot;
 import frc.robot.commands.commandgroups.IntakeFuel;
 import frc.robot.commands.commandgroups.OuttakeFuel;
 import frc.robot.subsystems.IntakeRollersSub;
@@ -63,7 +65,7 @@ public class RobotContainer {
             () -> -driverJoyStick.getRawAxis(OIConstants.kDriverYAxis),
             () -> driverJoyStick.getRawAxis(OIConstants.kDriverXAxis),
             () -> driverJoyStick.getRawAxis(OIConstants.kDriverRotAxis),
-            () -> driverJoyStick.getRawButtonPressed(OIConstants.kSlowModeIdx),
+            () -> driverJoyStick.getRawButtonPressed(OIConstants.kL3Button),
              /// By default will be on field oriented.
             () -> !
             driverJoyStick.getRawButton(OIConstants.kDriverFieldOrientedButtonIdx))); 
@@ -91,20 +93,24 @@ public class RobotContainer {
       new RunShooterCMD(shooterSub)
     );
 
-    new JoystickButton(driverJoyStick, Constants.GeorgianCollegeConstants.kCloseShotButton).whileTrue(
+    new JoystickButton(driverJoyStick, Constants.OIConstants.kR2TriggerButton).whileTrue(
       shootClose
     );
 
-    new JoystickButton(driverJoyStick, Constants.OIConstants.kIntakeButton).whileTrue(
+    new JoystickButton(driverJoyStick, Constants.OIConstants.kR1Button).whileTrue(
       new IntakeFuel(intakeSub, conveyorSub, indexerSub, intakePitcherSub)
     );
     
-    new JoystickButton(driverJoyStick, Constants.OIConstants.kOuttakeButton).whileTrue(
+    new JoystickButton(driverJoyStick, Constants.OIConstants.kL1Button).whileTrue(
       new OuttakeFuel(intakeSub, conveyorSub, indexerSub)
+    );
+
+    new JoystickButton(driverJoyStick, Constants.OIConstants.kL2TriggerButton).whileTrue(
+      new FireShot(indexerSub, conveyorSub, intakePitcherSub)
     );
   
 
-    // new JoystickButton(driverJoyStick, OIConstants.kPrepareShotButton).whileTrue(
+    // new JoystickButton(driverJoyStick, OIConstants.kL2TriggerButton).whileTrue(
     //   new AlignToHubCMD(swerveSub,  () -> -driverJoyStick.getRawAxis(OIConstants.kDriverXAxis), 
     //                                 () -> driverJoyStick.getRawAxis(OIConstants.kDriverYAxis),
     //                                  0.5)
