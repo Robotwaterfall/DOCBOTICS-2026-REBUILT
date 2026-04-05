@@ -7,13 +7,15 @@ import frc.robot.subsystems.ConveyorSub;
 import frc.robot.subsystems.IndexerSub;
 import frc.robot.subsystems.IntakePitcherSub;
 import frc.robot.subsystems.ShooterSub;
+import frc.robot.subsystems.SwerveSub;
 
 public class ShootingRoutine extends SequentialCommandGroup{
 
-    public ShootingRoutine(ShooterSub shooterSub, IndexerSub indexerSub, ConveyorSub conveyorSub, IntakePitcherSub intakePitcherSub){
+    public ShootingRoutine(ShooterSub shooterSub, IndexerSub indexerSub, ConveyorSub conveyorSub, 
+        IntakePitcherSub intakePitcherSub, SwerveSub swerveSub){
 
         addCommands(
-            new RunShooterCMD(shooterSub),
+            new RunShooterCMD(shooterSub, swerveSub),
             new SequentialCommandGroup(
             new WaitForShooterReady(shooterSub),
             new FireShot(indexerSub, conveyorSub, intakePitcherSub)

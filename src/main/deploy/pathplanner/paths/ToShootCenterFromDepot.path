@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.09453637660485,
-        "y": 5.841012838801713
+        "x": 3.314493580599143,
+        "y": 5.115378031383738
       },
       "isLocked": false,
       "linkedName": "driveInDepot"
@@ -30,8 +30,8 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.2657882780554312,
-      "rotationDegrees": 0.0
+      "waypointRelativePos": 0.2712403452975891,
+      "rotationDegrees": -90.0
     }
   ],
   "constraintZones": [],

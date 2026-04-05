@@ -7,6 +7,7 @@ import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.SwerveSub;
@@ -63,11 +64,12 @@ public class AlignToHubCMD extends Command {
         xSpeed = xLimiter.calculate(xSpeed) * DriveConstants.kTeleDriveMaxSpeedMetersPerSecond;
         ySpeed = yLimiter.calculate(ySpeed) * DriveConstants.kTeleDriveMaxSpeedMetersPerSecond;
 
-        double turnCommand = 0.0;
+        double errorDeg = PoseManager.getHeadingErrorDegreesHub(swerveSubsystem);
 
-        turnCommand = PoseManager.getHeadingErrorDegreesHub(swerveSubsystem);
-
-        turnCommand = MathUtil.clamp(turnCommand, -1.0, 1.0);
+        double kP = Constants.DriveConstants.autoTargetConstants.autoOrientKp;
+        double turnCommand = MathUtil.clamp(errorDeg * kP, -Constants.DriveConstants.autoTargetConstants.autoOrientSpeed, 
+            Constants.DriveConstants.autoTargetConstants.autoOrientSpeed
+        );
 
         double turningSpeed = turningLimiter.calculate(turnCommand)
                 * DriveConstants.kTeleDriveMaxAngularSpeedRadiansPerSecond;
@@ -75,7 +77,7 @@ public class AlignToHubCMD extends Command {
         ChassisSpeeds chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
                 xSpeed,
                 -ySpeed,
-                -turningSpeed,
+                turningSpeed,
                 swerveSubsystem.getRotation2d());
 
         CurrentXSpeed = xSpeed;

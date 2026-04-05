@@ -1,25 +1,24 @@
 package frc.robot.commands;
 
-import edu.wpi.first.math.geometry.Pose3d;
-import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import frc.robot.Constants.LimelightConstants;
-import frc.robot.config.LimelightHelpers;
 import frc.robot.subsystems.ShooterSub;
+import frc.robot.subsystems.SwerveSub;
+import frc.robot.util.PoseManager;
 import frc.robot.util.ShooterLookup;
 
 public class RunShooterCMD extends InstantCommand {
 
     private final ShooterSub shooterSub;
+    private final SwerveSub swerveSub;
 
     private double desiredVelocity; // fps
     private final boolean distanceBased;
 
     // 1‑param constructor
     // → distance-based: looks up velocity from Limelight distance when command starts
-    public RunShooterCMD(ShooterSub shooterSub) {
+    public RunShooterCMD(ShooterSub shooterSub, SwerveSub swerveSub) {
         this.shooterSub = shooterSub;
+        this.swerveSub = swerveSub;
         this.desiredVelocity = 0;
         this.distanceBased = true;
 
@@ -28,8 +27,9 @@ public class RunShooterCMD extends InstantCommand {
 
     // 2‑param constructor
     // → desiredVelocity is passed explicitly
-    public RunShooterCMD(ShooterSub shooterSub, double desiredVelocity) {
+    public RunShooterCMD(ShooterSub shooterSub, SwerveSub swerveSub, double desiredVelocity) {
         this.shooterSub = shooterSub;
+        this.swerveSub = swerveSub;
         this.desiredVelocity = desiredVelocity;
         this.distanceBased = false;
 
@@ -39,18 +39,9 @@ public class RunShooterCMD extends InstantCommand {
     @Override
     public void initialize() {
         if (distanceBased) {
-            double distanceFeet = getLimelightDistanceFeet();
+            double distanceFeet = PoseManager.getDistanceToHubFeet(swerveSub);
             this.desiredVelocity = ShooterLookup.getInterpolatedVelocity(distanceFeet);
         }
-    }
-
-    private double getLimelightDistanceFeet() {
-        Pose3d targetPose = LimelightHelpers.getTargetPose3d_CameraSpace(LimelightConstants.LimelightFront);
-        double distMeters = Math.sqrt(
-            targetPose.getX() * targetPose.getX() +
-            targetPose.getY() * targetPose.getY() +
-            targetPose.getZ() * targetPose.getZ());
-        return Units.metersToInches(distMeters) / 12.0;
     }
 
     @Override

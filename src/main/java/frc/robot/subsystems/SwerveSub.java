@@ -161,9 +161,6 @@ public class SwerveSub extends SubsystemBase {
 
         m_Field.setRobotPose(poseEstimator.getEstimatedPosition());
 
-        // Logging and Telemetry
-        Logger.recordOutput("RobotPose", poseEstimator.getEstimatedPosition());
-        Logger.recordOutput("heading", getHeading());
 
         SwerveModulePosition[] debugModulePosition = getModulePositionsAuto();
         for (int i = 0; i < debugModulePosition.length; i++) {
@@ -182,15 +179,17 @@ public class SwerveSub extends SubsystemBase {
         SmartDashboard.putNumber("ErrorToHub", PoseManager.getHeadingErrorDegreesHub(this));
         SmartDashboard.putBoolean("isInAllianceZone", PoseManager.isInAllianceZone(this));
 
-        // Limelight distance to target for shooter calibration
-        edu.wpi.first.math.geometry.Pose3d targetPose =
-            LimelightHelpers.getTargetPose3d_CameraSpace(LimelightConstants.LimelightFront);
-        distMeters = Math.sqrt(
-            targetPose.getX() * targetPose.getX() +
-            targetPose.getY() * targetPose.getY() +
-            targetPose.getZ() * targetPose.getZ());
-        SmartDashboard.putNumber("LL_Dist_ft", edu.wpi.first.math.util.Units.metersToInches(distMeters) / 12.0);
-        SmartDashboard.putNumber("LL_Dist_in", edu.wpi.first.math.util.Units.metersToInches(distMeters));
+        SmartDashboard.putNumber("Dist_To_HubFT", PoseManager.getDistanceToHubFeet(this));
+
+        // // Limelight distance to target for shooter calibration
+        // edu.wpi.first.math.geometry.Pose3d targetPose =
+        //     LimelightHelpers.getTargetPose3d_CameraSpace(LimelightConstants.LimelightFront);
+        // distMeters = Math.sqrt(
+        //     targetPose.getX() * targetPose.getX() +
+        //     targetPose.getY() * targetPose.getY() +
+        //     targetPose.getZ() * targetPose.getZ());
+        // SmartDashboard.putNumber("LL_Dist_ft", edu.wpi.first.math.util.Units.metersToInches(distMeters) / 12.0);
+        // SmartDashboard.putNumber("LL_Dist_in", edu.wpi.first.math.util.Units.metersToInches(distMeters));
     }
 
     private void fuseLimelight(String limelightName) {

@@ -33,8 +33,8 @@ public final class PoseManager {
 
         Pose2d fieldPose = FlippingUtil.flipFieldPose(robotPose);
 
-        double x = fieldPose.getX();
-        double y = fieldPose.getY();
+        double x = Units.metersToInches(fieldPose.getX());
+        double y = Units.metersToInches(fieldPose.getY());
 
         boolean inX = x >= Pose2DConstants.ALLIANCE_ZONE_X_MIN_BLUEin &&
                       x <= Pose2DConstants.ALLIANCE_ZONE_X_MAX_BLUEin;
@@ -46,19 +46,19 @@ public final class PoseManager {
     }
 
     /** Returns inches away from a target pose */
-    public static double getDistanceToTargetInches(SwerveSub swerveSub, Pose2d targetPose) {
+    public static double getDistanceToTargetFeet(SwerveSub swerveSub, Pose2d targetPose) {
         Pose2d robotPose = swerveSub.getPose();
-        if (robotPose == null || targetPose == null) return -1.0;
+        if (robotPose == null || targetPose == null) return 0.0;
 
         double distMeters =
             robotPose.getTranslation().getDistance(targetPose.getTranslation());
 
-        return Units.metersToInches(distMeters);
+        return Units.metersToFeet(distMeters);
     }
 
     /** Returns inches away from the hub */
-    public static double getDistanceToHubInches(SwerveSub swerveSub) {
-        return getDistanceToTargetInches(swerveSub, getAllianceHubPose2d());
+    public static double getDistanceToHubFeet(SwerveSub swerveSub) {
+        return getDistanceToTargetFeet(swerveSub, getAllianceHubPose2d());
     }
 
     /** Returns the heading (degrees) from robot to target */
@@ -80,7 +80,11 @@ public final class PoseManager {
         double targetDeg = getHeadingToTargetDegrees(swerveSub, targetPose);
         double robotDeg = robotPose.getRotation().getDegrees();
 
-        return MathUtil.angleModulus(robotDeg - targetDeg);
+        // Convert to radians for angleModulus, then back to degrees
+        double errorRad = MathUtil.angleModulus(
+            Math.toRadians(targetDeg - robotDeg)  // ✅ target - robot, not robot - target
+        );
+        return Math.toDegrees(errorRad);
     }
 
     /** Returns heading error to the hub */
