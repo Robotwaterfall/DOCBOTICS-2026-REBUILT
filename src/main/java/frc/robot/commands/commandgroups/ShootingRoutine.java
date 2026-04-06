@@ -17,7 +17,7 @@ public class ShootingRoutine extends SequentialCommandGroup{
         addCommands(
             new RunShooterCMD(shooterSub, swerveSub),
             new SequentialCommandGroup(
-            new WaitForShooterReady(shooterSub),
+            new WaitForShooterReady(shooterSub, swerveSub),
             new FireShot(indexerSub, conveyorSub, intakePitcherSub)
             )
         );
