@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import javax.naming.PartialResultException;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
@@ -16,8 +17,10 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
+import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.IntakePitcherConstants;
 import frc.robot.Constants.OIConstants;
+import frc.robot.commands.AlignToHubCMD;
 import frc.robot.commands.DecrementShooterCMD;
 import frc.robot.commands.IncrementShooterCMD;
 import frc.robot.commands.MoveIntakePitcherCMD;
@@ -113,11 +116,16 @@ public class RobotContainer {
     new JoystickButton(driverJoyStick, Constants.OIConstants.kR2TriggerButton).whileTrue(
       new ShootingRoutine(shooterSub, indexerSub, conveyorSub, intakePitcherSub, swerveSub)
     );
-    new JoystickButton(driverJoyStick, Constants.OIConstants.kR2TriggerButton).whileFalse(
-      new StopShooterMotorsCMD(shooterSub)
+
+    Command StopShooting = 
+    new ParallelCommandGroup(
+      new StopShooterMotorsCMD(shooterSub),
+      new MoveIntakePitcherCMD(intakePitcherSub, IntakePitcherConstants.kPitcherOutDegrees)
     );
+
+    //when the r2 trigger isnt being held stop the shooter motors and put the intake pitcher out to idle
     new JoystickButton(driverJoyStick, Constants.OIConstants.kR2TriggerButton).whileFalse(
-      new MoveIntakePitcherCMD(intakePitcherSub, Constants.IntakePitcherConstants.kPitcherOutDegrees)
+      StopShooting
     );
 
     new POVButton(driverJoyStick, OIConstants.kDpadUP).whileTrue(
@@ -128,21 +136,22 @@ public class RobotContainer {
       new DecrementShooterCMD(shooterSub)    
     );
 
+    //Fire a shot Manually
     new POVButton(driverJoyStick, OIConstants.kDpadRIGHTDOWN).whileTrue(
       new FireShot(indexerSub, conveyorSub, intakePitcherSub)    
     );
 
     new JoystickButton(driverJoyStick, OIConstants.kPsButton).whileTrue(
-      new StopShooterMotorsCMD(shooterSub)
+      StopShooting
     );
 
   
 
-    // new JoystickButton(driverJoyStick, OIConstants.kL2TriggerButton).whileTrue(
-    //   new AlignToHubCMD(swerveSub,  () -> -driverJoyStick.getRawAxis(OIConstants.kDriverXAxis), 
-    //                                 () -> driverJoyStick.getRawAxis(OIConstants.kDriverYAxis),
-    //                                  0.5)
-    // );
+    new JoystickButton(driverJoyStick, OIConstants.kL2TriggerButton).whileTrue(
+      new AlignToHubCMD(swerveSub, 
+        () -> driverJoyStick.getRawAxis(OIConstants.kDriverXAxis), 
+        () -> -driverJoyStick.getRawAxis(OIConstants.kDriverYAxis)
+    ));
 
     NamedCommands.registerCommand("Intake", new IntakeFuel(intakeSub, conveyorSub, indexerSub, 
       intakePitcherSub));

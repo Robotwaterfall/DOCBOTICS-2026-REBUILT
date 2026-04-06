@@ -29,18 +29,15 @@ public class AlignToHubCMD extends Command {
     public static double CurrentTurningSpeed;
     public static boolean CurrentOrientation;
 
-    public final double speed;
-
     public AlignToHubCMD(
             SwerveSub swerveSubsystem,
             Supplier<Double> xSpdFunction,
-            Supplier<Double> ySpdFunction,
-            double speed) {
+            Supplier<Double> ySpdFunction) {
 
         this.swerveSubsystem = swerveSubsystem;
         this.xSpdFunction = xSpdFunction;
         this.ySpdFunction = ySpdFunction;
-        this.speed = speed;
+            
 
         this.xLimiter = new SlewRateLimiter(DriveConstants.kTeleDriveMaxAccelerationUnitsPerSecond);
         this.yLimiter = new SlewRateLimiter(DriveConstants.kTeleDriveMaxAccelerationUnitsPerSecond);
