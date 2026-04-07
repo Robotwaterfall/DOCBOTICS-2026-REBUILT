@@ -8,6 +8,7 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -41,6 +42,8 @@ public class SwerveSub extends SubsystemBase {
     private RobotConfig config;
 
     public double distMeters;
+
+    private Trajectory currentPPTrajectory;
 
     public SwerveSub() {
          // 1. Initialize Swerve Modules FIRST
@@ -145,12 +148,24 @@ public class SwerveSub extends SubsystemBase {
 
     // 6. Dashboard + Limelight
     SmartDashboard.putData("Field", m_Field);
+
+    m_Field.getObject("PPTrajectory");
+
+    resetTrajectory();
     
     // Reset pose after everything ready
     poseEstimator.resetPosition(getRotation2d(), getModulePositionsAuto(), new Pose2d());
     
     LimelightHelpers.setPipelineIndex(LimelightConstants.LimelightFront, 0);
     LimelightHelpers.setPipelineIndex(LimelightConstants.LimelightBackLeft, 0);
+    }
+
+    public void setCurrentPPTrajectory(Trajectory trajectory) {
+        this.currentPPTrajectory = trajectory;
+    }
+
+    public Trajectory getCurrentPPTrajectory() {
+        return currentPPTrajectory;
     }
 
     @Override
@@ -160,6 +175,10 @@ public class SwerveSub extends SubsystemBase {
         fuseLimelight(LimelightConstants.LimelightFront);
 
         m_Field.setRobotPose(poseEstimator.getEstimatedPosition());
+
+        if(currentPPTrajectory != null) {
+            m_Field.getObject("PPTrajectory").setTrajectory(currentPPTrajectory);
+        }
 
 
         SwerveModulePosition[] debugModulePosition = getModulePositionsAuto();
@@ -234,6 +253,10 @@ public class SwerveSub extends SubsystemBase {
 
     public ChassisSpeeds getSpeeds() {
         return DriveConstants.kDriveKinematics.toChassisSpeeds(getModuleStates());
+    }
+
+    public void resetTrajectory(){
+        currentPPTrajectory = null;
     }
 
     public void driveRobotRelative(ChassisSpeeds robotRelativeSpeeds) {

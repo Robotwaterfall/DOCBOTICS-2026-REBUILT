@@ -188,7 +188,7 @@ public final class Constants {
     public static final double kMaxPitchDegrees = 105; 
 
     public static final double kPitcherInDegrees = 0; // Setpoint positions
-    public static final double kPitcherOutDegrees = 100; 
+    public static final double kPitcherOutDegrees = 103; 
 
     public static double intakePitcher_kP = 0.1; 
     public static double intakePitcher_kI = 0; 
@@ -196,9 +196,9 @@ public final class Constants {
 
     public static double intakePitcherToleranceDegrees = 1;
 
-    public static double intakePitcherWaitTimeSec = 0.8; 
+    public static double intakePitcherWaitTimeSec = 0.5; 
 
-    public static double intakePitcherFlutterDegrees = 95;
+    public static double intakePitcherFlutterDegrees = 90;
 
     public static final IdleMode pitcherIdleMode = IdleMode.kCoast;
 
@@ -254,6 +254,12 @@ public final class Constants {
     
     public static final double xHubPose = 4.63; // blue hub center (meters), derived from AprilTag ring
     public static final double yHubPose = 4.03; // blue hub center (meters), derived from AprilTag ring
+
+    public static final double xAllianceZoneLeftPose = 0;
+    public static final double yAllianceZoneLeftPose = 0;
+
+    public static final double xAllianceZoneRightPose = 0;
+    public static final double yAllianceZoneRightPose = 0;
 
     public static final double ALLIANCE_ZONE_X_MIN_BLUEin = 0.0;
     public static final double ALLIANCE_ZONE_X_MAX_BLUEin = 182.11;

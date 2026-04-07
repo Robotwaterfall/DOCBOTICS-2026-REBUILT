@@ -4,20 +4,16 @@
 
 package frc.robot;
 
-import javax.naming.PartialResultException;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PS5Controller;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
-import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.IntakePitcherConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.AlignToHubCMD;
@@ -25,14 +21,12 @@ import frc.robot.commands.DecrementShooterCMD;
 import frc.robot.commands.IncrementShooterCMD;
 import frc.robot.commands.MoveIntakePitcherCMD;
 import frc.robot.commands.ResetHeadingCMD;
-import frc.robot.commands.RunShooterCMD;
 import frc.robot.commands.StopShooterMotorsCMD;
 import frc.robot.commands.SwerveJoystickCMD;
 import frc.robot.commands.commandgroups.FireShot;
 import frc.robot.commands.commandgroups.IntakeFuel;
 import frc.robot.commands.commandgroups.OuttakeFuel;
 import frc.robot.commands.commandgroups.ShootingRoutine;
-import frc.robot.commands.commandgroups.WaitForShooterReady;
 import frc.robot.subsystems.IntakeRollersSub;
 import frc.robot.subsystems.ShooterSub;
 import frc.robot.subsystems.ConveyorSub;

@@ -7,6 +7,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import frc.robot.Constants.Pose2DConstants;
 import frc.robot.subsystems.SwerveSub;
 
@@ -16,6 +17,14 @@ public final class PoseManager {
 
     private static final Pose2d HUB_POSE =
         new Pose2d(Pose2DConstants.xHubPose, Pose2DConstants.yHubPose, new Rotation2d());
+    
+    private static final Pose2d LEFT_ALLIANCE_ZONE_POSE =
+        new Pose2d(Pose2DConstants.xAllianceZoneLeftPose, Pose2DConstants.yAllianceZoneLeftPose, 
+            new Rotation2d());
+
+    private static final Pose2d RIGHT_ALLIANCE_ZONE_POSE =
+        new Pose2d(Pose2DConstants.xAllianceZoneRightPose, Pose2DConstants.yAllianceZoneRightPose, 
+            new Rotation2d());
 
     /** Returns the hub pose for the current alliance */
     public static Pose2d getAllianceHubPose2d() {
@@ -26,23 +35,54 @@ public final class PoseManager {
             .orElse(HUB_POSE);
     }
 
+    //Start of pose for shooting to alliance area
+    public static Pose2d getLeftAllianceZonePose2d(){
+        return DriverStation.getAlliance()
+        .map(alliance -> alliance == DriverStation.Alliance.Red
+            ? FlippingUtil.flipFieldPose(LEFT_ALLIANCE_ZONE_POSE)
+            : LEFT_ALLIANCE_ZONE_POSE)
+            .orElse(LEFT_ALLIANCE_ZONE_POSE);
+    }
+    public static Pose2d getRightAllianceZonePose2d(){
+        return DriverStation.getAlliance()
+        .map(alliance -> alliance == DriverStation.Alliance.Red
+            ? FlippingUtil.flipFieldPose(RIGHT_ALLIANCE_ZONE_POSE)
+            : RIGHT_ALLIANCE_ZONE_POSE)
+            .orElse(RIGHT_ALLIANCE_ZONE_POSE);
+    }
+    //end of pose for shooting to alliance area
+
     /** True if the robot is inside the alliance zone */
     public static boolean isInAllianceZone(SwerveSub swerveSub) {
         Pose2d robotPose = swerveSub.getPose();
         if (robotPose == null) return false;
 
-        Pose2d fieldPose = FlippingUtil.flipFieldPose(robotPose);
+        Translation2d blueMin = new Translation2d(
+            Units.inchesToMeters(Pose2DConstants.ALLIANCE_ZONE_X_MIN_BLUEin),
+            Units.inchesToMeters(Pose2DConstants.ALLIANCE_ZONE_Y_MIN_BLUEin)
+        );
 
-        double x = Units.metersToInches(fieldPose.getX());
-        double y = Units.metersToInches(fieldPose.getY());
+        Translation2d blueMax = new Translation2d(
+            Units.inchesToMeters(Pose2DConstants.ALLIANCE_ZONE_X_MAX_BLUEin),
+            Units.inchesToMeters(Pose2DConstants.ALLIANCE_ZONE_Y_MAX_BLUEin)
+        );
 
-        boolean inX = x >= Pose2DConstants.ALLIANCE_ZONE_X_MIN_BLUEin &&
-                      x <= Pose2DConstants.ALLIANCE_ZONE_X_MAX_BLUEin;
+        boolean isRed = DriverStation.getAlliance()
+            .map(alliance -> alliance == Alliance.Red)
+            .orElse(false);
 
-        boolean inY = y >= Pose2DConstants.ALLIANCE_ZONE_Y_MIN_BLUEin &&
-                      y <= Pose2DConstants.ALLIANCE_ZONE_Y_MAX_BLUEin;
+        Translation2d min = isRed ? FlippingUtil.flipFieldPosition(blueMin) : blueMin;
+        Translation2d max = isRed ? FlippingUtil.flipFieldPosition(blueMax) : blueMax;
 
-        return inX && inY;
+        double minX = Math.min(min.getX(), max.getX());
+        double maxX = Math.max(min.getX(), max.getX());
+        double minY = Math.min(min.getY(), max.getY());
+        double maxY = Math.max(min.getY(), max.getY());
+
+        double x = robotPose.getX();
+        double y = robotPose.getY();
+
+        return x >= minX && x <= maxX && y >= minY && y <= maxY;
     }
 
     /** Returns inches away from a target pose */
