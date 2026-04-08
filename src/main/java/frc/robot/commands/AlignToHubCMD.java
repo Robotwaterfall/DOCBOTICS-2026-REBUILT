@@ -12,6 +12,7 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.SwerveSub;
 import frc.robot.util.PoseManager;
+import frc.robot.util.ShooterLookup;
 
 public class AlignToHubCMD extends Command {
 
@@ -28,6 +29,8 @@ public class AlignToHubCMD extends Command {
     public static double CurrentYSpeed;
     public static double CurrentTurningSpeed;
     public static boolean CurrentOrientation;
+
+    public double errorDeg = 0;
 
     public AlignToHubCMD(
             SwerveSub swerveSubsystem,
@@ -61,7 +64,23 @@ public class AlignToHubCMD extends Command {
         xSpeed = xLimiter.calculate(xSpeed) * DriveConstants.kTeleDriveMaxSpeedMetersPerSecond;
         ySpeed = yLimiter.calculate(ySpeed) * DriveConstants.kTeleDriveMaxSpeedMetersPerSecond;
 
-        double errorDeg = PoseManager.getHeadingErrorDegreesHub(swerveSubsystem);
+        if(PoseManager.isInAllianceZone(swerveSubsystem)){
+             errorDeg = PoseManager.getHeadingErrorDegreesHub(swerveSubsystem);
+         } else if (
+                PoseManager.isInWasteLand(swerveSubsystem) && 
+                PoseManager.isOnLeftSideOfField(swerveSubsystem) && 
+                !PoseManager.isInAllianceZone(swerveSubsystem)){
+             errorDeg = PoseManager.getHeadingErrorDegreesLeftAllianceZoneArea(swerveSubsystem);
+            
+        } else if (
+                PoseManager.isInWasteLand(swerveSubsystem) && 
+                !PoseManager.isOnLeftSideOfField(swerveSubsystem) && 
+                !PoseManager.isInAllianceZone(swerveSubsystem)){
+            
+             errorDeg = PoseManager.getHeadingErrorDegreesRightAllianceZoneArea(swerveSubsystem);
+        } else {
+             errorDeg = PoseManager.getHeadingErrorDegreesHub(swerveSubsystem);
+        }
 
         double kP = Constants.DriveConstants.autoTargetConstants.autoOrientKp;
         double turnCommand = MathUtil.clamp(errorDeg * kP, -Constants.DriveConstants.autoTargetConstants.autoOrientSpeed, 

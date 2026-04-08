@@ -199,6 +199,8 @@ public class SwerveSub extends SubsystemBase {
         SmartDashboard.putBoolean("isInAllianceZone", PoseManager.isInAllianceZone(this));
 
         SmartDashboard.putNumber("Dist_To_HubFT", PoseManager.getDistanceToHubFeet(this));
+        SmartDashboard.putNumber("Dist_To_LeftAllianceArea", PoseManager.getDistanceToLeftAllianceZone(this));
+        SmartDashboard.putNumber("Dist_To_RightAllianceArea", PoseManager.getDistanceToRightAllianceZone(this));
 
         // // Limelight distance to target for shooter calibration
         // edu.wpi.first.math.geometry.Pose3d targetPose =

@@ -38,7 +38,26 @@ public class RunShooterCMD extends InstantCommand {
 
     @Override
     public void initialize() {
-        if (distanceBased) {
+        if (distanceBased && PoseManager.isInAllianceZone(swerveSub)) {
+            double distanceFeet = PoseManager.getDistanceToHubFeet(swerveSub);
+            this.desiredVelocity = ShooterLookup.getInterpolatedVelocity(distanceFeet);
+        } else if (
+                distanceBased && 
+                PoseManager.isInWasteLand(swerveSub) && 
+                PoseManager.isOnLeftSideOfField(swerveSub) && 
+                !PoseManager.isInAllianceZone(swerveSub)){
+            
+            double distanceFeet = PoseManager.getDistanceToLeftAllianceZone(swerveSub);
+            this.desiredVelocity = ShooterLookup.getInterpolatedVelocity(distanceFeet);
+        } else if (
+                distanceBased && 
+                PoseManager.isInWasteLand(swerveSub) && 
+                !PoseManager.isOnLeftSideOfField(swerveSub) && 
+                !PoseManager.isInAllianceZone(swerveSub)){
+            
+            double distanceFeet = PoseManager.getDistanceToRightAllianceZone(swerveSub);
+            this.desiredVelocity = ShooterLookup.getInterpolatedVelocity(distanceFeet);
+        } else {
             double distanceFeet = PoseManager.getDistanceToHubFeet(swerveSub);
             this.desiredVelocity = ShooterLookup.getInterpolatedVelocity(distanceFeet);
         }

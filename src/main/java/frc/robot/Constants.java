@@ -202,7 +202,7 @@ public final class Constants {
 
     public static final IdleMode pitcherIdleMode = IdleMode.kCoast;
 
-    public static final double pitcherMaxSpeed = 0.25;
+    public static final double pitcherMaxSpeed = 0.2;
   }
 
   public static final class ShooterConstants {
@@ -252,19 +252,42 @@ public final class Constants {
 
   public static final class Pose2DConstants{
     
-    public static final double xHubPose = 4.63; // blue hub center (meters), derived from AprilTag ring
-    public static final double yHubPose = 4.03; // blue hub center (meters), derived from AprilTag ring
+  // Field geometry in METERS (FRC coord: origin bottom-right(DRIVER PRESPECTIVE) BLUE alliance wall)
+  // From 2026 field drawings + your AprilTag-derived hub
+  public static final double X_HUB_POSE_M = 4.63; // blue hub center
+  public static final double Y_HUB_POSE_M = 4.03; // blue hub center (alliance depth)
 
-    public static final double xAllianceZoneLeftPose = 0;
-    public static final double yAllianceZoneLeftPose = 0;
+  // Alliance zone poses (left/right corners, bottom)
+  public static final double X_ALLIANCE_ZONE_LEFT_M = 0.0;
+  public static final double Y_ALLIANCE_ZONE_LEFT_M = 0.0;
 
-    public static final double xAllianceZoneRightPose = 0;
-    public static final double yAllianceZoneRightPose = 0;
+  public static final double X_ALLIANCE_ZONE_RIGHT_M = 8.07; // full width
+  public static final double Y_ALLIANCE_ZONE_RIGHT_M = 4.03; // alliance depth
 
-    public static final double ALLIANCE_ZONE_X_MIN_BLUEin = 0.0;
-    public static final double ALLIANCE_ZONE_X_MAX_BLUEin = 182.11;
-    public static final double ALLIANCE_ZONE_Y_MIN_BLUEin = 0.0;
-    public static final double ALLIANCE_ZONE_Y_MAX_BLUEin = 317.68; 
+  // Blue alliance zone bounds (rectangle: full width x alliance depth)
+  public static final double ALLIANCE_ZONE_X_MIN_BLUE_M = 0.0;
+  public static final double ALLIANCE_ZONE_X_MAX_BLUE_M = 8.07;
+  public static final double ALLIANCE_ZONE_Y_MIN_BLUE_M = 0.0;
+  public static final double ALLIANCE_ZONE_Y_MAX_BLUE_M = 4.03; // hub Y
+
+  // Full field
+  public static final double FIELD_X_MIN_M = 0.0;
+  public static final double FIELD_X_MAX_M = 8.07; // width 317in
+  public static final double FIELD_Y_MIN_M = 0.0;
+  public static final double FIELD_Y_MAX_M = 16.54; // length ~651in (2026 longer)
+
+  // Half field (left half: vertical midline, full width x 0 to half length)
+  public static final double HALF_FIELD_X_MIN_M = 0.0;
+  public static final double HALF_FIELD_X_MAX_M = 8.07;
+  public static final double HALF_FIELD_Y_MIN_M = 0.0;
+  public static final double HALF_FIELD_Y_MAX_M = 8.27; // half of 16.54
+
+  // Neutral zone / wasteland (front rectangle: 0 to neutral depth x full field)
+  public static final double NEUTRAL_ZONE_X_MIN_M = 0.0;
+  public static final double NEUTRAL_ZONE_X_MAX_M = 7.19; // 283in depth
+  public static final double NEUTRAL_ZONE_Y_MIN_M = 0.0;
+  public static final double NEUTRAL_ZONE_Y_MAX_M = 16.54; // full length
+
 
   }
 }
