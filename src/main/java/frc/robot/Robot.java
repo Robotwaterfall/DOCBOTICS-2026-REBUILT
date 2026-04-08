@@ -4,16 +4,10 @@
 
 package frc.robot;
 
-import java.util.Optional;
-
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.subsystems.LedSub;
-import frc.robot.util.HubLogic;
+import frc.robot.commands.PeriodicLightsCMD;
 
 /**
  * The methods in this class are called automatically corresponding to each mode, as described in
@@ -24,8 +18,6 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private final RobotContainer m_robotContainer;
-  private final LedSub robotLights = new LedSub();
-  private final HubLogic hubLogic = new HubLogic();
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -51,46 +43,8 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
-    Optional<Alliance> ally = DriverStation.getAlliance();
 
-    if (DriverStation.isDisabled()) {
-      robotLights.disable();
-    } else if (DriverStation.isAutonomous()) {
-    if (DriverStation.isFMSAttached()) {
-      robotLights.setRainbow();
-    } else {
-      robotLights.setOrangeBlink();
-    }
-    } else if (DriverStation.isTeleop()) {
-      if (DriverStation.isFMSAttached()) {
-
-switch (hubLogic.getHubState()) {
-  case ACTIVE:
-          // if (ally.get() == Alliance.Red) {
-          //   SmartDashboard.putString("Active Hub:", "Red");
-          // } else {
-          //   SmartDashboard.putString("Active Hub:", "Blue");
-          // }
-    robotLights.setRainbow();
-    break;
-  case INACTIVE:
-          if (ally.get() == Alliance.Red) {
-            robotLights.setRawPattern(Constants.LEDConstants.BLINKIN_PATTERN_BLUE_POS);
-            // SmartDashboard.putString("Active Hub:", "Blue");
-          } else {
-            robotLights.setRawPattern(Constants.LEDConstants.BLINKIN_PATTERN_RED_POS);
-            // SmartDashboard.putString("Active Hub:", "Red");
-          }
-    break;
-  case WARNING:
-    robotLights.setRawPattern(Constants.LEDConstants.BLINKIN_PATTERN_SHIFT);
-    // SmartDashboard.putString("Active Hub:", "Shifting..");
-    break;
-}
-      } else {
-        robotLights.setOrangeBlink();
-      }
-    }
+    new PeriodicLightsCMD(m_robotContainer.ledSub);
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
