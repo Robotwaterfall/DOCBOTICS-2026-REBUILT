@@ -12,7 +12,6 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.SwerveSub;
 import frc.robot.util.PoseManager;
-import frc.robot.util.ShooterLookup;
 
 public class AlignToHubCMD extends Command {
 

@@ -15,26 +15,26 @@ public final class PoseManager {
 
     private PoseManager() {}
 
-    private static final Pose2d HUB_POSE =
+    private static final Pose2d BLUE_HUB_POSE =
         new Pose2d(
-            Pose2DConstants.X_HUB_POSE_M,
-            Pose2DConstants.Y_HUB_POSE_M,
+            Pose2DConstants.BLUE_HUB_POSE_X_M,
+            Pose2DConstants.BLUE_HUB_POSE_Y_M,
             new Rotation2d()
         );
 
     /** Driver Prespective */
-    private static final Pose2d LEFT_ALLIANCE_ZONE_POSE =
+    private static final Pose2d BLUE_ZONE_LEFT_MIDPOINT_POSE =
         new Pose2d(
-            Pose2DConstants.X_ALLIANCE_ZONE_LEFT_M,
-            Pose2DConstants.Y_ALLIANCE_ZONE_LEFT_M,
+            Pose2DConstants.BLUE_ZONE_MIDPOINT_X_M,
+            Pose2DConstants.BLUE_ZONE_LEFT_MIDPOINT_Y_M,
             new Rotation2d()
         );
 
     /** Driver Prespective */
-    private static final Pose2d RIGHT_ALLIANCE_ZONE_POSE =
+    private static final Pose2d BLUE_ZONE_RIGHT_MIDPOINT_POSE =
         new Pose2d(
-            Pose2DConstants.X_ALLIANCE_ZONE_RIGHT_M,
-            Pose2DConstants.Y_ALLIANCE_ZONE_RIGHT_M,
+            Pose2DConstants.BLUE_ZONE_MIDPOINT_X_M,
+            Pose2DConstants.BLUE_ZONE_RIGHT_MIDPOINT_Y_M,
             new Rotation2d()
         );
 
@@ -42,29 +42,29 @@ public final class PoseManager {
     public static Pose2d getAllianceHubPose2d() {
         return DriverStation.getAlliance()
             .map(alliance -> alliance == Alliance.Red
-                ? FlippingUtil.flipFieldPose(HUB_POSE)
-                : HUB_POSE)
-            .orElse(HUB_POSE);
+                ? FlippingUtil.flipFieldPose(BLUE_HUB_POSE)
+                : BLUE_HUB_POSE)
+            .orElse(BLUE_HUB_POSE);
     }
 
     /** Returns the left alliance zone reference pose for the current alliance */
     /** Driver Prespective */
-    public static Pose2d getLeftAllianceZonePose2d() {
+    public static Pose2d getLeftAllianceZoneMidpointPose2d() {
         return DriverStation.getAlliance()
             .map(alliance -> alliance == Alliance.Red
-                ? FlippingUtil.flipFieldPose(LEFT_ALLIANCE_ZONE_POSE)
-                : LEFT_ALLIANCE_ZONE_POSE)
-            .orElse(LEFT_ALLIANCE_ZONE_POSE);
+                ? FlippingUtil.flipFieldPose(BLUE_ZONE_LEFT_MIDPOINT_POSE)
+                : BLUE_ZONE_LEFT_MIDPOINT_POSE)
+            .orElse(BLUE_ZONE_LEFT_MIDPOINT_POSE);
     }
 
     /** Returns the right alliance zone reference pose for the current alliance */
     /** Driver Prespective */
-    public static Pose2d getRightAllianceZonePose2d() {
+    public static Pose2d getRightAllianceZoneMidpointPose2d() {
         return DriverStation.getAlliance()
             .map(alliance -> alliance == Alliance.Red
-                ? FlippingUtil.flipFieldPose(RIGHT_ALLIANCE_ZONE_POSE)
-                : RIGHT_ALLIANCE_ZONE_POSE)
-            .orElse(RIGHT_ALLIANCE_ZONE_POSE);
+                ? FlippingUtil.flipFieldPose(BLUE_ZONE_RIGHT_MIDPOINT_POSE)
+                : BLUE_ZONE_RIGHT_MIDPOINT_POSE)
+            .orElse(BLUE_ZONE_RIGHT_MIDPOINT_POSE);
     }
 
     /** True if the robot is inside its alliance zone */
@@ -73,31 +73,31 @@ public final class PoseManager {
         if (robotPose == null) return false;
 
         Translation2d blueMin = new Translation2d(
-            Pose2DConstants.ALLIANCE_ZONE_X_MIN_BLUE_M,
-            Pose2DConstants.ALLIANCE_ZONE_Y_MIN_BLUE_M
+            Pose2DConstants.BLUE_ZONE_X_MIN_M,
+            Pose2DConstants.BLUE_ZONE_Y_MIN_M
         );
 
         Translation2d blueMax = new Translation2d(
-            Pose2DConstants.ALLIANCE_ZONE_X_MAX_BLUE_M,
-            Pose2DConstants.ALLIANCE_ZONE_Y_MAX_BLUE_M
+            Pose2DConstants.BLUE_ZONE_X_MAX_M,
+            Pose2DConstants.BLUE_ZONE_Y_MAX_M
         );
 
         boolean isRed = DriverStation.getAlliance()
             .map(alliance -> alliance == Alliance.Red)
             .orElse(false);
 
-        Translation2d flippedA = isRed ? FlippingUtil.flipFieldPosition(blueMin) : blueMin;
-        Translation2d flippedB = isRed ? FlippingUtil.flipFieldPosition(blueMax) : blueMax;
+        Translation2d allianceMin = isRed ? FlippingUtil.flipFieldPosition(blueMin) : blueMin;
+        Translation2d allianceMax = isRed ? FlippingUtil.flipFieldPosition(blueMax) : blueMax;
 
-        double minX = Math.min(flippedA.getX(), flippedB.getX());
-        double maxX = Math.max(flippedA.getX(), flippedB.getX());
-        double minY = Math.min(flippedA.getY(), flippedB.getY());
-        double maxY = Math.max(flippedA.getY(), flippedB.getY());
+        double minX = Math.min(allianceMin.getX(), allianceMax.getX());
+        double maxX = Math.max(allianceMin.getX(), allianceMax.getX());
+        double minY = Math.min(allianceMin.getY(), allianceMax.getY());
+        double maxY = Math.max(allianceMin.getY(), allianceMax.getY());
 
         double x = robotPose.getX();
         double y = robotPose.getY();
 
-        return x >= minX && x <= maxX && y >= minY && y <= maxY;
+        return (x >= minX && x <= maxX) && (y >= minY && y <= maxY);
     }
 
     /** True if the robot is inside the neutral zone / wasteland */
@@ -113,17 +113,17 @@ public final class PoseManager {
         double x = robotPose.getX();
         double y = robotPose.getY();
 
-        return x >= minX && x <= maxX && y >= minY && y <= maxY;
+        return (x >= minX && x <= maxX) && (y >= minY && y <= maxY);
     }
 
-/** True if the robot is on the left side of the field, split by the center line (alliance-aware) */
+    /** True if the robot is on the left side of the field, split by the center line (alliance-aware) */
     public static boolean isOnLeftSideOfField(SwerveSub swerveSub) {
         Pose2d robotPose = swerveSub.getPose();
         if (robotPose == null) return false;
 
         double y = robotPose.getY();
 
-        return y >= Pose2DConstants.HALF_FIELD_Y_MAX_M;
+        return y >= Pose2DConstants.HALF_FIELD_Y_M;
     }
 
     /** Returns feet away from a target pose */
@@ -145,13 +145,13 @@ public final class PoseManager {
     /** Returns feet away from the left alliance zone area where fuel can collect */
     /** Depot side */
     public static double getDistanceToLeftAllianceZone(SwerveSub swerveSub){
-        return getDistanceToTargetFeet(swerveSub, getLeftAllianceZonePose2d());
+        return getDistanceToTargetFeet(swerveSub, getLeftAllianceZoneMidpointPose2d());
     }
 
      /** Returns feet away from the right alliance zone area where fuel can collect */
     /**  Outtpost side */
     public static double getDistanceToRightAllianceZone(SwerveSub swerveSub){
-        return getDistanceToTargetFeet(swerveSub, getRightAllianceZonePose2d());
+        return getDistanceToTargetFeet(swerveSub, getRightAllianceZoneMidpointPose2d());
     }
 
     /** Returns the heading (degrees) from robot to target */
@@ -186,10 +186,10 @@ public final class PoseManager {
     }
     
     public static double getHeadingErrorDegreesLeftAllianceZoneArea(SwerveSub swerveSub){
-        return getHeadingErrorDegrees(swerveSub, getLeftAllianceZonePose2d());
+        return getHeadingErrorDegrees(swerveSub, getLeftAllianceZoneMidpointPose2d());
     }
 
     public static double getHeadingErrorDegreesRightAllianceZoneArea(SwerveSub swerveSub){
-        return getHeadingErrorDegrees(swerveSub, getRightAllianceZonePose2d());
+        return getHeadingErrorDegrees(swerveSub, getRightAllianceZoneMidpointPose2d());
     }
 }

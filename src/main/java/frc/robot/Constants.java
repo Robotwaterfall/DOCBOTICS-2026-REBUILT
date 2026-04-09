@@ -253,43 +253,41 @@ public final class Constants {
   public static final class Pose2DConstants{
     
   // Field geometry in METERS (FRC coord: origin bottom-right(DRIVER PRESPECTIVE) BLUE alliance wall)
-  // From 2026 field drawings + your AprilTag-derived hub
-  public static final double X_HUB_POSE_M = 4.63; // blue hub center
-  public static final double Y_HUB_POSE_M = 4.03; // blue hub center (alliance depth)
-
-  // Alliance zone poses (left/right corners, bottom)
-  public static final double X_ALLIANCE_ZONE_LEFT_M = 2.31;
-  public static final double Y_ALLIANCE_ZONE_LEFT_M = 6.05;
-
-  public static final double X_ALLIANCE_ZONE_RIGHT_M = 2.31;
-  public static final double Y_ALLIANCE_ZONE_RIGHT_M = 2.02;
-
-  // Blue alliance zone bounds (rectangle: full width x alliance depth)
-  public static final double ALLIANCE_ZONE_X_MIN_BLUE_M = 0.0;
-  public static final double ALLIANCE_ZONE_X_MAX_BLUE_M = 4.625594;
-
-  public static final double ALLIANCE_ZONE_Y_MIN_BLUE_M = 0.0;
-  public static final double ALLIANCE_ZONE_Y_MAX_BLUE_M = 8.069072;
-
+  public static final double BLUE_HUB_POSE_X_M = 4.63; // blue hub center
+  public static final double BLUE_HUB_POSE_Y_M = 4.03; // blue hub center (alliance depth)
+  
   // Full field
   public static final double FIELD_X_MIN_M = 0.0;
   public static final double FIELD_X_MAX_M = 17.55648;
-
+  
   public static final double FIELD_Y_MIN_M = 0.0;
-  public static final double FIELD_Y_MAX_M = 8.069072;
+  public static final double FIELD_Y_MAX_M = 8.042656;
+
+  // Blue alliance zone bounds (rectangle: full width x alliance depth)
+  // Measured not as FIRST does (after bump), but by middle of bump.
+  // This allows the robot to "be in zone" while shooting from trench
+  public static final double BLUE_ZONE_X_MIN_M = 0.0;
+  public static final double BLUE_ZONE_X_MAX_M = 4.625594;
+
+  public static final double BLUE_ZONE_Y_MIN_M = 0.0;
+  public static final double BLUE_ZONE_Y_MAX_M = FIELD_Y_MAX_M;
+
+  // Alliance zone poses (left/right corners, bottom)
+  // These are the points we aim at when feeding
+  public static final double BLUE_ZONE_MIDPOINT_X_M = BLUE_ZONE_X_MAX_M / 2;
+  
+  public static final double BLUE_ZONE_LEFT_MIDPOINT_Y_M = 0.75 * FIELD_Y_MAX_M;
+
+  public static final double BLUE_ZONE_RIGHT_MIDPOINT_Y_M = 0.25 * FIELD_Y_MAX_M;
 
   // Half field (left half: vertical midline, full width x 0 to half length)
-  public static final double HALF_FIELD_X_MIN_M = 0.0;
-  public static final double HALF_FIELD_X_MAX_M = 0.0;
-  public static final double HALF_FIELD_Y_MIN_M = 0.0;
-  public static final double HALF_FIELD_Y_MAX_M = FIELD_Y_MAX_M / 2;
+  public static final double HALF_FIELD_Y_M = FIELD_Y_MAX_M / 2;
 
   // Neutral zone / wasteland (front rectangle: 0 to neutral depth x full field)
-  public static final double NEUTRAL_ZONE_X_MIN_M = 0.0; //TODO
-  public static final double NEUTRAL_ZONE_X_MAX_M = 7.2913875;
-  public static final double NEUTRAL_ZONE_Y_MIN_M = 0.0; //TODO
-  public static final double NEUTRAL_ZONE_Y_MAX_M = 4.034536;
-
+  public static final double NEUTRAL_ZONE_X_MIN_M = BLUE_ZONE_X_MAX_M; // Starts at end of blue zone
+  public static final double NEUTRAL_ZONE_X_MAX_M = BLUE_ZONE_X_MAX_M + 7.2898;
+  public static final double NEUTRAL_ZONE_Y_MIN_M = 0.0;
+  public static final double NEUTRAL_ZONE_Y_MAX_M = FIELD_Y_MAX_M;
 
   }
 }
