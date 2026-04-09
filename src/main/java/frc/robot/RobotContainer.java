@@ -25,6 +25,7 @@ import frc.robot.commands.StopShooterMotorsCMD;
 import frc.robot.commands.SwerveJoystickCMD;
 import frc.robot.commands.commandgroups.FireShot;
 import frc.robot.commands.commandgroups.IntakeFuel;
+import frc.robot.commands.commandgroups.LockOnToTarget;
 import frc.robot.commands.commandgroups.OuttakeFuel;
 import frc.robot.commands.commandgroups.ShootingRoutine;
 import frc.robot.subsystems.IntakeRollersSub;
@@ -141,7 +142,7 @@ public class RobotContainer {
 
   
     new JoystickButton(driverJoyStick, OIConstants.kL2TriggerButton).whileTrue(
-      new AlignToTargetCMD(swerveSub, 
+      new LockOnToTarget(swerveSub, 
         () -> -driverJoyStick.getRawAxis(OIConstants.kDriverYAxis), 
         () -> driverJoyStick.getRawAxis(OIConstants.kDriverXAxis)
     ));

@@ -1,6 +1,7 @@
 package frc.robot.commands.commandgroups;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.commands.AlignToTargetCMD;
 import frc.robot.subsystems.ShooterSub;
 import frc.robot.subsystems.SwerveSub;
 
@@ -16,7 +17,7 @@ public class WaitForShooterReady extends Command{
 
     @Override
     public boolean isFinished() {
-        return shooterSub.isAtSetVelocityFPS(); // also some how check if the robot is facing the target
+        return shooterSub.isAtSetVelocityFPS() && AlignToTargetCMD.isAlignedToTarget; 
     }
 
 }

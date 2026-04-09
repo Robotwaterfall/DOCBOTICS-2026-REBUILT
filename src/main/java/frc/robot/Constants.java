@@ -112,7 +112,8 @@ public final class Constants {
 
     public static class autoTargetConstants {
       public static final double autoOrientKp = 0.015; 
-      public static final double autoOrientSpeed = 0.4;
+      public static final double autoOrientSpeed = 0.6;
+      public static final double autoOrientToleranceDegrees = 0.8;
 
     }
   }
