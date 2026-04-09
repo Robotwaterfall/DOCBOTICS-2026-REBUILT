@@ -6,12 +6,15 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import frc.robot.commands.PeriodicLightsCMD;
 import frc.robot.subsystems.LedSub;
 
 public class RobotContainer {
   public final LedSub ledSub = new LedSub();
   public RobotContainer() {
     configureBindings();
+
+    ledSub.setDefaultCommand(new PeriodicLightsCMD(ledSub));
   }
 
   private void configureBindings() {}

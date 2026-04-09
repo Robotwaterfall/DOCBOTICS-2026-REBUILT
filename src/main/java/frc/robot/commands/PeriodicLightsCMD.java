@@ -22,12 +22,12 @@ public class PeriodicLightsCMD extends Command {
     }
     
     @Override
-    public void initialize() {}
+    public void initialize() {
+    }
 
     @Override
     public void execute() {
-
-        Optional<Alliance> ally = DriverStation.getAlliance();
+      Optional<Alliance> ally = DriverStation.getAlliance();
 
     if (DriverStation.isDisabled()) {
       ledSub.disable();
@@ -35,36 +35,28 @@ public class PeriodicLightsCMD extends Command {
     if (DriverStation.isFMSAttached()) {
       ledSub.setRawPattern(LEDConstants.BLINKIN_PATTERN_RAINBOW_POS);
     } else {
-      new LightsRslCMD(ledSub);
+      ledSub.setOrangeBlink();
     }
     } else if (DriverStation.isTeleop()) {
       if (DriverStation.isFMSAttached()) {
 
 switch (hubLogic.getHubState()) {
   case ACTIVE:
-          // if (ally.get() == Alliance.Red) {
-          //   SmartDashboard.putString("Active Hub:", "Red");
-          // } else {
-          //   SmartDashboard.putString("Active Hub:", "Blue");
-          // }
     ledSub.setRawPattern(LEDConstants.BLINKIN_PATTERN_RAINBOW_POS);
     break;
   case INACTIVE:
           if (ally.get() == Alliance.Red) {
             ledSub.setRawPattern(LEDConstants.BLINKIN_PATTERN_BLUE_POS);
-            // SmartDashboard.putString("Active Hub:", "Blue");
           } else {
             ledSub.setRawPattern(LEDConstants.BLINKIN_PATTERN_RED_POS);
-            // SmartDashboard.putString("Active Hub:", "Red");
           }
     break;
   case WARNING:
     ledSub.setRawPattern(Constants.LEDConstants.BLINKIN_PATTERN_SHIFT);
-    // SmartDashboard.putString("Active Hub:", "Shifting..");
     break;
 }
       } else {
-        new LightsRslCMD(ledSub);
+        ledSub.setOrangeBlink();
       }
     }
     }
