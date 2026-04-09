@@ -27,6 +27,7 @@ import frc.robot.commands.commandgroups.FireShot;
 import frc.robot.commands.commandgroups.IntakeFuel;
 import frc.robot.commands.commandgroups.OuttakeFuel;
 import frc.robot.commands.commandgroups.ShootingRoutine;
+import frc.robot.diagnostics.DiagnosticsCMD;
 import frc.robot.subsystems.IntakeRollersSub;
 import frc.robot.subsystems.ShooterSub;
 import frc.robot.subsystems.ConveyorSub;
@@ -86,6 +87,10 @@ public class RobotContainer {
       autoChooser.addOption("LeftBumpSweep", new PathPlannerAuto("LeftBumpSweep"));
 
       SmartDashboard.putData("AutoMode: ", autoChooser);
+
+      // Diagnostic command
+      SmartDashboard.putData("Run Diagnostics (Pit)", new DiagnosticsCMD(swerveSub,
+        intakeSub, intakePitcherSub, shooterSub, indexerSub, conveyorSub));
   }
 
 

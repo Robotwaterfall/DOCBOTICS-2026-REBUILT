@@ -11,9 +11,12 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.SwerveModuleConstants;
+import frc.robot.diagnostics.Diagnosable;
+import frc.robot.diagnostics.DiagnosticResult;
 
 public class SwerveModule {
 
@@ -146,5 +149,69 @@ public class SwerveModule {
         SmartDashboard.putNumber("AbsPos[" + absoluteEncoder.getDeviceID() + "] ", absoluteEncoder.getAbsolutePosition().getValueAsDouble());
     }
 
+    /**
+     * Description: Checks the encoder connectivity and if the swerves respond to voltage. To be called from the runDiagnostics method of the SwerveSub.
+     * This is not Diagnosable and is not a Diagnoseable object.
+     * Pre-Condition: All objects and hardware are declared and initialized
+     * Post-Condition: A DiagnosticResult object is returned with the results of the diagnostics
+     * @param name The name of the diagnostic (Use the module location)
+     * @return The result of the Diagnostic 
+     */
+    public DiagnosticResult runDiagnostics(String name) {
+        DiagnosticResult result = new DiagnosticResult(name);
+        boolean encoderConnected;
+
+        // Encoder Connectivity check (1) (Single check since this won't change)
+        // Drive
+        double initialDrivePosition = driveMotor.getEncoder().getPosition();
+        encoderConnected = !Double.isNaN(initialDrivePosition); 
+        result.check("Drive Encoder Connected", encoderConnected);
+
+        // Turn
+        double initialTurningPosition = turningMotor.getEncoder().getPosition();
+        encoderConnected = !Double.isNaN(initialTurningPosition);
+        result.check("Turning Encoder Connected", encoderConnected);
+
+        // Encoder change check (2) (Matured check)  
+        // Drive  
+        result.checkRepeated(
+            "Drive motor responds to voltage",
+            () -> {
+                double initial = driveMotor.getEncoder().getPosition();
+
+                driveMotor.set(0.2);
+                Timer.delay(0.05);
+
+                double newPos = driveMotor.getEncoder().getPosition();
+                return Math.abs(newPos - initial) > 0.01;
+            },
+            10,
+            0.8
+        );
+
+        // Stop motor
+        driveMotor.set(0);
+
+        // Turning 
+        result.checkRepeated(
+            "Turning motor responds to voltage",
+            () -> {
+                double initial = turningMotor.getEncoder().getPosition();
+
+                turningMotor.set(0.2);
+                Timer.delay(0.05);
+                
+                double newPos = turningMotor.getEncoder().getPosition();
+                return Math.abs(newPos - initial) > 0.01;
+            },
+            10,
+            0.8
+        );
+
+        // Stop motor
+        driveMotor.set(0);
+
+        return result;
+    }
 
 }

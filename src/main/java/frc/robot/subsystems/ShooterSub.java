@@ -4,12 +4,16 @@ import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
+
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.ShooterConstants;
+import frc.robot.diagnostics.Diagnosable;
+import frc.robot.diagnostics.DiagnosticResult;
 
-public class ShooterSub extends SubsystemBase {
+public class ShooterSub extends SubsystemBase implements Diagnosable{
 
     public TalonFX shooterLead = new TalonFX(ShooterConstants.kShooterLeadMotorId);
     public TalonFX shooterFollowerRight = new TalonFX(ShooterConstants.kShooterFollowerRightId);
@@ -136,6 +140,91 @@ public class ShooterSub extends SubsystemBase {
         SmartDashboard.putNumber("shooterAvgVelocityFPS", getAverageMotorVelocityFPS());
         SmartDashboard.putNumber("shooterVelocityErrorFPS", desiredVelocityFPS - getAverageMotorVelocityFPS());
         SmartDashboard.putBoolean("atDesiredVelocityFPS", isAtSetVelocityFPS());
+    }
+
+    /**
+     * Description: Checks the encoder connectivity and if the shooters respond to voltage
+     * Pre-Condition: All objects and hardware are declared and initialized
+     * Post-Condition: A DiagnosticResult object is returned with the results of the diagnostics
+     * @return The result of the Diagnostic 
+     */
+    @Override
+    public DiagnosticResult runDiagnostics() {
+        DiagnosticResult result = new DiagnosticResult("Shooter");
+        boolean encoderConnected;
+
+        // Encoder conectivity check (1) (Single check since this won't change)
+        // Lead
+        encoderConnected = shooterLead.getPosition().getStatus().isOK();
+        result.check("Lead encoder connected", encoderConnected);
+
+        // Left
+        encoderConnected = shooterFollowerLeft.getPosition().getStatus().isOK();
+        result.check("Left encoder connected", encoderConnected);
+
+        // Right
+        encoderConnected = shooterFollowerRight.getPosition().getStatus().isOK();
+        result.check("Right connected", encoderConnected);
+
+        // Encoder change check (Matured check)
+        // Lead
+        result.checkRepeated(
+            "Lead motor responds to voltage",
+            () -> {
+                double initial = shooterLead.getPosition().getValueAsDouble();
+
+                shooterLead.set(0.2);
+                Timer.delay(0.05);
+
+                double newPos = shooterLead.getPosition().getValueAsDouble();
+                return Math.abs(newPos - initial) > 0.01;
+            },
+            10,
+            0.8
+        );
+
+        // Stop motor
+        shooterLead.set(0);
+
+        // Left
+        result.checkRepeated(
+            "Left motor responds to voltage",
+            () -> {
+                double initial = shooterFollowerLeft.getPosition().getValueAsDouble();
+
+                shooterLead.set(0.2);
+                Timer.delay(0.05);
+
+                double newPos = shooterLead.getPosition().getValueAsDouble();
+                return Math.abs(newPos - initial) > 0.01;
+            },
+            10,
+            0.8
+        );
+
+        // Stop motor
+        shooterFollowerLeft.set(0);
+
+        // Left
+        result.checkRepeated(
+            "Right motor responds to voltage",
+            () -> {
+                double initial = shooterFollowerRight.getPosition().getValueAsDouble();
+
+                shooterLead.set(0.2);
+                Timer.delay(0.05);
+
+                double newPos = shooterLead.getPosition().getValueAsDouble();
+                return Math.abs(newPos - initial) > 0.01;
+            },
+            10,
+            0.8
+        );
+
+        // Stop motor
+        shooterFollowerRight.set(0);
+
+        return result;
     }
 
 }

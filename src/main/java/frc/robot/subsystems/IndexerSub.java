@@ -3,11 +3,14 @@ package frc.robot.subsystems;
 import com.ctre.phoenix6.hardware.TalonFX;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterConstants;
+import frc.robot.diagnostics.Diagnosable;
+import frc.robot.diagnostics.DiagnosticResult;
 
-public class IndexerSub extends SubsystemBase {
+public class IndexerSub extends SubsystemBase implements Diagnosable {
 
     public TalonFX indexerMotor = new TalonFX(ShooterConstants.kIndexMotorId);
 
@@ -42,5 +45,40 @@ public class IndexerSub extends SubsystemBase {
         SmartDashboard.putBoolean("isIndexMotorRunning", isIndexMotorRunning());
     }
 
+    /**
+     * Description: Checks the encoder connectivity and if the indexer responds to voltage
+     * Pre-Condition: All objects and hardware are declared and initialized
+     * Post-Condition: A DiagnosticResult object is returned with the results of the diagnostics
+     * @return The result of the Diagnostic 
+     */
+    @Override
+    public DiagnosticResult runDiagnostics() {
+        DiagnosticResult result = new DiagnosticResult("Indexer");
+
+        // Encoder conectivity check (1) (Single check since this won't change)
+        boolean encoderConnected = indexerMotor.getPosition().getStatus().isOK();
+        result.check("Encoder connected", encoderConnected);
+
+        // Encoder change check (2) (Matured check)
+        result.checkRepeated(
+            "Motor responds to voltage",
+            () -> {
+                double initial = indexerMotor.getPosition().getValueAsDouble();
+
+                indexerMotor.set(0.2);
+                Timer.delay(0.05);
+
+                double newPos = indexerMotor.getPosition().getValueAsDouble();
+                return Math.abs(newPos - initial) > 0.01;
+            },
+            10,
+            0.8
+        );
+
+        // Stop motor
+        indexerMotor.set(0);
+
+        return result;
+    }
 
 }

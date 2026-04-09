@@ -18,7 +18,12 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.LimelightConstants;
 import frc.robot.Constants.PathPlannerConstants;
 import frc.robot.config.LimelightHelpers;
+import frc.robot.diagnostics.Diagnosable;
+import frc.robot.diagnostics.DiagnosticResult;
 import frc.robot.util.PoseManager;
+
+import javax.tools.Diagnostic;
+
 import org.littletonrobotics.junction.Logger;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
@@ -27,7 +32,7 @@ import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
 
-public class SwerveSub extends SubsystemBase {
+public class SwerveSub extends SubsystemBase implements Diagnosable {
     // Hardware Modules
     public final SwerveModule frontRight;
     public final SwerveModule frontLeft;
@@ -321,5 +326,23 @@ public class SwerveSub extends SubsystemBase {
         for (SwerveModule module : swerveModules) {
             module.stop();
         }
+    }
+
+    /**
+     * Description: Runs the diagnostics for the swerve modules
+     * Pre-Condition: All objects and heardware are declared and initialized
+     * Post-Condition: Swerve diagnostics are ran
+     * @return The result of the diagnostics
+     */
+    @Override
+    public DiagnosticResult runDiagnostics() {
+        DiagnosticResult result = new DiagnosticResult("SwerveSub");
+
+        result.addSubResult(frontLeft.runDiagnostics("FrontLeft"));
+        result.addSubResult(frontRight.runDiagnostics("FrontRight"));
+        result.addSubResult(backLeft.runDiagnostics("BackLeft"));
+        result.addSubResult(backRight.runDiagnostics("BackRight"));
+
+        return result;
     }
 }
