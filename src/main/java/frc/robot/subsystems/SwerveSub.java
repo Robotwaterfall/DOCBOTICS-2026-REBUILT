@@ -19,7 +19,6 @@ import frc.robot.Constants.LimelightConstants;
 import frc.robot.Constants.PathPlannerConstants;
 import frc.robot.config.LimelightHelpers;
 import frc.robot.util.PoseManager;
-import java.util.concurrent.Semaphore;
 import org.littletonrobotics.junction.Logger;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
@@ -201,8 +200,8 @@ public class SwerveSub extends SubsystemBase {
         SmartDashboard.putBoolean("isInAllianceZone", PoseManager.isInAllianceZone(this));
 
         SmartDashboard.putNumber("Dist_To_HubFT", PoseManager.getDistanceToHubFeet(this));
-        SmartDashboard.putNumber("Dist_To_LeftAllianceArea", PoseManager.getDistanceToLeftAllianceZone(this));
-        SmartDashboard.putNumber("Dist_To_RightAllianceArea", PoseManager.getDistanceToRightAllianceZone(this));
+        SmartDashboard.putNumber("Dist_To_LeftAllianceArea", PoseManager.getDistanceToLeftAllianceZoneMidpoint(this));
+        SmartDashboard.putNumber("Dist_To_RightAllianceArea", PoseManager.getDistanceToRightAllianceZoneMidpoint(this));
 
         SmartDashboard.putBoolean("IsOnLeft", PoseManager.isOnLeftSideOfField(this));
 

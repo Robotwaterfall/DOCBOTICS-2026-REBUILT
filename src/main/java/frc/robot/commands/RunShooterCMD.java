@@ -38,33 +38,63 @@ public class RunShooterCMD extends InstantCommand {
 
     @Override
     public void initialize() {
+
+        // May get better performance by only doing the velocity lookup once, but will require driver to re-trigger command if they move significantly.
+        // Doing it in execute allows for real-time velocity updates as robot moves, but may cause performance issues.
+
+        // if (distanceBased && PoseManager.isInAllianceZone(swerveSub)) {
+        //     double distanceFeet = PoseManager.getDistanceToHubFeet(swerveSub);
+        //     this.desiredVelocity = ShooterLookup.getInterpolatedVelocity(distanceFeet);
+        // } else if (
+        //         distanceBased && 
+        //         PoseManager.isInWasteLand(swerveSub) && 
+        //         PoseManager.isOnLeftSideOfField(swerveSub)){ // OG -> &&!PoseManager.isInAllianceZone(swerveSub) <- Redundant, if you are in neutral zone, you aren't in alliance zone
+            
+        //     double distanceFeet = PoseManager.getDistanceToLeftAllianceZoneMidpoint(swerveSub);
+        //     this.desiredVelocity = ShooterLookup.getInterpolatedVelocity(distanceFeet);
+        // } else if (
+        //         distanceBased && 
+        //         PoseManager.isInWasteLand(swerveSub) && 
+        //         !PoseManager.isOnLeftSideOfField(swerveSub) && 
+        //         !PoseManager.isInAllianceZone(swerveSub)){
+            
+        //     double distanceFeet = PoseManager.getDistanceToRightAllianceZoneMidpoint(swerveSub);
+        //     this.desiredVelocity = ShooterLookup.getInterpolatedVelocity(distanceFeet);
+        // } else {
+        //     double distanceFeet = PoseManager.getDistanceToHubFeet(swerveSub);
+        //     this.desiredVelocity = ShooterLookup.getInterpolatedVelocity(distanceFeet);
+        // }
+    }
+
+    @Override
+    public void execute() {
+
+        // Computationally slow!!!! Consider guard clauses or something to reduce number of calls to PoseManager and ShooterLookup. 
+        // Moved to execute to update shooter velocity in real time as robot moves, but may cause performance issues.
+        // Consider caching distance/velocity and only updating every 0.5s or so.
+
         if (distanceBased && PoseManager.isInAllianceZone(swerveSub)) {
             double distanceFeet = PoseManager.getDistanceToHubFeet(swerveSub);
             this.desiredVelocity = ShooterLookup.getInterpolatedVelocity(distanceFeet);
         } else if (
                 distanceBased && 
                 PoseManager.isInWasteLand(swerveSub) && 
-                PoseManager.isOnLeftSideOfField(swerveSub) && 
-                !PoseManager.isInAllianceZone(swerveSub)){
+                PoseManager.isOnLeftSideOfField(swerveSub)){ // OG -> &&!PoseManager.isInAllianceZone(swerveSub) <- Redundant, if you are in neutral zone, you aren't in alliance zone
             
-            double distanceFeet = PoseManager.getDistanceToLeftAllianceZone(swerveSub);
+            double distanceFeet = PoseManager.getDistanceToLeftAllianceZoneMidpoint(swerveSub);
             this.desiredVelocity = ShooterLookup.getInterpolatedVelocity(distanceFeet);
         } else if (
                 distanceBased && 
                 PoseManager.isInWasteLand(swerveSub) && 
-                !PoseManager.isOnLeftSideOfField(swerveSub) && 
-                !PoseManager.isInAllianceZone(swerveSub)){
+                !PoseManager.isOnLeftSideOfField(swerveSub)){ // see line 82 comment
             
-            double distanceFeet = PoseManager.getDistanceToRightAllianceZone(swerveSub);
+            double distanceFeet = PoseManager.getDistanceToRightAllianceZoneMidpoint(swerveSub);
             this.desiredVelocity = ShooterLookup.getInterpolatedVelocity(distanceFeet);
         } else {
             double distanceFeet = PoseManager.getDistanceToHubFeet(swerveSub);
             this.desiredVelocity = ShooterLookup.getInterpolatedVelocity(distanceFeet);
         }
-    }
 
-    @Override
-    public void execute() {
         shooterSub.setShooterVelocityFPS(desiredVelocity);
     }
 

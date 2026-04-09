@@ -6,9 +6,9 @@ import java.util.TreeMap;
 public class ShooterLookup {
 
     // Distance (feet) -> Shooter velocity (FPS)
-    // TODO: Replace with real calibration data
     private static final TreeMap<Double, Double> table = new TreeMap<>();
 
+    // Tested on 2026-04-08 at DO'C in drama room
     static {
         table.put(5.0,  38.0);
         table.put(6.0,  40.0);

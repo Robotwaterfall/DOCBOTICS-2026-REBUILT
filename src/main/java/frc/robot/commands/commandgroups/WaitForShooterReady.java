@@ -16,7 +16,7 @@ public class WaitForShooterReady extends Command{
 
     @Override
     public boolean isFinished() {
-        return shooterSub.isAtSetVelocityFPS();
+        return shooterSub.isAtSetVelocityFPS(); // also some how check if the robot is facing the target
     }
 
 }

@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.Constants.IntakePitcherConstants;
 import frc.robot.Constants.OIConstants;
-import frc.robot.commands.AlignToHubCMD;
+import frc.robot.commands.AlignToTargetCMD;
 import frc.robot.commands.DecrementShooterCMD;
 import frc.robot.commands.IncrementShooterCMD;
 import frc.robot.commands.MoveIntakePitcherCMD;
@@ -51,8 +51,7 @@ public class RobotContainer {
 
   private final PS5Controller driverJoyStick = new PS5Controller(OIConstants.kDriverControllerPort);
   
-    
-
+  
   private final SendableChooser<Command> autoChooser;
 
 
@@ -115,7 +114,7 @@ public class RobotContainer {
     Command StopShooting = 
     new ParallelCommandGroup(
       new StopShooterMotorsCMD(shooterSub),
-      new MoveIntakePitcherCMD(intakePitcherSub, IntakePitcherConstants.kPitcherOutDegrees)
+      new MoveIntakePitcherCMD(intakePitcherSub, IntakePitcherConstants.kPitcherOutDegrees) // when flutter ends, intake may be in
     );
 
     //when the r2 trigger isnt being held stop the shooter motors and put the intake pitcher out to idle
@@ -141,9 +140,8 @@ public class RobotContainer {
     );
 
   
-
     new JoystickButton(driverJoyStick, OIConstants.kL2TriggerButton).whileTrue(
-      new AlignToHubCMD(swerveSub, 
+      new AlignToTargetCMD(swerveSub, 
         () -> -driverJoyStick.getRawAxis(OIConstants.kDriverYAxis), 
         () -> driverJoyStick.getRawAxis(OIConstants.kDriverXAxis)
     ));
@@ -157,6 +155,5 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
     return autoChooser.getSelected();
-    // return null;
   }
 }

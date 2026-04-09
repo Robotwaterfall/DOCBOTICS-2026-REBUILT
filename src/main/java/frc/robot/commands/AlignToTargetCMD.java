@@ -13,7 +13,7 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.SwerveSub;
 import frc.robot.util.PoseManager;
 
-public class AlignToHubCMD extends Command {
+public class AlignToTargetCMD extends Command {
 
     private final SwerveSub swerveSubsystem;
 
@@ -31,7 +31,7 @@ public class AlignToHubCMD extends Command {
 
     public double errorDeg = 0;
 
-    public AlignToHubCMD(
+    public AlignToTargetCMD(
             SwerveSub swerveSubsystem,
             Supplier<Double> xSpdFunction,
             Supplier<Double> ySpdFunction) {
@@ -74,7 +74,7 @@ public class AlignToHubCMD extends Command {
             } else if (inWaste && !onLeft) {
                 errorDeg = PoseManager.getHeadingErrorDegreesRightAllianceZoneArea(swerveSubsystem);
             } else {
-                errorDeg = PoseManager.getHeadingErrorDegreesHub(swerveSubsystem);
+                errorDeg = 0; // OG --> PoseManager.getHeadingErrorDegreesHub(swerveSubsystem); <- Why? Should default to 0; shoot where you are turned already.
             }
 
         double kP = Constants.DriveConstants.autoTargetConstants.autoOrientKp;
@@ -107,6 +107,6 @@ public class AlignToHubCMD extends Command {
 
     @Override
     public boolean isFinished() {
-        return false;
+        return false; // You may want to finish if errorDeg < tolerance; but this may mess up other cmdgroups
     }
 }

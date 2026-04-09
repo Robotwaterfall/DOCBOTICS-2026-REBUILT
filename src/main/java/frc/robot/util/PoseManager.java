@@ -22,7 +22,7 @@ public final class PoseManager {
             new Rotation2d()
         );
 
-    /** Driver Prespective */
+    /** Driver Perspective */
     private static final Pose2d BLUE_ZONE_LEFT_MIDPOINT_POSE =
         new Pose2d(
             Pose2DConstants.BLUE_ZONE_MIDPOINT_X_M,
@@ -30,7 +30,7 @@ public final class PoseManager {
             new Rotation2d()
         );
 
-    /** Driver Prespective */
+    /** Driver Perspective */
     private static final Pose2d BLUE_ZONE_RIGHT_MIDPOINT_POSE =
         new Pose2d(
             Pose2DConstants.BLUE_ZONE_MIDPOINT_X_M,
@@ -47,8 +47,9 @@ public final class PoseManager {
             .orElse(BLUE_HUB_POSE);
     }
 
-    /** Returns the left alliance zone reference pose for the current alliance */
-    /** Driver Prespective */
+    /** Returns the left (driver perspective) alliance zone midpoint reference pose for the current alliance
+     *  This is where the robot will feed when on the left side of the field
+     */
     public static Pose2d getLeftAllianceZoneMidpointPose2d() {
         return DriverStation.getAlliance()
             .map(alliance -> alliance == Alliance.Red
@@ -56,9 +57,11 @@ public final class PoseManager {
                 : BLUE_ZONE_LEFT_MIDPOINT_POSE)
             .orElse(BLUE_ZONE_LEFT_MIDPOINT_POSE);
     }
+    
 
-    /** Returns the right alliance zone reference pose for the current alliance */
-    /** Driver Prespective */
+    /** Returns the right (driver perspective) alliance zone midpoint reference pose for the current alliance
+     *  This is where the robot will feed when on the right side of the field
+     */
     public static Pose2d getRightAllianceZoneMidpointPose2d() {
         return DriverStation.getAlliance()
             .map(alliance -> alliance == Alliance.Red
@@ -67,6 +70,13 @@ public final class PoseManager {
             .orElse(BLUE_ZONE_RIGHT_MIDPOINT_POSE);
     }
 
+    /** Returns true if the current alliance is red. */
+    public static boolean isRed() {
+        return DriverStation.getAlliance()
+            .map(alliance -> alliance == Alliance.Red)
+            .orElse(false); // default to blue if alliance info is unavailable
+    }
+    
     /** True if the robot is inside its alliance zone */
     public static boolean isInAllianceZone(SwerveSub swerveSub) {
         Pose2d robotPose = swerveSub.getPose();
@@ -82,12 +92,14 @@ public final class PoseManager {
             Pose2DConstants.BLUE_ZONE_Y_MAX_M
         );
 
-        boolean isRed = DriverStation.getAlliance()
-            .map(alliance -> alliance == Alliance.Red)
-            .orElse(false);
+        // v Removed because we can just call isRed() method instead of repeating the same code
 
-        Translation2d allianceMin = isRed ? FlippingUtil.flipFieldPosition(blueMin) : blueMin;
-        Translation2d allianceMax = isRed ? FlippingUtil.flipFieldPosition(blueMax) : blueMax;
+        // boolean isRed = DriverStation.getAlliance()
+        //     .map(alliance -> alliance == Alliance.Red)
+        //     .orElse(false); // default to blue if alliance info is unavailable
+
+        Translation2d allianceMin = isRed() ? FlippingUtil.flipFieldPosition(blueMin) : blueMin;
+        Translation2d allianceMax = isRed() ? FlippingUtil.flipFieldPosition(blueMax) : blueMax;
 
         double minX = Math.min(allianceMin.getX(), allianceMax.getX());
         double maxX = Math.max(allianceMin.getX(), allianceMax.getX());
@@ -100,7 +112,9 @@ public final class PoseManager {
         return (x >= minX && x <= maxX) && (y >= minY && y <= maxY);
     }
 
-    /** True if the robot is inside the neutral zone / wasteland */
+    /** True if the robot is inside the neutral zone / wasteland
+     * No need to flip, as this is the same for both blue and red alliances
+     */
     public static boolean isInWasteLand(SwerveSub swerveSub) {
         Pose2d robotPose = swerveSub.getPose();
         if (robotPose == null) return false;
@@ -116,14 +130,14 @@ public final class PoseManager {
         return (x >= minX && x <= maxX) && (y >= minY && y <= maxY);
     }
 
-    /** True if the robot is on the left side of the field, split by the center line (alliance-aware) */
+    /** True if the robot is on the left side of the field wrt own alliance's DS, split by the center line (alliance-aware) */
     public static boolean isOnLeftSideOfField(SwerveSub swerveSub) {
         Pose2d robotPose = swerveSub.getPose();
         if (robotPose == null) return false;
 
         double y = robotPose.getY();
-
-        return y >= Pose2DConstants.HALF_FIELD_Y_M;
+        
+        return (y >= Pose2DConstants.HALF_FIELD_Y_M && !isRed()) || (y < Pose2DConstants.HALF_FIELD_Y_M && isRed());
     }
 
     /** Returns feet away from a target pose */
@@ -144,13 +158,13 @@ public final class PoseManager {
 
     /** Returns feet away from the left alliance zone area where fuel can collect */
     /** Depot side */
-    public static double getDistanceToLeftAllianceZone(SwerveSub swerveSub){
+    public static double getDistanceToLeftAllianceZoneMidpoint(SwerveSub swerveSub){
         return getDistanceToTargetFeet(swerveSub, getLeftAllianceZoneMidpointPose2d());
     }
 
      /** Returns feet away from the right alliance zone area where fuel can collect */
     /**  Outtpost side */
-    public static double getDistanceToRightAllianceZone(SwerveSub swerveSub){
+    public static double getDistanceToRightAllianceZoneMidpoint(SwerveSub swerveSub){
         return getDistanceToTargetFeet(swerveSub, getRightAllianceZoneMidpointPose2d());
     }
 
@@ -185,10 +199,12 @@ public final class PoseManager {
         return getHeadingErrorDegrees(swerveSub, getAllianceHubPose2d());
     }
     
+    /** Returns heading error to the left alliance zone midpoint */
     public static double getHeadingErrorDegreesLeftAllianceZoneArea(SwerveSub swerveSub){
         return getHeadingErrorDegrees(swerveSub, getLeftAllianceZoneMidpointPose2d());
     }
-
+    
+    /** Returns heading error to the right alliance zone midpoint */
     public static double getHeadingErrorDegreesRightAllianceZoneArea(SwerveSub swerveSub){
         return getHeadingErrorDegrees(swerveSub, getRightAllianceZoneMidpointPose2d());
     }
