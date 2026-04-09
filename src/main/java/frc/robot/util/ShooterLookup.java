@@ -10,11 +10,12 @@ public class ShooterLookup {
     private static final TreeMap<Double, Double> table = new TreeMap<>();
 
     static {
-        table.put(4.25,  40.0);
-        table.put(5.0,  50.0);
-        table.put(7.0,  54.0);
-        table.put(9.0,  57.0);
-        table.put(12.0, 60.0);
+        table.put(5.0,  38.0);
+        table.put(6.0,  40.0);
+        table.put(8.5,  44.0);
+        table.put(10.0,  48.0);
+        table.put(11.5, 50.0);
+        table.put(16.5, 58.0);
     }
 
     public static double getInterpolatedVelocity(double distanceFt) {

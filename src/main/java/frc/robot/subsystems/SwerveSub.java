@@ -19,6 +19,7 @@ import frc.robot.Constants.LimelightConstants;
 import frc.robot.Constants.PathPlannerConstants;
 import frc.robot.config.LimelightHelpers;
 import frc.robot.util.PoseManager;
+import java.util.concurrent.Semaphore;
 import org.littletonrobotics.junction.Logger;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
@@ -173,6 +174,7 @@ public class SwerveSub extends SubsystemBase {
         poseEstimator.update(getRotation2d(), getModulePositionsAuto());
 
         fuseLimelight(LimelightConstants.LimelightFront);
+        fuseLimelight(LimelightConstants.LimelightBackLeft);
 
         m_Field.setRobotPose(poseEstimator.getEstimatedPosition());
 
@@ -201,6 +203,8 @@ public class SwerveSub extends SubsystemBase {
         SmartDashboard.putNumber("Dist_To_HubFT", PoseManager.getDistanceToHubFeet(this));
         SmartDashboard.putNumber("Dist_To_LeftAllianceArea", PoseManager.getDistanceToLeftAllianceZone(this));
         SmartDashboard.putNumber("Dist_To_RightAllianceArea", PoseManager.getDistanceToRightAllianceZone(this));
+
+        SmartDashboard.putBoolean("IsOnLeft", PoseManager.isOnLeftSideOfField(this));
 
         // // Limelight distance to target for shooter calibration
         // edu.wpi.first.math.geometry.Pose3d targetPose =

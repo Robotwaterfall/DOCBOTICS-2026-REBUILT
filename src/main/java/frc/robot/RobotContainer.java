@@ -84,6 +84,7 @@ public class RobotContainer {
       autoChooser.addOption("MoveBackward", new PathPlannerAuto("MoveBackward"));
       autoChooser.addOption("DriveAroundHub", new PathPlannerAuto("DriveAroundHub"));
       autoChooser.addOption("MiddleDepotShootCenter", new PathPlannerAuto("MiddleDepotShootCenter"));
+      autoChooser.addOption("LeftBumpSweep", new PathPlannerAuto("LeftBumpSweep"));
 
       SmartDashboard.putData("AutoMode: ", autoChooser);
   }
@@ -131,7 +132,7 @@ public class RobotContainer {
     );
 
     //Fire a shot Manually
-    new POVButton(driverJoyStick, OIConstants.kDpadRIGHTDOWN).whileTrue(
+    new POVButton(driverJoyStick, OIConstants.kDpadRIGHT).whileTrue(
       new FireShot(indexerSub, conveyorSub, intakePitcherSub)    
     );
 
@@ -143,8 +144,8 @@ public class RobotContainer {
 
     new JoystickButton(driverJoyStick, OIConstants.kL2TriggerButton).whileTrue(
       new AlignToHubCMD(swerveSub, 
-        () -> driverJoyStick.getRawAxis(OIConstants.kDriverXAxis), 
-        () -> -driverJoyStick.getRawAxis(OIConstants.kDriverYAxis)
+        () -> -driverJoyStick.getRawAxis(OIConstants.kDriverYAxis), 
+        () -> driverJoyStick.getRawAxis(OIConstants.kDriverXAxis)
     ));
 
     NamedCommands.registerCommand("Intake", new IntakeFuel(intakeSub, conveyorSub, indexerSub, 

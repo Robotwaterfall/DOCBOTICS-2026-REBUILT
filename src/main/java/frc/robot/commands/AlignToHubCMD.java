@@ -64,23 +64,19 @@ public class AlignToHubCMD extends Command {
         xSpeed = xLimiter.calculate(xSpeed) * DriveConstants.kTeleDriveMaxSpeedMetersPerSecond;
         ySpeed = yLimiter.calculate(ySpeed) * DriveConstants.kTeleDriveMaxSpeedMetersPerSecond;
 
-        if(PoseManager.isInAllianceZone(swerveSubsystem)){
-             errorDeg = PoseManager.getHeadingErrorDegreesHub(swerveSubsystem);
-         } else if (
-                PoseManager.isInWasteLand(swerveSubsystem) && 
-                PoseManager.isOnLeftSideOfField(swerveSubsystem) && 
-                !PoseManager.isInAllianceZone(swerveSubsystem)){
-             errorDeg = PoseManager.getHeadingErrorDegreesLeftAllianceZoneArea(swerveSubsystem);
-            
-        } else if (
-                PoseManager.isInWasteLand(swerveSubsystem) && 
-                !PoseManager.isOnLeftSideOfField(swerveSubsystem) && 
-                !PoseManager.isInAllianceZone(swerveSubsystem)){
-            
-             errorDeg = PoseManager.getHeadingErrorDegreesRightAllianceZoneArea(swerveSubsystem);
-        } else {
-             errorDeg = PoseManager.getHeadingErrorDegreesHub(swerveSubsystem);
-        }
+        boolean inAlliance = PoseManager.isInAllianceZone(swerveSubsystem);
+        boolean inWaste = PoseManager.isInWasteLand(swerveSubsystem);
+        boolean onLeft = PoseManager.isOnLeftSideOfField(swerveSubsystem);
+
+            if (inAlliance) {
+                errorDeg = PoseManager.getHeadingErrorDegreesHub(swerveSubsystem);
+            } else if (inWaste && onLeft) {
+                errorDeg = PoseManager.getHeadingErrorDegreesLeftAllianceZoneArea(swerveSubsystem);
+            } else if (inWaste && !onLeft) {
+                errorDeg = PoseManager.getHeadingErrorDegreesRightAllianceZoneArea(swerveSubsystem);
+            } else {
+                errorDeg = PoseManager.getHeadingErrorDegreesHub(swerveSubsystem);
+            }
 
         double kP = Constants.DriveConstants.autoTargetConstants.autoOrientKp;
         double turnCommand = MathUtil.clamp(errorDeg * kP, -Constants.DriveConstants.autoTargetConstants.autoOrientSpeed, 

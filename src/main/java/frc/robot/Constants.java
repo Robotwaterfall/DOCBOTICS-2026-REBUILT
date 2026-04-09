@@ -111,8 +111,8 @@ public final class Constants {
     
 
     public static class autoTargetConstants {
-      public static final double autoOrientKp = 0.02; 
-      public static final double autoOrientSpeed = 0.5;
+      public static final double autoOrientKp = 0.015; 
+      public static final double autoOrientSpeed = 0.4;
 
     }
   }
@@ -158,7 +158,7 @@ public final class Constants {
 
       public static final int kPsButton = 13;
 
-      public static final double kDeadband = 0.5;
+      public static final double kDeadband = 0.1;
 
   }
   public static final class IntakeRollerConstants{
@@ -198,11 +198,11 @@ public final class Constants {
 
     public static double intakePitcherWaitTimeSec = 0.5; 
 
-    public static double intakePitcherFlutterDegrees = 90;
+    public static double intakePitcherFlutterDegrees = 50;
 
     public static final IdleMode pitcherIdleMode = IdleMode.kCoast;
 
-    public static final double pitcherMaxSpeed = 0.2;
+    public static final double pitcherMaxSpeed = 0.3;
   }
 
   public static final class ShooterConstants {
@@ -232,9 +232,9 @@ public final class Constants {
 
     public static final double shooterTolerance = 0.8; 
 
-    public static final double defaultShooterVelocityPlusPerPress = 5.0; 
+    public static final double defaultShooterVelocityPlusPerPress = 2.0; 
 
-    public static final double shooterVelocityPlusPerPress = 5.0; 
+    public static final double shooterVelocityPlusPerPress = 2.0; 
 
      public static class KrakenX60 {
         public static final AngularVelocity kFreeSpeed = RPM.of(6000);
@@ -258,35 +258,37 @@ public final class Constants {
   public static final double Y_HUB_POSE_M = 4.03; // blue hub center (alliance depth)
 
   // Alliance zone poses (left/right corners, bottom)
-  public static final double X_ALLIANCE_ZONE_LEFT_M = 0.0;
-  public static final double Y_ALLIANCE_ZONE_LEFT_M = 0.0;
+  public static final double X_ALLIANCE_ZONE_LEFT_M = 2.31;
+  public static final double Y_ALLIANCE_ZONE_LEFT_M = 6.05;
 
-  public static final double X_ALLIANCE_ZONE_RIGHT_M = 8.07; // full width
-  public static final double Y_ALLIANCE_ZONE_RIGHT_M = 4.03; // alliance depth
+  public static final double X_ALLIANCE_ZONE_RIGHT_M = 2.31;
+  public static final double Y_ALLIANCE_ZONE_RIGHT_M = 2.02;
 
   // Blue alliance zone bounds (rectangle: full width x alliance depth)
   public static final double ALLIANCE_ZONE_X_MIN_BLUE_M = 0.0;
-  public static final double ALLIANCE_ZONE_X_MAX_BLUE_M = 8.07;
+  public static final double ALLIANCE_ZONE_X_MAX_BLUE_M = 4.625594;
+
   public static final double ALLIANCE_ZONE_Y_MIN_BLUE_M = 0.0;
-  public static final double ALLIANCE_ZONE_Y_MAX_BLUE_M = 4.03; // hub Y
+  public static final double ALLIANCE_ZONE_Y_MAX_BLUE_M = 8.069072;
 
   // Full field
   public static final double FIELD_X_MIN_M = 0.0;
-  public static final double FIELD_X_MAX_M = 8.07; // width 317in
+  public static final double FIELD_X_MAX_M = 17.55648;
+
   public static final double FIELD_Y_MIN_M = 0.0;
-  public static final double FIELD_Y_MAX_M = 16.54; // length ~651in (2026 longer)
+  public static final double FIELD_Y_MAX_M = 8.069072;
 
   // Half field (left half: vertical midline, full width x 0 to half length)
   public static final double HALF_FIELD_X_MIN_M = 0.0;
-  public static final double HALF_FIELD_X_MAX_M = 8.07;
+  public static final double HALF_FIELD_X_MAX_M = 0.0;
   public static final double HALF_FIELD_Y_MIN_M = 0.0;
-  public static final double HALF_FIELD_Y_MAX_M = 8.27; // half of 16.54
+  public static final double HALF_FIELD_Y_MAX_M = FIELD_Y_MAX_M / 2;
 
   // Neutral zone / wasteland (front rectangle: 0 to neutral depth x full field)
-  public static final double NEUTRAL_ZONE_X_MIN_M = 0.0;
-  public static final double NEUTRAL_ZONE_X_MAX_M = 7.19; // 283in depth
-  public static final double NEUTRAL_ZONE_Y_MIN_M = 0.0;
-  public static final double NEUTRAL_ZONE_Y_MAX_M = 16.54; // full length
+  public static final double NEUTRAL_ZONE_X_MIN_M = 0.0; //TODO
+  public static final double NEUTRAL_ZONE_X_MAX_M = 7.2913875;
+  public static final double NEUTRAL_ZONE_Y_MIN_M = 0.0; //TODO
+  public static final double NEUTRAL_ZONE_Y_MAX_M = 4.034536;
 
 
   }

@@ -121,33 +121,9 @@ public final class PoseManager {
         Pose2d robotPose = swerveSub.getPose();
         if (robotPose == null) return false;
 
-        // Blue "left half" rectangle bounds (full width X, 0 to half length Y)
-        Translation2d blueHalfMin = new Translation2d(
-            Pose2DConstants.HALF_FIELD_X_MIN_M,
-            Pose2DConstants.HALF_FIELD_Y_MIN_M
-        );
-        Translation2d blueHalfMax = new Translation2d(
-            Pose2DConstants.HALF_FIELD_X_MAX_M,
-            Pose2DConstants.HALF_FIELD_Y_MAX_M
-        );
-
-        boolean isRed = DriverStation.getAlliance()
-            .map(alliance -> alliance == Alliance.Red)
-            .orElse(false);
-
-        // Flip bounds for red alliance (FlippingUtil handles field symmetry correctly)
-        Translation2d halfMin = isRed ? FlippingUtil.flipFieldPosition(blueHalfMin) : blueHalfMin;
-        Translation2d halfMax = isRed ? FlippingUtil.flipFieldPosition(blueHalfMax) : blueHalfMax;
-
-        double minX = Math.min(halfMin.getX(), halfMax.getX());
-        double maxX = Math.max(halfMin.getX(), halfMax.getX());
-        double minY = Math.min(halfMin.getY(), halfMax.getY());
-        double maxY = Math.max(halfMin.getY(), halfMax.getY());
-
-        double x = robotPose.getX();
         double y = robotPose.getY();
 
-        return x >= minX && x <= maxX && y >= minY && y <= maxY;
+        return y >= Pose2DConstants.HALF_FIELD_Y_MAX_M;
     }
 
     /** Returns feet away from a target pose */
