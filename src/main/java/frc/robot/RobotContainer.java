@@ -92,7 +92,7 @@ public class RobotContainer {
       // Diagnostic command
       diagnosticChooser = new SendableChooser<Command>();
 
-      diagnosticChooser.addOption("Diagnose All", new DiagnosticsCMD(swerveSub,
+      diagnosticChooser.addOption("Diagnose All (PIT ONLY)", new DiagnosticsCMD(swerveSub,
         intakeSub, intakePitcherSub, shooterSub, indexerSub, conveyorSub));
       diagnosticChooser.addOption("Diagnose Swerves (PIT ONLY)", new DiagnosticsCMD(swerveSub));
       diagnosticChooser.addOption("Diagnose Intake Rollers", new DiagnosticsCMD(intakeSub));
