@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.PS5Controller;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
@@ -20,7 +21,6 @@ import frc.robot.commands.AlignToTargetCMD;
 import frc.robot.commands.DecrementShooterCMD;
 import frc.robot.commands.IncrementShooterCMD;
 import frc.robot.commands.MoveIntakePitcherCMD;
-import frc.robot.commands.PeriodicLightsCMD;
 import frc.robot.commands.ResetHeadingCMD;
 import frc.robot.commands.StopShooterMotorsCMD;
 import frc.robot.commands.SwerveJoystickCMD;
@@ -30,7 +30,6 @@ import frc.robot.commands.commandgroups.LockOnToTarget;
 import frc.robot.commands.commandgroups.OuttakeFuel;
 import frc.robot.commands.commandgroups.ShootingRoutine;
 import frc.robot.subsystems.IntakeRollersSub;
-import frc.robot.subsystems.LedSub;
 import frc.robot.subsystems.ShooterSub;
 import frc.robot.subsystems.ConveyorSub;
 import frc.robot.subsystems.IndexerSub;
@@ -51,13 +50,10 @@ public class RobotContainer {
   public final IntakePitcherSub intakePitcherSub = new IntakePitcherSub();
   public final ConveyorSub conveyorSub = new ConveyorSub();
   public final IndexerSub indexerSub = new IndexerSub();
-  public final LedSub ledSub = new LedSub();
 
   private final PS5Controller driverJoyStick = new PS5Controller(OIConstants.kDriverControllerPort);
   
-  
   private final SendableChooser<Command> autoChooser;
-
 
   public RobotContainer() {
     //  Configure the trigger bindings
@@ -79,17 +75,17 @@ public class RobotContainer {
              /// By default will be on field oriented.
             () -> !
             driverJoyStick.getRawButton(OIConstants.kDriverFieldOrientedButtonIdx))); 
-       
-    ledSub.setDefaultCommand(new PeriodicLightsCMD(ledSub));
-    
-
     
       autoChooser = new SendableChooser<Command>();
     
+      autoChooser.setDefaultOption("N/A", Commands.none());
       autoChooser.addOption("MoveBackward", new PathPlannerAuto("MoveBackward"));
-      autoChooser.addOption("DriveAroundHub", new PathPlannerAuto("DriveAroundHub"));
       autoChooser.addOption("MiddleDepotShootCenter", new PathPlannerAuto("MiddleDepotShootCenter"));
       autoChooser.addOption("LeftBumpSweep", new PathPlannerAuto("LeftBumpSweep"));
+      autoChooser.addOption("RightBumpSweep", new PathPlannerAuto("RightBumpSweep"));
+      autoChooser.addOption("LeftBumpToDepotShootMiddleAuto", new PathPlannerAuto("LeftBumpToDepotShootMiddleAuto"));
+      autoChooser.addOption("RightBumpFeed", new PathPlannerAuto("RightBumpFeed"));
+      autoChooser.addOption("LeftBumpFeed", new PathPlannerAuto("LeftBumpFeed"));
 
       SmartDashboard.putData("AutoMode: ", autoChooser);
   }

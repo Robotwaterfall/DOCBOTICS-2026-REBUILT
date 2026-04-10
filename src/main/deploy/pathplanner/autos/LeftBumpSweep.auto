@@ -57,7 +57,13 @@
         {
           "type": "named",
           "data": {
-            "name": "fireShot"
+            "name": "AlignToTarget"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShootingRoutine"
           }
         }
       ]
