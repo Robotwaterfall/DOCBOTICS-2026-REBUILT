@@ -97,7 +97,7 @@ public class IntakePitcherSub extends SubsystemBase implements Diagnosable {
         boolean encoderConnected = !Double.isNaN(initialPosition); // SparkMax encoders return NaN if disconnected
         result.check("Encoder connected", encoderConnected);
 
-        /* 
+        
         // Encoder change check out (2) (Matured Check)
         result.checkRepeated(
             "Motor responds to voltage (Out)",
@@ -136,7 +136,7 @@ public class IntakePitcherSub extends SubsystemBase implements Diagnosable {
             10,
             0.8
         );
-        */
+        
 
         // Stop motor
         intakePitcherMotor.set(0);

@@ -54,6 +54,7 @@ public class RobotContainer {
   
   
   private final SendableChooser<Command> autoChooser;
+  private final SendableChooser<Command> diagnosticChooser;
 
 
   public RobotContainer() {
@@ -89,8 +90,18 @@ public class RobotContainer {
       SmartDashboard.putData("AutoMode: ", autoChooser);
 
       // Diagnostic command
-      SmartDashboard.putData("Run Diagnostics (Pit)", new DiagnosticsCMD(swerveSub,
+      diagnosticChooser = new SendableChooser<Command>();
+
+      diagnosticChooser.addOption("Diagnose All", new DiagnosticsCMD(swerveSub,
         intakeSub, intakePitcherSub, shooterSub, indexerSub, conveyorSub));
+      diagnosticChooser.addOption("Diagnose Swerves (PIT ONLY)", new DiagnosticsCMD(swerveSub));
+      diagnosticChooser.addOption("Diagnose Intake Rollers", new DiagnosticsCMD(intakeSub));
+      diagnosticChooser.addOption("Diagnose Intake Pitcher", new DiagnosticsCMD(intakePitcherSub));
+      diagnosticChooser.addOption("Diagnose Shooter", new DiagnosticsCMD(shooterSub));
+      diagnosticChooser.addOption("Diagnose Indexer", new DiagnosticsCMD(indexerSub));
+      diagnosticChooser.addOption("Diagnose Conveyor", new DiagnosticsCMD(conveyorSub));
+
+      SmartDashboard.putData("Run Diagnostics: ", diagnosticChooser);
   }
 
 
