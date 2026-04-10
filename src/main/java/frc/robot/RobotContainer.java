@@ -20,6 +20,7 @@ import frc.robot.commands.AlignToTargetCMD;
 import frc.robot.commands.DecrementShooterCMD;
 import frc.robot.commands.IncrementShooterCMD;
 import frc.robot.commands.MoveIntakePitcherCMD;
+import frc.robot.commands.PeriodicLightsCMD;
 import frc.robot.commands.ResetHeadingCMD;
 import frc.robot.commands.StopShooterMotorsCMD;
 import frc.robot.commands.SwerveJoystickCMD;
@@ -29,6 +30,7 @@ import frc.robot.commands.commandgroups.LockOnToTarget;
 import frc.robot.commands.commandgroups.OuttakeFuel;
 import frc.robot.commands.commandgroups.ShootingRoutine;
 import frc.robot.subsystems.IntakeRollersSub;
+import frc.robot.subsystems.LedSub;
 import frc.robot.subsystems.ShooterSub;
 import frc.robot.subsystems.ConveyorSub;
 import frc.robot.subsystems.IndexerSub;
@@ -49,6 +51,7 @@ public class RobotContainer {
   public final IntakePitcherSub intakePitcherSub = new IntakePitcherSub();
   public final ConveyorSub conveyorSub = new ConveyorSub();
   public final IndexerSub indexerSub = new IndexerSub();
+  public final LedSub ledSub = new LedSub();
 
   private final PS5Controller driverJoyStick = new PS5Controller(OIConstants.kDriverControllerPort);
   
@@ -76,6 +79,8 @@ public class RobotContainer {
              /// By default will be on field oriented.
             () -> !
             driverJoyStick.getRawButton(OIConstants.kDriverFieldOrientedButtonIdx))); 
+       
+    ledSub.setDefaultCommand(new PeriodicLightsCMD(ledSub));
     
 
     
@@ -151,6 +156,7 @@ public class RobotContainer {
       intakePitcherSub));
     NamedCommands.registerCommand("ShootingRoutine", new ShootingRoutine(shooterSub, indexerSub, 
       conveyorSub, intakePitcherSub, swerveSub));
+    NamedCommands.registerCommand("AlignToTarget", new AlignToTargetCMD(swerveSub, () -> 0.0, () -> 0.0));
   }
 
 

@@ -186,10 +186,10 @@ public final class Constants {
     public static final double kDegreesPerMotorRotation = 360 / (9 * 48/20 * 48/20 * 24/12); // Degrees / gear ratio gives degrees to motor revolutions
 
     public static final double kMinPitchDegrees = 0; 
-    public static final double kMaxPitchDegrees = 105; 
+    public static final double kMaxPitchDegrees = 110; 
 
     public static final double kPitcherInDegrees = 0; // Setpoint positions
-    public static final double kPitcherOutDegrees = 103; 
+    public static final double kPitcherOutDegrees = 110; 
 
     public static double intakePitcher_kP = 0.1; 
     public static double intakePitcher_kI = 0; 
@@ -204,6 +204,19 @@ public final class Constants {
     public static final IdleMode pitcherIdleMode = IdleMode.kCoast;
 
     public static final double pitcherMaxSpeed = 0.3;
+  }
+
+   public static final class LEDConstants {
+    public static final int BLINKIN_PWM_PORT = 0;
+    public static final int BLINKIN2_PWM_PORT = 1;
+
+    public static final double BLINKIN_PATTERN_RED_POS = -0.25;
+    public static final double BLINKIN_PATTERN_BLUE_POS = -0.23;
+    public static final double BLINKIN_PATTERN_ORANGE_BLINK_POS = 0.65;
+    public static final double BLINKIN_PATTERN_RAINBOW_POS = -0.99; 
+    public static final double BLINKIN_PATTERN_DOC_POS = -0.99; 
+    public static final double BLINKIN_PATTERN_SHIFT = -0.07;
+    public static final double HUB_SHIFT_WARNING_TIME = 3; // in seconds
   }
 
   public static final class ShooterConstants {

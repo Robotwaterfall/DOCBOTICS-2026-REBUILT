@@ -38,6 +38,12 @@
         {
           "type": "named",
           "data": {
+            "name": "LockOnHub"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "ShootingRoutine"
           }
         }

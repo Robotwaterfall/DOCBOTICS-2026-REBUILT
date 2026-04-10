@@ -16,6 +16,7 @@ public class ShooterLookup {
         table.put(10.0,  48.0);
         table.put(11.5, 50.0);
         table.put(16.5, 58.0);
+        table.put(40.0, 106.0);
     }
 
     public static double getInterpolatedVelocity(double distanceFt) {
