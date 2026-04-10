@@ -30,6 +30,7 @@ import frc.robot.commands.commandgroups.LockOnToTarget;
 import frc.robot.commands.commandgroups.OuttakeFuel;
 import frc.robot.commands.commandgroups.ShootingRoutine;
 import frc.robot.diagnostics.DiagnosticsCMD;
+import frc.robot.diagnostics.SystemCheckCMD;
 import frc.robot.subsystems.IntakeRollersSub;
 import frc.robot.subsystems.ShooterSub;
 import frc.robot.subsystems.ConveyorSub;
@@ -56,6 +57,7 @@ public class RobotContainer {
   
   private final SendableChooser<Command> autoChooser;
   private final SendableChooser<Command> diagnosticChooser;
+  private final SendableChooser<Command> systemCheckChooser;
 
   public RobotContainer() {
     //  Configure the trigger bindings
@@ -104,6 +106,21 @@ public class RobotContainer {
       diagnosticChooser.addOption("Diagnose Conveyor", new DiagnosticsCMD(conveyorSub));
 
       SmartDashboard.putData("Run Diagnostics: ", diagnosticChooser);
+
+      // System Check command
+      systemCheckChooser = new SendableChooser<Command>();
+
+      systemCheckChooser.addOption("Check All (PIT ONLY)", new SystemCheckCMD(swerveSub,
+        intakeSub, intakePitcherSub, shooterSub, indexerSub, conveyorSub));
+      systemCheckChooser.addOption("Check Swerves (PIT ONLY)", new SystemCheckCMD(swerveSub));
+      systemCheckChooser.addOption("Check Intake Rollers", new SystemCheckCMD(intakeSub));
+      systemCheckChooser.addOption("Check Intake Pitcher", new SystemCheckCMD(intakePitcherSub));
+      systemCheckChooser.addOption("Check Shooter", new SystemCheckCMD(shooterSub));
+      systemCheckChooser.addOption("Check Indexer", new SystemCheckCMD(indexerSub));
+      systemCheckChooser.addOption("Check Conveyor", new SystemCheckCMD(conveyorSub));
+
+      SmartDashboard.putData("Perform System Check: ", systemCheckChooser);
+
   }
 
 

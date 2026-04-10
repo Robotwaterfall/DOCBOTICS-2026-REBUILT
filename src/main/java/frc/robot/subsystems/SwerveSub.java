@@ -10,6 +10,7 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -17,10 +18,14 @@ import frc.robot.Constants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.LimelightConstants;
 import frc.robot.Constants.PathPlannerConstants;
+import frc.robot.Constants.SwerveModuleConstants;
 import frc.robot.config.LimelightHelpers;
 import frc.robot.diagnostics.Diagnosable;
 import frc.robot.diagnostics.DiagnosticResult;
+import frc.robot.diagnostics.SystemCheck;
 import frc.robot.util.PoseManager;
+
+import javax.tools.Diagnostic;
 
 import org.littletonrobotics.junction.Logger;
 
@@ -30,7 +35,7 @@ import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
 
-public class SwerveSub extends SubsystemBase implements Diagnosable {
+public class SwerveSub extends SubsystemBase implements Diagnosable, SystemCheck {
     // Hardware Modules
     public final SwerveModule frontRight;
     public final SwerveModule frontLeft;
@@ -340,6 +345,50 @@ public class SwerveSub extends SubsystemBase implements Diagnosable {
         result.addSubResult(frontRight.runDiagnostics("FrontRight"));
         result.addSubResult(backLeft.runDiagnostics("BackLeft"));
         result.addSubResult(backRight.runDiagnostics("BackRight"));
+
+        return result;
+    }
+
+    /**
+     * Description: Powers wheels to half speed in all directions
+     * Pre-Condition: All objects and hardware are initialized
+     * Post-Condition: DOES NOT PRODUCE A PROPER DIAGNOSTIC RESULT
+     * @return Result that says true
+     */
+    @Override
+    public DiagnosticResult performSystemCheck() {
+        DiagnosticResult result = new DiagnosticResult("SwervesSC");
+        double xspeed = 0;
+        double yspeed = 0;
+        double turningSpeed = 0;
+        double degrees = 0;
+        ChassisSpeeds chassisSpeeds;
+
+        // Drive 2D
+        while (degrees < 360) {
+            xspeed = Math.cos(Math.toRadians(degrees)) * DriveConstants.kTeleDriveMaxSpeedMetersPerSecond / 2;
+            yspeed = Math.sin(Math.toRadians(degrees)) * DriveConstants.kTeleDriveMaxSpeedMetersPerSecond / 2;
+            turningSpeed = 0;
+
+            degrees++;
+
+            chassisSpeeds = new ChassisSpeeds(xspeed, yspeed, turningSpeed);
+
+            SwerveModuleState[] moduleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(chassisSpeeds);
+
+            setModuleStates(moduleStates, true);
+            
+            Timer.delay(0.02);
+        }
+       
+        // Reset and stop motors
+        xspeed = 0;
+        yspeed = 0;
+        chassisSpeeds = new ChassisSpeeds(xspeed, yspeed, turningSpeed);
+        SwerveModuleState[] moduleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(chassisSpeeds);
+        setModuleStates(moduleStates, true);
+        
+        result.check("Drive 2D", true);
 
         return result;
     }

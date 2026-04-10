@@ -236,7 +236,7 @@ public class ShooterSub extends SubsystemBase implements Diagnosable, SystemChec
      */
     @Override
     public DiagnosticResult performSystemCheck() {
-        DiagnosticResult result = new DiagnosticResult("IntakePitcerSC");
+        DiagnosticResult result = new DiagnosticResult("ShooterSC");
 
         // Shooter
         result.checkRepeated(

@@ -215,12 +215,4 @@ public class SwerveModule {
         return result;
     }
 
-    public DiagnosticResult perfromSystemCheck(String name) {
-        DiagnosticResult result = new DiagnosticResult(name);
-
-        
-
-        return result;
-    }
-
 }

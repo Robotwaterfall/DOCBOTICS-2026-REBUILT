@@ -80,7 +80,7 @@ public class IntakeRollersSub extends SubsystemBase implements Diagnosable, Syst
      */
     @Override
     public DiagnosticResult performSystemCheck() {
-        DiagnosticResult result = new DiagnosticResult("IndexerSC");
+        DiagnosticResult result = new DiagnosticResult("IntakeRollerSC");
 
         // Index Forward
         result.checkRepeated(
