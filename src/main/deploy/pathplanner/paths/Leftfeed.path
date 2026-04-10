@@ -4,28 +4,28 @@
     {
       "anchor": {
         "x": 7.5971897289586305,
-        "y": 7.2
+        "y": 5.0377460770328115
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.5971897289586305,
-        "y": 6.2
+        "x": 6.486766666666667,
+        "y": 5.350499999999999
       },
       "isLocked": false,
-      "linkedName": "LeftNeutralZone"
+      "linkedName": "DroveIntoLeftNeutralZone"
     },
     {
       "anchor": {
-        "x": 7.5971897289586305,
-        "y": 5.0377460770328115
+        "x": 6.058011111111111,
+        "y": 5.408966666666666
       },
       "prevControl": {
-        "x": 7.5971897289586305,
-        "y": 6.0377460770328115
+        "x": 7.0422,
+        "y": 5.204333333333333
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "DroveIntoLeftNeutralZone"
+      "linkedName": "leftfeed"
     }
   ],
   "rotationTargets": [],
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -90.0
+    "rotation": 180.0
   },
   "reversed": false,
   "folder": "LeftBoomerangSweepPaths",

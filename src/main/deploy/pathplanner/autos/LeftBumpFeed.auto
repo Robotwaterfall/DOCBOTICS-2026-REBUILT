@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "MoveBackwardCenter"
+            "pathName": "LeftBumpToNeutralZone"
           }
         },
         {
@@ -30,6 +30,31 @@
           }
         },
         {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "LeftDriveIntoNeutralZone"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Intake"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Leftfeed"
+          }
+        },
+        {
           "type": "named",
           "data": {
             "name": "AlignToTarget"
@@ -44,7 +69,7 @@
       ]
     }
   },
-  "resetOdom": true,
-  "folder": "Center AUTO's",
+  "resetOdom": false,
+  "folder": "Left Side AUTO's",
   "choreoAuto": false
 }

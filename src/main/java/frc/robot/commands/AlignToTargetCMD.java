@@ -29,6 +29,8 @@ public class AlignToTargetCMD extends Command {
     public static double CurrentTurningSpeed;
     public static boolean CurrentOrientation;
 
+    public static boolean isAlignedToTarget = false;
+
     public double errorDeg = 0;
 
     public AlignToTargetCMD(
@@ -50,6 +52,7 @@ public class AlignToTargetCMD extends Command {
 
     @Override
     public void initialize() {
+        isAlignedToTarget = false;
     }
 
     @Override
@@ -102,11 +105,13 @@ public class AlignToTargetCMD extends Command {
     }
 
     @Override
-    public void end(boolean interrupted) {
+    public boolean isFinished() {
+        return Math.abs(errorDeg) <= 
+                Constants.DriveConstants.autoTargetConstants.autoOrientToleranceDegrees;
     }
 
     @Override
-    public boolean isFinished() {
-        return false; // You may want to finish if errorDeg < tolerance; but this may mess up other cmdgroups
+    public void end(boolean interrupted) {
+        isAlignedToTarget = true;
     }
 }

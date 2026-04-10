@@ -3,43 +3,38 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.5456205420827387,
-        "y": 5.0
+        "x": 0.7138231098430812,
+        "y": 5.917574893009986
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.3144935805991427,
-        "y": 5.115378031383738
+        "x": 2.861640513552067,
+        "y": 5.982268188302426
       },
       "isLocked": false,
       "linkedName": "driveInDepot"
     },
     {
       "anchor": {
-        "x": 2.6028673323823104,
-        "y": 4.015592011412268
+        "x": 2.24058487874465,
+        "y": 3.9897146932952925
       },
       "prevControl": {
-        "x": 2.1370756062767473,
-        "y": 4.623708987161199
+        "x": 2.369971469329529,
+        "y": 5.076562054208274
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": "MiddleShoot"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.2712403452975891,
-      "rotationDegrees": -90.0
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 1.5,
-    "maxAcceleration": 0.5,
+    "maxVelocity": 2.5,
+    "maxAcceleration": 1.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -53,7 +48,7 @@
   "folder": "CenterPaths",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -90.0
+    "rotation": 180.0
   },
   "useDefaultConstraints": true
 }

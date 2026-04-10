@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.PS5Controller;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
@@ -25,6 +26,7 @@ import frc.robot.commands.StopShooterMotorsCMD;
 import frc.robot.commands.SwerveJoystickCMD;
 import frc.robot.commands.commandgroups.FireShot;
 import frc.robot.commands.commandgroups.IntakeFuel;
+import frc.robot.commands.commandgroups.LockOnToTarget;
 import frc.robot.commands.commandgroups.OuttakeFuel;
 import frc.robot.commands.commandgroups.ShootingRoutine;
 import frc.robot.diagnostics.DiagnosticsCMD;
@@ -52,10 +54,8 @@ public class RobotContainer {
 
   private final PS5Controller driverJoyStick = new PS5Controller(OIConstants.kDriverControllerPort);
   
-  
   private final SendableChooser<Command> autoChooser;
   private final SendableChooser<Command> diagnosticChooser;
-
 
   public RobotContainer() {
     //  Configure the trigger bindings
@@ -78,14 +78,16 @@ public class RobotContainer {
             () -> !
             driverJoyStick.getRawButton(OIConstants.kDriverFieldOrientedButtonIdx))); 
     
-
-    
       autoChooser = new SendableChooser<Command>();
     
+      autoChooser.setDefaultOption("N/A", Commands.none());
       autoChooser.addOption("MoveBackward", new PathPlannerAuto("MoveBackward"));
-      autoChooser.addOption("DriveAroundHub", new PathPlannerAuto("DriveAroundHub"));
       autoChooser.addOption("MiddleDepotShootCenter", new PathPlannerAuto("MiddleDepotShootCenter"));
       autoChooser.addOption("LeftBumpSweep", new PathPlannerAuto("LeftBumpSweep"));
+      autoChooser.addOption("RightBumpSweep", new PathPlannerAuto("RightBumpSweep"));
+      autoChooser.addOption("LeftBumpToDepotShootMiddleAuto", new PathPlannerAuto("LeftBumpToDepotShootMiddleAuto"));
+      autoChooser.addOption("RightBumpFeed", new PathPlannerAuto("RightBumpFeed"));
+      autoChooser.addOption("LeftBumpFeed", new PathPlannerAuto("LeftBumpFeed"));
 
       SmartDashboard.putData("AutoMode: ", autoChooser);
 
@@ -157,7 +159,7 @@ public class RobotContainer {
 
   
     new JoystickButton(driverJoyStick, OIConstants.kL2TriggerButton).whileTrue(
-      new AlignToTargetCMD(swerveSub, 
+      new LockOnToTarget(swerveSub, 
         () -> -driverJoyStick.getRawAxis(OIConstants.kDriverYAxis), 
         () -> driverJoyStick.getRawAxis(OIConstants.kDriverXAxis)
     ));
@@ -166,6 +168,7 @@ public class RobotContainer {
       intakePitcherSub));
     NamedCommands.registerCommand("ShootingRoutine", new ShootingRoutine(shooterSub, indexerSub, 
       conveyorSub, intakePitcherSub, swerveSub));
+    NamedCommands.registerCommand("AlignToTarget", new AlignToTargetCMD(swerveSub, () -> 0.0, () -> 0.0));
   }
 
 

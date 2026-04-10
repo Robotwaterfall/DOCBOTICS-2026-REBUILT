@@ -23,7 +23,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "IntakeOut"
+                  "name": "Intake"
                 }
               }
             ]
@@ -55,28 +55,15 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "named",
           "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "shootClose"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "fireShot"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "LockOnHub"
-                }
-              }
-            ]
+            "name": "AlignToTarget"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShootingRoutine"
           }
         }
       ]
