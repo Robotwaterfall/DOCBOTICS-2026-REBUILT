@@ -11,7 +11,7 @@ import frc.robot.diagnostics.Diagnosable;
 import frc.robot.diagnostics.DiagnosticResult;
 import frc.robot.diagnostics.SystemCheck;
 
-public class IndexerSub extends SubsystemBase implements Diagnosable, SystemCheck {
+public class IndexerSub extends SubsystemBase implements Diagnosable {
 
     public TalonFX indexerMotor = new TalonFX(ShooterConstants.kIndexMotorId);
 
