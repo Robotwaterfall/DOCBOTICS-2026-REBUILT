@@ -22,8 +22,6 @@ import frc.robot.diagnostics.Diagnosable;
 import frc.robot.diagnostics.DiagnosticResult;
 import frc.robot.util.PoseManager;
 
-import javax.tools.Diagnostic;
-
 import org.littletonrobotics.junction.Logger;
 
 import com.ctre.phoenix6.hardware.Pigeon2;

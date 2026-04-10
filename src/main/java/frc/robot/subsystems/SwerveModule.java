@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import javax.tools.Diagnostic;
+
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.revrobotics.PersistMode;
 import com.revrobotics.ResetMode;
@@ -15,7 +17,6 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.SwerveModuleConstants;
-import frc.robot.diagnostics.Diagnosable;
 import frc.robot.diagnostics.DiagnosticResult;
 
 public class SwerveModule {
@@ -210,6 +211,14 @@ public class SwerveModule {
 
         // Stop motor
         driveMotor.set(0);
+
+        return result;
+    }
+
+    public DiagnosticResult perfromSystemCheck(String name) {
+        DiagnosticResult result = new DiagnosticResult(name);
+
+        
 
         return result;
     }

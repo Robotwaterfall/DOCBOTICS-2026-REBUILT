@@ -10,6 +10,7 @@ import frc.robot.Constants;
 import frc.robot.Constants.IntakePitcherConstants;
 import frc.robot.diagnostics.Diagnosable;
 import frc.robot.diagnostics.DiagnosticResult;
+import frc.robot.diagnostics.SystemCheck;
 
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.PersistMode;
@@ -17,7 +18,8 @@ import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
-public class IntakePitcherSub extends SubsystemBase implements Diagnosable {
+
+public class IntakePitcherSub extends SubsystemBase implements Diagnosable, SystemCheck {
     private final SparkMax intakePitcherMotor;
     private final SparkMaxConfig intakePitcherMotorConfig;
     private final PIDController intakePitchController;
@@ -140,6 +142,52 @@ public class IntakePitcherSub extends SubsystemBase implements Diagnosable {
 
         // Stop motor
         intakePitcherMotor.set(0);
+
+        return result;
+    }
+
+    /**
+     * Description: Performs a systems check of the pitcher by moving it to both setpoints
+     * Pre-Condition: All objects and hardware are declared and initialized
+     * Post-Condition: Systems check is performed and the diagnostic result is returned
+     * @return The DiagnosticResult of the systems check
+     */
+    @Override
+    public DiagnosticResult performSystemCheck() {
+        DiagnosticResult result = new DiagnosticResult("IntakePitcerSC");
+
+        // Moving Pitcher in, not as diagnostic
+        setPitcherAngle(IntakePitcherConstants.kPitcherInDegrees);
+
+        // Pitcher Out
+        result.checkRepeated(
+            "Pitcher Out", 
+            () -> {
+                setPitcherAngle(IntakePitcherConstants.kPitcherOutDegrees);
+
+                double initial = currentAngle;
+                Timer.delay(0.05);
+
+                return Math.abs(initial - currentAngle) > 0;
+            },
+            () -> isPitcherAtSetpoint(),
+            0.8
+        );
+
+        // Pitcher In
+        result.checkRepeated(
+            "Pitcher In", 
+            () -> {
+                setPitcherAngle(IntakePitcherConstants.kPitcherInDegrees);
+
+                double initial = currentAngle;
+                Timer.delay(0.05);
+
+                return Math.abs(initial - currentAngle) > 0;
+            },
+            () -> isPitcherAtSetpoint(),
+            0.8
+        );
 
         return result;
     }

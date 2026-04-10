@@ -11,7 +11,7 @@ import frc.robot.diagnostics.Diagnosable;
 import frc.robot.diagnostics.DiagnosticResult;
 import frc.robot.diagnostics.SystemCheck;
 
-public class IndexerSub extends SubsystemBase implements Diagnosable {
+public class IndexerSub extends SubsystemBase implements Diagnosable, SystemCheck {
 
     public TalonFX indexerMotor = new TalonFX(ShooterConstants.kIndexMotorId);
 
@@ -78,6 +78,59 @@ public class IndexerSub extends SubsystemBase implements Diagnosable {
 
         // Stop motor
         indexerMotor.set(0);
+
+        return result;
+    }
+
+    /**
+     * Description: Performs a systems check of the indexer by moving it forwards and backwards
+     * Pre-Condition: All objects and hardware are declared and initialized
+     * Post-Condition: Systems check is performed and the diagnostic result is returned
+     * @return The DiagnosticResult of the systems check
+     */
+    @Override
+    public DiagnosticResult performSystemCheck() {
+        DiagnosticResult result = new DiagnosticResult("IndexerSC");
+
+        // Index Forward
+        result.checkRepeated(
+            "Index Forward", 
+            () -> {
+                double initial = indexerMotor.getPosition().getValueAsDouble();
+
+                setIndexSpeed(ShooterConstants.kIndexSpeed);
+                Timer.delay(0.05);
+
+                double newPos = indexerMotor.getPosition().getValueAsDouble();
+                return Math.abs(newPos - initial) > 0.01;
+            }, 
+            100,
+            0.8
+        );
+
+        // Stop Motor
+        setIndexSpeed(0);
+        stopIndexMotor();
+
+        // Index Reverse
+        result.checkRepeated(
+            "Index Reverse", 
+            () -> {
+                double initial = indexerMotor.getPosition().getValueAsDouble();
+
+                setIndexSpeed(ShooterConstants.kReverseIndexSpeed);
+                Timer.delay(0.05);
+
+                double newPos = indexerMotor.getPosition().getValueAsDouble();
+                return Math.abs(newPos - initial) > 0.01;
+            }, 
+            100,
+            0.8
+        );
+
+        // Stop Motor
+        setIndexSpeed(0);
+        stopIndexMotor();
 
         return result;
     }

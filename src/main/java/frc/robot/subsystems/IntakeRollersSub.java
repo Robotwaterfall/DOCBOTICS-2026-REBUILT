@@ -7,8 +7,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IntakeRollerConstants;
 import frc.robot.diagnostics.Diagnosable;
 import frc.robot.diagnostics.DiagnosticResult;
+import frc.robot.diagnostics.SystemCheck;
 
-public class IntakeRollersSub extends SubsystemBase implements Diagnosable {
+public class IntakeRollersSub extends SubsystemBase implements Diagnosable, SystemCheck {
     private final TalonFX intakeRollerMotor = new TalonFX(IntakeRollerConstants.kIntakeMotorPort);
 
     public IntakeRollersSub() {
@@ -67,6 +68,57 @@ public class IntakeRollersSub extends SubsystemBase implements Diagnosable {
 
         // Stop motor
         intakeRollerMotor.set(0);
+
+        return result;
+    }
+
+    /**
+     * Description: Performs a systems check of the rollers by intaking and outtaking
+     * Pre-Condition: All objects and hardware are declared and initialized
+     * Post-Condition: Systems check is performed and the diagnostic result is returned
+     * @return The DiagnosticResult of the systems check
+     */
+    @Override
+    public DiagnosticResult performSystemCheck() {
+        DiagnosticResult result = new DiagnosticResult("IndexerSC");
+
+        // Index Forward
+        result.checkRepeated(
+            "Intake", 
+            () -> {
+                double initial = intakeRollerMotor.getPosition().getValueAsDouble();
+
+                setMotorPower(IntakeRollerConstants.kIntakePower);
+
+                double newPos = intakeRollerMotor.getPosition().getValueAsDouble();
+                return Math.abs(newPos - initial) > 0.01;
+            }, 
+            100,
+            0.8
+        );
+
+        // Stop Motor
+        setMotorPower(0);
+        stopMotor();
+
+        // Index Reverse
+        result.checkRepeated(
+            "Outake", 
+            () -> {
+                double initial = intakeRollerMotor.getPosition().getValueAsDouble();
+
+                setMotorPower(IntakeRollerConstants.kOuttakePower);
+
+                double newPos = intakeRollerMotor.getPosition().getValueAsDouble();
+                return Math.abs(newPos - initial) > 0.01;
+            }, 
+            100,
+            0.8        
+        );
+
+        // Stop Motor
+        setMotorPower(0);
+        stopMotor();
 
         return result;
     }

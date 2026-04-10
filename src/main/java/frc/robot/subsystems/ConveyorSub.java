@@ -78,15 +78,14 @@ public class ConveyorSub extends SubsystemBase implements Diagnosable, SystemChe
     }
 
     /**
-     * Description: Performs a systems check on the conveyor by running it for 
+     * Description: Performs a systems check on the conveyor by running it forwards and backwards
      * Pre-Condition: All objects and hardware are declared and initialized
      * Post-Condition: Systems check is performed and the diagnostic result is returned
-     * @return The diagnostic result of the systems check
+     * @return The DiagnosticResult of the systems check
      */
     @Override
     public DiagnosticResult performSystemCheck() {
         DiagnosticResult result = new DiagnosticResult("ConveyorSC");
-
 
         // Conveyor Forward
         result.checkRepeated(
@@ -122,8 +121,9 @@ public class ConveyorSub extends SubsystemBase implements Diagnosable, SystemChe
             100,
             0.8
         );
+
         // Stop motor
-        conveyorMotor.set(0);
+        setConveyorPower(0);
 
         return result;
     }

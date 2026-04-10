@@ -38,7 +38,7 @@ public class DiagnosticResult {
      * Post-Condition: The check is added to the list of checks
      * @param label The label that is being checked
      * @param test The test that is being tested
-     * @param iterations The number of times to be tested (Usually 10)
+     * @param iterations The number of times to be tested
      * @param passThreshold The ratio of passes to iterations required for test to be successful (Usually 0.8)
      */
     public void checkRepeated(String label, BooleanSupplier test, int iterations, double passThreshold) {
@@ -48,6 +48,30 @@ public class DiagnosticResult {
             if (test.getAsBoolean()) {
                 passes++;
             }
+        }
+
+        boolean passed = ((double) passes / iterations) >= passThreshold;
+        checks.put(label, passed);
+    }
+
+        /**
+     * Description: Performs a check on the given lable to see if it is working as intended above the pass threshold
+     * Pre-Condition: None
+     * Post-Condition: The check is added to the list of checks
+     * @param label The label that is being checked
+     * @param test The test that is being tested
+     * @param condition The condition to be testing until, will test until condition is true
+     * @param passThreshold The ratio of passes to iterations required for test to be successful (Usually 0.8)
+     */
+    public void checkRepeated(String label, BooleanSupplier test, BooleanSupplier condition, double passThreshold) {
+        int passes = 0;
+        int iterations = 0;
+
+        while (condition.getAsBoolean()) {
+            if (test.getAsBoolean()) {
+                passes++;
+            }
+            iterations++;
         }
 
         boolean passed = ((double) passes / iterations) >= passThreshold;

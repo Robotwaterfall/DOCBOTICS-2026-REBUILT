@@ -12,8 +12,9 @@ import frc.robot.Constants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.diagnostics.Diagnosable;
 import frc.robot.diagnostics.DiagnosticResult;
+import frc.robot.diagnostics.SystemCheck;
 
-public class ShooterSub extends SubsystemBase implements Diagnosable{
+public class ShooterSub extends SubsystemBase implements Diagnosable, SystemCheck {
 
     public TalonFX shooterLead = new TalonFX(ShooterConstants.kShooterLeadMotorId);
     public TalonFX shooterFollowerRight = new TalonFX(ShooterConstants.kShooterFollowerRightId);
@@ -227,4 +228,35 @@ public class ShooterSub extends SubsystemBase implements Diagnosable{
         return result;
     }
 
+    /**
+     * Description: Performs a systems check of the shooter by ensuring it reaches warm up velocity
+     * Pre-Condition: All objects and hardware are declared and initialized
+     * Post-Condition: Systems check is performed and the diagnostic result is returned
+     * @return The DiagnosticResult of the systems check
+     */
+    @Override
+    public DiagnosticResult performSystemCheck() {
+        DiagnosticResult result = new DiagnosticResult("IntakePitcerSC");
+
+        // Shooter
+        result.checkRepeated(
+            "Reaches warm up velocity", 
+            () -> {
+                setShooterVelocityFPS(ShooterConstants.kWarmupVelocityFPS);
+
+                double initial = getShooterLeadVelocityFPS();
+                Timer.delay(0.05);
+
+                return Math.abs(initial - getShooterLeadVelocityFPS()) > 0;
+            },
+            () -> isAtSetVelocityFPS(),
+            0.8
+        );
+
+        // Stop motors
+        setShooterVelocityFPS(0);
+        stopShooterMotors();
+
+        return result;
+    }
 }
