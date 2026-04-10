@@ -9,8 +9,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.diagnostics.Diagnosable;
 import frc.robot.diagnostics.DiagnosticResult;
+import frc.robot.diagnostics.SystemCheck;
 
-public class IndexerSub extends SubsystemBase implements Diagnosable {
+public class IndexerSub extends SubsystemBase implements Diagnosable, SystemCheck {
 
     public TalonFX indexerMotor = new TalonFX(ShooterConstants.kIndexMotorId);
 

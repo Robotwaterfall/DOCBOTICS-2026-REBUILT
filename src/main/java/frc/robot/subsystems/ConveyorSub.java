@@ -8,10 +8,11 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ConveyorConstant;
 import frc.robot.diagnostics.Diagnosable;
 import frc.robot.diagnostics.DiagnosticResult;
+import frc.robot.diagnostics.SystemCheck;
 
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
-public class ConveyorSub extends SubsystemBase implements Diagnosable {
+public class ConveyorSub extends SubsystemBase implements Diagnosable, SystemCheck {
     private SparkMax conveyorMotor = new SparkMax(ConveyorConstant.kConveyorMotorPort, MotorType.kBrushless);
 
     private double conveyorPower = 0;
@@ -70,6 +71,57 @@ public class ConveyorSub extends SubsystemBase implements Diagnosable {
             0.8
         );
 
+        // Stop motor
+        conveyorMotor.set(0);
+
+        return result;
+    }
+
+    /**
+     * Description: Performs a systems check on the conveyor by running it for 
+     * Pre-Condition: All objects and hardware are declared and initialized
+     * Post-Condition: Systems check is performed and the diagnostic result is returned
+     * @return The diagnostic result of the systems check
+     */
+    @Override
+    public DiagnosticResult performSystemCheck() {
+        DiagnosticResult result = new DiagnosticResult("ConveyorSC");
+
+
+        // Conveyor Forward
+        result.checkRepeated(
+            "Conveyor Forward",
+            () -> {
+                double initial = conveyorMotor.getEncoder().getPosition();
+
+                setConveyorPower(ConveyorConstant.conveyorPower);
+                Timer.delay(0.05);
+                
+                double newPos = conveyorMotor.getEncoder().getPosition();
+                return Math.abs(newPos - initial) > 0.01;
+            },
+            100,
+            0.8
+        );
+
+        // Stop motor
+        setConveyorPower(0);
+
+        // Conveyor Reverse
+        result.checkRepeated(
+            "Conveyor Reverse",
+            () -> {
+                double initial = conveyorMotor.getEncoder().getPosition();
+
+                setConveyorPower(ConveyorConstant.reverseConveyorPower);
+                Timer.delay(0.05);
+                
+                double newPos = conveyorMotor.getEncoder().getPosition();
+                return Math.abs(newPos - initial) > 0.01;
+            },
+            100,
+            0.8
+        );
         // Stop motor
         conveyorMotor.set(0);
 
