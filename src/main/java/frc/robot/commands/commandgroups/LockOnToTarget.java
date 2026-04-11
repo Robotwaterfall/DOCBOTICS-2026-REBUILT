@@ -12,8 +12,7 @@ public class LockOnToTarget extends SequentialCommandGroup{
             Supplier<Double> ySpdFunction){
 
         addCommands(
-            new AlignToTargetCMD(swerveSub, xSpdFunction, ySpdFunction),
-            new LockWheelsCMD(swerveSub)
+            new AlignToTargetCMD(swerveSub, xSpdFunction, ySpdFunction)
         );
 
     }

@@ -166,8 +166,8 @@ public final class Constants {
   public static final class IntakeRollerConstants{
     public static final int kIntakeMotorPort = 3; 
 
-    public static final double kIntakePower = -0.8;
-    public static final double kOuttakePower = 0.8;
+    public static final double kIntakePower = -0.85;
+    public static final double kOuttakePower = 0.85;
 
   }
   

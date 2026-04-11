@@ -17,7 +17,7 @@ public class WaitForShooterReady extends Command{
 
     @Override
     public boolean isFinished() {
-        return shooterSub.isAtSetVelocityFPS() && AlignToTargetCMD.isAlignedToTarget; 
+        return shooterSub.isAtSetVelocityFPS(); 
     }
 
 }
