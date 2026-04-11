@@ -293,6 +293,7 @@ public class SwerveSub extends SubsystemBase {
 
     public void zeroHeading() {
         gyro.reset();
+        resetPose(getPose());
         // On red alliance, "forward" is 180° in the blue-origin coordinate system
         var alliance = DriverStation.getAlliance();
         if (alliance.isPresent() && alliance.get() == DriverStation.Alliance.Red) {

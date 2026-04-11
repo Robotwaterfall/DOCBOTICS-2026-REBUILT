@@ -136,6 +136,7 @@ public final class Constants {
       public static final int kDriveGyroResetButtonIdx = 10;
     
       public static final int kL3Button = 11; //L3 Button
+      public static final int kR3Button = 12;
 
       public static final int kDriverFieldOrientedButtonIdx = 9;
 

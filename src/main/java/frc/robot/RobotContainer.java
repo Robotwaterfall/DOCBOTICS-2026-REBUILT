@@ -20,6 +20,7 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.commands.AlignToTargetCMD;
 import frc.robot.commands.DecrementShooterCMD;
 import frc.robot.commands.IncrementShooterCMD;
+import frc.robot.commands.LockWheelsCMD;
 import frc.robot.commands.MoveIntakePitcherCMD;
 import frc.robot.commands.ResetHeadingCMD;
 import frc.robot.commands.StopShooterMotorsCMD;
@@ -130,6 +131,10 @@ public class RobotContainer {
 
     new POVButton(driverJoyStick, OIConstants.kDpadDOWN).whileTrue(
       new DecrementShooterCMD(shooterSub)    
+    );
+
+    new JoystickButton(driverJoyStick, OIConstants.kR3Button).whileTrue(
+      new LockWheelsCMD(swerveSub)
     );
 
     //Fire a shot Manually
