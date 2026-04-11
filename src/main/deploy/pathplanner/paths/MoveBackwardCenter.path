@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 1.975638554216867,
-        "y": 5.597662650602409
+        "x": 2.3908915662650605,
+        "y": 4.028530670470756
       },
       "prevControl": {
-        "x": 2.975638554216867,
-        "y": 5.597662650602409
+        "x": 3.3908915662650605,
+        "y": 4.028530670470756
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "MiddleShoot"
+      "linkedName": "ShootCenter"
     }
   ],
   "rotationTargets": [],
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -35.0
+    "rotation": 0.0
   },
   "reversed": false,
   "folder": "CenterPaths",
