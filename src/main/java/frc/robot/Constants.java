@@ -43,9 +43,9 @@ public final class Constants {
   }
 
   public static final class LockOnPoseConstants {
-    // TODO: Change these names to something more specific.
+    
     public static final double kMax_Rotational_Speed = 0.8;
-    public static final double headingToleranceDeg = 2.0; 
+    public static final double headingToleranceDeg = 1.5; 
     public static final double kTurning = 0.2; 
 
   } 
@@ -187,10 +187,10 @@ public final class Constants {
     public static final double kDegreesPerMotorRotation = 360 / (9 * 48/20 * 48/20 * 24/12); // Degrees / gear ratio gives degrees to motor revolutions
 
     public static final double kMinPitchDegrees = 0; 
-    public static final double kMaxPitchDegrees = 110; 
+    public static final double kMaxPitchDegrees = 105; 
 
     public static final double kPitcherInDegrees = 0; // Setpoint positions
-    public static final double kPitcherOutDegrees = 110; 
+    public static final double kPitcherOutDegrees = 103; 
 
     public static double intakePitcher_kP = 0.1; 
     public static double intakePitcher_kI = 0; 
@@ -200,7 +200,7 @@ public final class Constants {
 
     public static double intakePitcherWaitTimeSec = 0.5; 
 
-    public static double intakePitcherFlutterDegrees = 50;
+    public static double intakePitcherFlutterDegrees = 40;
 
     public static final IdleMode pitcherIdleMode = IdleMode.kCoast;
 
@@ -236,8 +236,8 @@ public final class Constants {
     public static final double kShooterKs = 0; 
     public static final double kShooterKv = 12.0 / KrakenX60.kFreeSpeed.in(RotationsPerSecond);
 
-    public static final double kIndexSpeed = 1;
-    public static final double kReverseIndexSpeed = -1; 
+    public static final double kIndexSpeed = 0.95;
+    public static final double kReverseIndexSpeed = -0.95; 
 
     public static final double kWarmupVelocityFPS = 50;
 

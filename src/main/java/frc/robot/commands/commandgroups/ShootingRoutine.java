@@ -18,7 +18,6 @@ public class ShootingRoutine extends SequentialCommandGroup{
             new SequentialCommandGroup(
             new WaitForShooterReady(shooterSub, swerveSub),
             new FireShot(indexerSub, conveyorSub, intakePitcherSub)
-            // Lock wheels when firing shot
             )
         );
     }

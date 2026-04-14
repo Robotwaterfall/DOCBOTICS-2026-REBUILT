@@ -55,15 +55,22 @@
           }
         },
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "AlignToTarget"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ShootingRoutine"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "AlignToTarget"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "ShootingRoutine"
+                }
+              }
+            ]
           }
         }
       ]

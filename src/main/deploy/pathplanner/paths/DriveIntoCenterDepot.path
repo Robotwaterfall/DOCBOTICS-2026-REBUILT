@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.690831325301204,
-        "y": 0.7566867469879515
+        "x": 1.5057469879518073,
+        "y": 5.925493975903614
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.690831325301204,
-        "y": 1.7566867469879515
+        "x": 0.8282289156626504,
+        "y": 5.958277108433736
       },
       "isLocked": false,
-      "linkedName": "LineUpNeutralZoneRight"
+      "linkedName": "LineUpCenterDepot"
     },
     {
       "anchor": {
-        "x": 7.66188302425107,
-        "y": 3.174579172610556
+        "x": 0.9265783132530121,
+        "y": 5.925493975903614
       },
       "prevControl": {
-        "x": 7.66188302425107,
-        "y": 2.174579172610556
+        "x": 1.175942988210696,
+        "y": 5.943305738400591
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "DroveInNeutralZoneRight"
+      "linkedName": "DriveIntoCenterDepot"
     }
   ],
   "rotationTargets": [],
@@ -34,7 +34,7 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 4.0,
-    "maxAcceleration": 0.7,
+    "maxAcceleration": 1.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 90.0
+    "rotation": 180.0
   },
   "reversed": false,
-  "folder": "RightBoomerangSweepPaths",
+  "folder": "LeftBoomerangSweepPaths",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 90.0
+    "rotation": 180.0
   },
   "useDefaultConstraints": false
 }

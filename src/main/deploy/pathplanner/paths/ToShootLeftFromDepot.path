@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.789867469879518,
-        "y": 5.215192771084337
+        "x": 1.145132530120482,
+        "y": 5.3463253012048195
       },
       "isLocked": false,
       "linkedName": "driveInDepot"
     },
     {
       "anchor": {
-        "x": 1.975638554216867,
-        "y": 5.597662650602409
+        "x": 1.8663614457831326,
+        "y": 5.182409638554216
       },
       "prevControl": {
-        "x": 1.5931686746987948,
-        "y": 5.422819277108433
+        "x": 1.3199759036144574,
+        "y": 5.094987951807227
       },
       "nextControl": null,
       "isLocked": false,
@@ -34,7 +34,7 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 4.0,
-    "maxAcceleration": 2.0,
+    "maxAcceleration": 2.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,

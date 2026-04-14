@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.874579172610556,
-        "y": 5.257703281027104
+        "x": 2.729650602409638,
+        "y": 5.575807228915662
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.0139999999999998,
-        "y": 7.029192771084338
+        "x": 0.869071429799082,
+        "y": 7.3472967189728955
       },
       "isLocked": false,
       "linkedName": "Leftshoot"
@@ -39,7 +39,7 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 4.0,
-    "maxAcceleration": 2.0,
+    "maxAcceleration": 2.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,

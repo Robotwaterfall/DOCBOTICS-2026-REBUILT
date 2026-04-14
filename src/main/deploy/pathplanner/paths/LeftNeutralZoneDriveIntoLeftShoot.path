@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.5971897289586305,
-        "y": 5.0377460770328115
+        "x": 7.7345421686746985,
+        "y": 5.094987951807229
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.983580599144078,
-        "y": 5.581169757489302
+        "x": 5.120933038860146,
+        "y": 5.63841163226372
       },
       "isLocked": false,
       "linkedName": "DroveIntoLeftNeutralZone"
@@ -32,25 +32,30 @@
     },
     {
       "anchor": {
-        "x": 2.874579172610556,
-        "y": 5.257703281027104
+        "x": 2.729650602409638,
+        "y": 5.575807228915662
       },
       "prevControl": {
-        "x": 4.647175463623395,
-        "y": 5.76231098430813
+        "x": 4.502246893422477,
+        "y": 6.080414932196688
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": "Leftshoot"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.25675675675675014,
+      "rotationDegrees": -130.65895784375593
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 4.0,
-    "maxAcceleration": 2.0,
+    "maxAcceleration": 2.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,

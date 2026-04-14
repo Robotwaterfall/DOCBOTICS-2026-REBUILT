@@ -30,21 +30,28 @@
           }
         },
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "AlignToTarget"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ShootingRoutine"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "AlignToTarget"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "ShootingRoutine"
+                }
+              }
+            ]
           }
         }
       ]
     }
   },
-  "resetOdom": true,
+  "resetOdom": false,
   "folder": "Center AUTO's",
   "choreoAuto": false
 }

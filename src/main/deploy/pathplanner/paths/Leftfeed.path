@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.5971897289586305,
-        "y": 5.0377460770328115
+        "x": 7.7345421686746985,
+        "y": 5.094987951807229
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.486766666666667,
-        "y": 5.350499999999999
+        "x": 6.624119106382735,
+        "y": 5.407741874774417
       },
       "isLocked": false,
       "linkedName": "DroveIntoLeftNeutralZone"
@@ -34,7 +34,7 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 4.0,
-    "maxAcceleration": 2.0,
+    "maxAcceleration": 2.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,

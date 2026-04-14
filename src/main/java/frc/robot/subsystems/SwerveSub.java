@@ -205,6 +205,8 @@ public class SwerveSub extends SubsystemBase {
 
         SmartDashboard.putBoolean("IsOnLeft", PoseManager.isOnLeftSideOfField(this));
 
+        SmartDashboard.putNumber("MatchTime", DriverStation.getMatchTime());
+
         // // Limelight distance to target for shooter calibration
         // edu.wpi.first.math.geometry.Pose3d targetPose =
         //     LimelightHelpers.getTargetPose3d_CameraSpace(LimelightConstants.LimelightFront);

@@ -86,6 +86,7 @@ public class RobotContainer {
       autoChooser.addOption("LeftBumpToDepotShootMiddleAuto", new PathPlannerAuto("LeftBumpToDepotShootMiddleAuto"));
       autoChooser.addOption("RightBumpFeed", new PathPlannerAuto("RightBumpFeed"));
       autoChooser.addOption("LeftBumpFeed", new PathPlannerAuto("LeftBumpFeed"));
+      autoChooser.addOption("LeftBumpSweepToDepotLeftShoot", new PathPlannerAuto("LeftBumpSweepToDepotLeftShoot"));
 
       SmartDashboard.putData("AutoMode: ", autoChooser);
   }
