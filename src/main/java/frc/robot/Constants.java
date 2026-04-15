@@ -128,6 +128,7 @@ public final class Constants {
     public static final class OIConstants {
 
       public static final int kDriverControllerPort = 0;
+      public static final int kPathfindingControllerPort = 1;
 
       public static final int kDriverXAxis = 0;
       public static final int kDriverYAxis = 1;
@@ -179,6 +180,11 @@ public final class Constants {
     public static final double kRotationalKp = 5.0;
     public static final double kRotationalKi = 0.0;
     public static final double kRotationalKd = 0.0;
+
+    public static final double kMaxPathfindingVel = 2.0; // m/s
+    public static final double kMaxPathfindingAccel = 0.5; // m/s^2
+    public static final double kMaxPathfindingAngVel = 540.000; // rad/s
+    public static final double kMaxPathfindingAngAccel = 720.000; // rad/s^
     
   }
 
@@ -303,6 +309,10 @@ public final class Constants {
   public static final double NEUTRAL_ZONE_X_MAX_M = BLUE_ZONE_X_MAX_M + 7.2898;
   public static final double NEUTRAL_ZONE_Y_MIN_M = 0.0;
   public static final double NEUTRAL_ZONE_Y_MAX_M = FIELD_Y_MAX_M;
+
+  public static final class PathFindingConstants{
+    public static final String DriveIntoCenterDepotPath = "DriveIntoCenterDepot";
+  }
 
   }
 }

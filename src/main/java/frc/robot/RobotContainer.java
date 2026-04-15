@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.Constants.IntakePitcherConstants;
 import frc.robot.Constants.OIConstants;
+import frc.robot.Constants.Pose2DConstants;
 import frc.robot.commands.AlignToTargetCMD;
 import frc.robot.commands.DecrementShooterCMD;
 import frc.robot.commands.IncrementShooterCMD;
@@ -29,6 +30,7 @@ import frc.robot.commands.commandgroups.FireShot;
 import frc.robot.commands.commandgroups.IntakeFuel;
 import frc.robot.commands.commandgroups.OuttakeFuel;
 import frc.robot.commands.commandgroups.ShootingRoutine;
+import frc.robot.commands.pathfindingcommands.PathFindToPath;
 import frc.robot.subsystems.IntakeRollersSub;
 import frc.robot.subsystems.ShooterSub;
 import frc.robot.subsystems.ConveyorSub;
@@ -52,6 +54,7 @@ public class RobotContainer {
   public final IndexerSub indexerSub = new IndexerSub();
 
   private final PS5Controller driverJoyStick = new PS5Controller(OIConstants.kDriverControllerPort);
+  private final PS5Controller pathFindingJoystick = new PS5Controller(OIConstants.kPathfindingControllerPort);
   
   private final SendableChooser<Command> autoChooser;
 
@@ -154,6 +157,9 @@ public class RobotContainer {
       )
     );
 
+    new JoystickButton(pathFindingJoystick, OIConstants.kR2TriggerButton).whileTrue(
+      new PathFindToPath(Pose2DConstants.PathFindingConstants.DriveIntoCenterDepotPath)
+    );
     NamedCommands.registerCommand("Intake", new IntakeFuel(intakeSub, conveyorSub, indexerSub, 
       intakePitcherSub));
     NamedCommands.registerCommand("ShootingRoutine", new ShootingRoutine(shooterSub, indexerSub, 
