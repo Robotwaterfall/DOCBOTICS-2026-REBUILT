@@ -183,8 +183,8 @@ public final class Constants {
 
     public static final double kMaxPathfindingVel = 2.0; // m/s
     public static final double kMaxPathfindingAccel = 0.5; // m/s^2
-    public static final double kMaxPathfindingAngVel = 540.000; // rad/s
-    public static final double kMaxPathfindingAngAccel = 720.000; // rad/s^
+    public static final double kMaxPathfindingAngVel = 400.000; // rad/s
+    public static final double kMaxPathfindingAngAccel = 200.000; // rad/s^
     
   }
 
@@ -312,6 +312,7 @@ public final class Constants {
 
   public static final class PathFindingConstants{
     public static final String DriveIntoCenterDepotPath = "DriveIntoCenterDepot";
+    public static final String DriveBackwardPath = "MoveBackwardCenter";
   }
 
   }

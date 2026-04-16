@@ -158,7 +158,7 @@ public class RobotContainer {
     );
 
     new JoystickButton(pathFindingJoystick, OIConstants.kR2TriggerButton).whileTrue(
-      new PathFindToPath(Pose2DConstants.PathFindingConstants.DriveIntoCenterDepotPath)
+      new PathFindToPath(Pose2DConstants.PathFindingConstants.DriveBackwardPath)
     );
     NamedCommands.registerCommand("Intake", new IntakeFuel(intakeSub, conveyorSub, indexerSub, 
       intakePitcherSub));
