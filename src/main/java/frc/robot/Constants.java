@@ -251,6 +251,15 @@ public final class Constants {
 
     public static final double shooterVelocityPlusPerPress = 2.0; 
 
+    public static final double kShooterHeightInches = 0; //TODO: measure from floor to center of ball in shooter.
+    
+    public static final double shooterEfficiency = 0.8;
+    
+    public static final double kMaxShooterVelocityFPS  = 110;
+    public static final double kMaxShooterRPM  = kMaxShooterVelocityFPS * 60 / (Math.PI * ShooterConstants.kWheelDiameterInches); 
+
+    public static final double kShooterFixedAngle  = 60; 
+
      public static class KrakenX60 {
         public static final AngularVelocity kFreeSpeed = RPM.of(6000);
     }
@@ -305,4 +314,5 @@ public final class Constants {
   public static final double NEUTRAL_ZONE_Y_MAX_M = FIELD_Y_MAX_M;
 
   }
+  
 }
