@@ -10,12 +10,14 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
+import frc.robot.subsystems.LedSub;
 import frc.robot.subsystems.SwerveSub;
 import frc.robot.util.PoseManager;
 
 public class AlignToTargetCMD extends Command {
 
     private final SwerveSub swerveSubsystem;
+    private final LedSub ledSub;
 
     public final Supplier<Double> xSpdFunction;
     public final Supplier<Double> ySpdFunction;
@@ -35,10 +37,12 @@ public class AlignToTargetCMD extends Command {
 
     public AlignToTargetCMD(
             SwerveSub swerveSubsystem,
+            LedSub ledSub,
             Supplier<Double> xSpdFunction,
             Supplier<Double> ySpdFunction) {
 
         this.swerveSubsystem = swerveSubsystem;
+        this.ledSub = ledSub;
         this.xSpdFunction = xSpdFunction;
         this.ySpdFunction = ySpdFunction;
             
@@ -53,6 +57,7 @@ public class AlignToTargetCMD extends Command {
     @Override
     public void initialize() {
         isAlignedToTarget = false;
+        ledSub.setRawPattern(-0.11);
     }
 
     @Override
@@ -113,5 +118,6 @@ public class AlignToTargetCMD extends Command {
     @Override
     public void end(boolean interrupted) {
         isAlignedToTarget = true;
+        ledSub.setRawPattern(0.77);
     }
 }

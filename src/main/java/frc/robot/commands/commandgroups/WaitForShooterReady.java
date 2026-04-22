@@ -1,18 +1,20 @@
 package frc.robot.commands.commandgroups;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.commands.AlignToTargetCMD;
+import frc.robot.subsystems.LedSub;
 import frc.robot.subsystems.ShooterSub;
 import frc.robot.subsystems.SwerveSub;
 
 public class WaitForShooterReady extends Command{
     private final ShooterSub shooterSub;
     private final SwerveSub swerveSub;
+    private final LedSub ledSub;
 
-    public WaitForShooterReady(ShooterSub shooterSub,SwerveSub swerveSub){
+    public WaitForShooterReady(ShooterSub shooterSub,SwerveSub swerveSub,LedSub ledSub){
         this.shooterSub = shooterSub;
         this.swerveSub = swerveSub;
-        addRequirements(shooterSub);
+        this.ledSub = ledSub;
+        addRequirements(shooterSub, ledSub);
     }
 
     @Override

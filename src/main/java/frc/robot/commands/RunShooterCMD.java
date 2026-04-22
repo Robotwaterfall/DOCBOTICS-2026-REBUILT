@@ -3,7 +3,7 @@ package frc.robot.commands;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.Constants.ShooterConstants;
-import frc.robot.subsystems.ShooterPhysics;
+import frc.robot.util.ShooterPhysics;
 import frc.robot.subsystems.ShooterSub;
 import frc.robot.subsystems.SwerveSub;
 import frc.robot.util.PoseManager;
@@ -89,7 +89,7 @@ public class RunShooterCMD extends InstantCommand {
             Units.inchesToMeters(ShooterConstants.kWheelDiameterInches / 2.0),
             ShooterConstants.shooterEfficiency,
             ShooterConstants.kMaxShooterRPM,
-            HoodConstants.kShooterFixedAngle
+            ShooterConstants.kShooterFixedAngle
             );
 
             double velocityFps = Units.metersToFeet(r.velocityMPerSec);
@@ -117,7 +117,7 @@ public class RunShooterCMD extends InstantCommand {
             Units.inchesToMeters(ShooterConstants.kWheelDiameterInches / 2.0),
             ShooterConstants.shooterEfficiency,
             ShooterConstants.kMaxShooterRPM,
-            HoodConstants.kShooterFixedAngle
+            ShooterConstants.kShooterFixedAngle
             );
 
             double velocityFps = Units.metersToFeet(r.velocityMPerSec);
@@ -143,7 +143,7 @@ public class RunShooterCMD extends InstantCommand {
             Units.inchesToMeters(ShooterConstants.kWheelDiameterInches / 2.0),
             ShooterConstants.shooterEfficiency,
             ShooterConstants.kMaxShooterRPM,
-            HoodConstants.kShooterFixedAngle
+            ShooterConstants.kShooterFixedAngle
             );
 
             double velocityFps = Units.metersToFeet(r.velocityMPerSec);
@@ -165,7 +165,7 @@ public class RunShooterCMD extends InstantCommand {
             Units.inchesToMeters(ShooterConstants.kWheelDiameterInches / 2.0),
             ShooterConstants.shooterEfficiency,
             ShooterConstants.kMaxShooterRPM,
-            HoodConstants.kShooterFixedAngle
+            ShooterConstants.kShooterFixedAngle
             );
 
             double velocityFps = Units.metersToFeet(r.velocityMPerSec);

@@ -27,18 +27,19 @@ public class PeriodicLightsCMD extends Command {
 
     @Override
     public void execute() {
+      boolean onField = !DriverStation.isFMSAttached();
       Optional<Alliance> ally = DriverStation.getAlliance();
 
     if (DriverStation.isDisabled()) {
       ledSub.disable();
     } else if (DriverStation.isAutonomous()) {
-    if (DriverStation.isFMSAttached()) {
+    if (onField) {
       ledSub.setRawPattern(LEDConstants.BLINKIN_PATTERN_RAINBOW_POS);
     } else {
       ledSub.setOrangeBlink();
     }
     } else if (DriverStation.isTeleop()) {
-      if (DriverStation.isFMSAttached()) {
+      if (onField) {
 
 switch (hubLogic.getHubState()) {
   case ACTIVE:

@@ -116,7 +116,7 @@ public class RobotContainer {
       new MoveIntakePitcherCMD(intakePitcherSub, IntakePitcherConstants.kPitcherInDegrees)
     );
     new JoystickButton(driverJoyStick, Constants.OIConstants.kR2TriggerButton).whileTrue(
-      new ShootingRoutine(shooterSub, indexerSub, conveyorSub, intakePitcherSub, swerveSub)
+      new ShootingRoutine(shooterSub, indexerSub, conveyorSub, intakePitcherSub, swerveSub, ledsub)
     );
 
     Command StopShooting = 
@@ -154,6 +154,7 @@ public class RobotContainer {
   
     new JoystickButton(driverJoyStick, OIConstants.kL2TriggerButton).whileTrue(
       new AlignToTargetCMD(swerveSub, 
+        ledsub,
         () -> -driverJoyStick.getRawAxis(OIConstants.kDriverYAxis), 
         () -> driverJoyStick.getRawAxis(OIConstants.kDriverXAxis)
       )
@@ -162,8 +163,8 @@ public class RobotContainer {
     NamedCommands.registerCommand("Intake", new IntakeFuel(intakeSub, conveyorSub, indexerSub, 
       intakePitcherSub));
     NamedCommands.registerCommand("ShootingRoutine", new ShootingRoutine(shooterSub, indexerSub, 
-      conveyorSub, intakePitcherSub, swerveSub));
-    NamedCommands.registerCommand("AlignToTarget", new AlignToTargetCMD(swerveSub, () -> 0.0, () -> 0.0));
+      conveyorSub, intakePitcherSub, swerveSub, ledsub));
+    NamedCommands.registerCommand("AlignToTarget", new AlignToTargetCMD(swerveSub, ledsub, () -> 0.0, () -> 0.0));
   }
 
 
